@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix P6 Engine — Primavera P6 Power Tools for Planners</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #112236;
+    --orange: #e8620a;
+    --orange2: #f07c2a;
+    --gold: #f5a623;
+    --text: #e8eaf0;
+    --muted: #8899aa;
+    --border: rgba(232,98,10,0.25);
+    --card-bg: rgba(255,255,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; }
+  .nav-logo img { height: 44px; }
+  .nav-logo span { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: #fff; }
+  .nav-logo em { color: var(--orange); font-style: normal; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta {
+    background: var(--orange); color: #fff; padding: 9px 22px;
+    border-radius: 4px; font-size: 13px; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .nav-cta:hover { background: var(--orange2); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,98,10,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(232,98,10,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,98,10,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black, transparent);
+  }
+
+  .hero-logo { width: 200px; margin-bottom: 24px; position: relative; z-index: 1; filter: drop-shadow(0 0 40px rgba(232,98,10,0.5)); animation: floatLogo 4s ease-in-out infinite; }
+  @keyframes floatLogo { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    letter-spacing: 4px; line-height: 1;
+    position: relative; z-index: 1;
+  }
+  .hero h1 span { color: var(--orange); }
+
+  .hero-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 500; color: var(--muted);
+    margin: 16px 0 40px; max-width: 620px;
+    letter-spacing: 1px; position: relative; z-index: 1;
+  }
+
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    padding: 14px 36px; border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700;
+    text-decoration: none; letter-spacing: 1px;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,98,10,0.4); }
+  .btn-secondary {
+    background: transparent; color: var(--text);
+    padding: 14px 36px; border-radius: 4px;
+    border: 1px solid var(--border);
+    font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 600;
+    text-decoration: none; letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+  .hero-badge {
+    margin-top: 48px; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .badge-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+  .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 90px 5%; }
+  .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: 2px; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .section-title span { color: var(--orange); }
+  .section-desc { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 600px; }
+
+  /* ── TABS SECTION ── */
+  .tabs-section { background: var(--navy2); }
+  .tabs-header { text-align: center; margin-bottom: 56px; }
+  .tabs-header .section-desc { margin: 0 auto; }
+
+  .tab-nav {
+    display: flex; gap: 0; justify-content: center; margin-bottom: 48px;
+    border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; max-width: 680px; margin-left: auto; margin-right: auto;
+  }
+  .tab-btn {
+    flex: 1; padding: 14px 20px;
+    background: transparent; border: none; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600;
+    color: var(--muted); letter-spacing: 0.5px;
+    transition: all 0.2s; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active { background: var(--orange); color: #fff; }
+  .tab-btn .tab-num { font-size: 11px; opacity: 0.7; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 28px 24px;
+    transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .feature-card:hover { border-color: rgba(232,98,10,0.5); transform: translateY(-3px); }
+  .feature-card:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 44px; height: 44px; border-radius: 8px;
+    background: rgba(232,98,10,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 20px;
+  }
+  .feature-card h3 {
+    font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700;
+    margin-bottom: 8px; color: #fff; letter-spacing: 0.5px;
+  }
+  .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ── STATS ── */
+  .stats-section { background: var(--navy); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 60px 5%; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; max-width: 900px; margin: 0 auto; text-align: center; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--orange); letter-spacing: 2px; line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { background: var(--navy2); }
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin-top: 56px; position: relative; }
+  .how-step {
+    padding: 36px 28px; text-align: center;
+    border-right: 1px solid var(--border); position: relative;
+  }
+  .how-step:last-child { border-right: none; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 2px solid var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--orange);
+    margin: 0 auto 20px;
+  }
+  .how-step h3 { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px; }
+  .how-step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ── AUDIENCE ── */
+  .audience-section { background: var(--navy); }
+  .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 56px; }
+  .audience-card {
+    padding: 32px 28px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+  .audience-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--orange); }
+  .audience-card ul { list-style: none; }
+  .audience-card li { font-size: 14px; color: var(--muted); padding: 5px 0; padding-left: 16px; position: relative; }
+  .audience-card li::before { content: '›'; position: absolute; left: 0; color: var(--orange); }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--navy2);
+    text-align: center; padding: 100px 5%;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(232,98,10,0.1), transparent);
+  }
+  .cta-section .section-title { position: relative; z-index: 1; }
+  .cta-section p { color: var(--muted); font-size: 16px; margin: 16px auto 40px; max-width: 500px; position: relative; z-index: 1; }
+  .cta-section .hero-btns { position: relative; z-index: 1; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070f18;
+    padding: 40px 5%; text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  footer img { height: 40px; margin-bottom: 12px; opacity: 0.7; }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--orange); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .how-step { border-right: none; border-bottom: 1px solid var(--border); }
+    .how-step:last-child { border-bottom: none; }
+    .tab-btn { font-size: 13px; padding: 12px 10px; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine Logo">
+    <span>PHOENIX <em>P6 ENGINE</em></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#who">Who It's For</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get the Tool</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine" class="hero-logo">
+  <h1>PHOENIX<br><span>P6 ENGINE</span></h1>
+  <p class="hero-sub">The ultimate Primavera P6 power toolkit — ultrafast XER import, schedule tools, and database management. No admin rights required.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">&#8659; Get the Tool Free</a>
+    <a href="#features" class="btn-secondary">Explore Features</a>
+  </div>
+  <div class="hero-badge">
+    <div class="badge-item"><div class="badge-dot"></div>No Admin Rights</div>
+    <div class="badge-item"><div class="badge-dot"></div>Single .EXE File</div>
+    <div class="badge-item"><div class="badge-dot"></div>Built for Planners</div>
+    <div class="badge-item"><div class="badge-dot"></div>100% Free</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="fade-in"><div class="stat-num">3</div><div class="stat-label">Main Modules</div></div>
+    <div class="fade-in"><div class="stat-num">10+</div><div class="stat-label">Built-in Tools</div></div>
+    <div class="fade-in"><div class="stat-num">0</div><div class="stat-label">Admin Rights Needed</div></div>
+    <div class="fade-in"><div class="stat-num">1</div><div class="stat-label">EXE File — No Install</div></div>
+  </div>
+</div>
+
+<!-- FEATURES / TABS -->
+<section class="tabs-section" id="features">
+  <div class="tabs-header fade-in">
+    <div class="section-label">What's Inside</div>
+    <h2 class="section-title">THREE POWERFUL <span>MODULES</span></h2>
+    <p class="section-desc">Phoenix P6 Engine is organized into 3 tabs — each targeting a critical area of your P6 workflow.</p>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab(0)">
+      <span class="tab-num">TAB 01</span>
+      Ultra Fast Import
+    </button>
+    <button class="tab-btn" onclick="showTab(1)">
+      <span class="tab-num">TAB 02</span>
+      Core Tools
+    </button>
+    <button class="tab-btn" onclick="showTab(2)">
+      <span class="tab-num">TAB 03</span>
+      Database Tweaks
+    </button>
+  </div>
+
+  <!-- TAB 1 -->
+  <div class="tab-panel active" id="tab-0">
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#9889;</div>
+      <h3>XER Import</h3>
+      <p>Ultrafast import of Primavera P6 XER files directly into SQLite — no Oracle, no P6 server, no admin needed. Handles large schedules in seconds.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128260;</div>
+      <h3>DB → DB Copy</h3>
+      <p>Copy an entire project from one SQLite database to another. All relationships, codes, calendars, and resources preserved perfectly.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128203;</div>
+      <h3>Duplicate Projects</h3>
+      <p>Instantly clone a project within the same database. Perfect for creating scenario copies or baseline variations without re-importing.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128279;</div>
+      <h3>Assign / Un-assign Baseline</h3>
+      <p>Link or unlink baseline projects with full integrity checks — cleans up dangling references automatically. Safe and reversible.</p>
+    </div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div class="tab-panel" id="tab-1">
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128269;</div>
+      <h3>Out-of-Sequence Detector & Solver</h3>
+      <p>Automatically find all out-of-sequence activities in your schedule. Get a detailed report and apply fixes — works on XER and SQLite databases.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#9986;</div>
+      <h3>Split Activities</h3>
+      <p>Split activities to create revised schedules — properly handles actual start, dates, durations, and task types. Works on both XER and SQLite.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128100;</div>
+      <h3>Remove Resource Assignments</h3>
+      <p>Bulk-remove resource assignments from selected projects. Clean up your schedule before re-assignment or for submittal-ready exports.</p>
+    </div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div class="tab-panel" id="tab-2">
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128274;</div>
+      <h3>Delete Shared Mode</h3>
+      <p>Remove the shared mode lock from projects stuck in shared/exclusive mode — no need for P6 client access or DBA privileges.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128291;</div>
+      <h3>Activity ID Limit Fix</h3>
+      <p>Resets P6's internal NEXTKEY counter to allow new activity IDs beyond the default limit — a common pain point for large projects.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#129529;</div>
+      <h3>Clean Rubbish Data</h3>
+      <p>Detect and remove orphaned records, dangling foreign keys, and corrupted data entries that slow down or break P6 databases.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#128196;</div>
+      <h3>Copy Database Layouts</h3>
+      <p>Transfer Layouts, Filters, and Units of Measure between databases — saves hours of manual recreation after migrations.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="card-icon">&#9194;</div>
+      <h3>Rollback Database Version</h3>
+      <p>Downgrade a SQLite database schema to an earlier P6 version — critical when sharing databases with teams using older P6 versions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="fade-in" style="text-align:center">
+    <div class="section-label">Simple Workflow</div>
+    <h2 class="section-title">HOW IT <span>WORKS</span></h2>
+  </div>
+  <div class="how-grid">
+    <div class="how-step fade-in">
+      <div class="step-num">1</div>
+      <h3>Download the EXE</h3>
+      <p>Single executable file. No installation wizard, no admin rights, no dependencies. Just download and run.</p>
+    </div>
+    <div class="how-step fade-in">
+      <div class="step-num">2</div>
+      <h3>Select Your Files</h3>
+      <p>Browse to your XER file or SQLite database. Phoenix P6 Engine reads the file structure automatically.</p>
+    </div>
+    <div class="how-step fade-in">
+      <div class="step-num">3</div>
+      <h3>Choose Your Tool</h3>
+      <p>Pick from 10+ tools across 3 tabs. Each tool is purpose-built for a specific P6 planner workflow.</p>
+    </div>
+    <div class="how-step fade-in">
+      <div class="step-num">4</div>
+      <h3>Done in Seconds</h3>
+      <p>Ultrafast processing engine delivers results instantly. No waiting, no server timeouts, no errors.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IS IT FOR -->
+<section class="audience-section" id="who">
+  <div class="fade-in">
+    <div class="section-label">Built For</div>
+    <h2 class="section-title">WHO BENEFITS FROM <span>PHOENIX</span></h2>
+  </div>
+  <div class="audience-grid">
+    <div class="audience-card fade-in">
+      <h3>Planning Engineers</h3>
+      <ul>
+        <li>Import XER files without P6 client</li>
+        <li>Fix out-of-sequence issues fast</li>
+        <li>Split and revise schedules easily</li>
+        <li>No admin rights needed on site PCs</li>
+      </ul>
+    </div>
+    <div class="audience-card fade-in">
+      <h3>Project Controls</h3>
+      <ul>
+        <li>Manage multiple project databases</li>
+        <li>Copy and duplicate projects safely</li>
+        <li>Assign/unassign baselines in bulk</li>
+        <li>Rollback schema for older P6 versions</li>
+      </ul>
+    </div>
+    <div class="audience-card fade-in">
+      <h3>DB Administrators</h3>
+      <ul>
+        <li>Clean orphaned and rubbish data</li>
+        <li>Fix shared mode locked projects</li>
+        <li>Copy layouts and filters between DBs</li>
+        <li>Reset NEXTKEY activity ID limits</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2 class="section-title fade-in">READY TO POWER UP<br><span>YOUR P6 WORKFLOW?</span></h2>
+  <p class="fade-in">Phoenix P6 Engine is free for planners. Reach out to get the latest version and updates directly.</p>
+  <div class="hero-btns fade-in">
+    <a href="mailto:omar@phoenixp6engine.com" class="btn-primary">&#9993; Contact Omar</a>
+    <a href="https://linkedin.com/in/omaradelbadawy" class="btn-secondary" target="_blank">LinkedIn Profile</a>
+  </div>
+  <p style="margin-top:32px; font-size:13px; color:var(--muted); position:relative; z-index:1;">
+    By <strong style="color:var(--text)">Omar Adel Badawy</strong> — PMP / PMI-RMP | Project Controls Specialist
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+  <p>&copy; 2025 Phoenix P6 Engine — Built by <a href="mailto:omar@phoenixp6engine.com">Omar Adel Badawy</a></p>
+  <p style="margin-top:6px; font-size:12px;">Primavera P6 is a registered trademark of Oracle Corporation. Phoenix P6 Engine is an independent tool.</p>
+</footer>
+
+<script>
+function showTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
