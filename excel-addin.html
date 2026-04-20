@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/jpeg" href="phoenix_logo.jpg">
+<title>Excel Add-in — Phoenix P6 Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a; --navy2: #112236;
+    --orange: #e8620a; --orange2: #f07c2a;
+    --text: #e8eaf0; --muted: #8899aa;
+    --border: rgba(232,98,10,0.25);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--navy); color:var(--text); font-family:'Inter',sans-serif; overflow-x:hidden; }
+
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 5%; height:68px;
+    background:rgba(13,27,42,0.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo img { height:44px; }
+  .nav-logo span { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:#fff; }
+  .nav-logo em { color:var(--orange); font-style:normal; }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:500; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--orange); }
+  .nav-back { background:transparent; color:var(--text); padding:9px 22px; border-radius:4px; border:1px solid var(--border); font-size:13px; font-weight:600; text-decoration:none; letter-spacing:0.5px; transition:all 0.2s; }
+  .nav-back:hover { border-color:var(--orange); color:var(--orange); }
+
+  .page {
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:100px 5% 60px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .page::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(232,98,10,0.08), transparent);
+    pointer-events:none;
+  }
+  .grid-bg {
+    position:absolute; inset:0;
+    background-image: linear-gradient(rgba(232,98,10,0.05) 1px,transparent 1px), linear-gradient(90deg,rgba(232,98,10,0.05) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);
+  }
+
+  .excel-icon { font-size:72px; margin-bottom:24px; position:relative; z-index:1; animation:float 4s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+  .page-label { font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--orange); margin-bottom:12px; position:relative; z-index:1; }
+
+  h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,7vw,84px); letter-spacing:4px; line-height:1.05; position:relative; z-index:1; }
+  h1 span { color:var(--orange); }
+
+  .sub { font-family:'Rajdhani',sans-serif; font-size:clamp(16px,2vw,20px); font-weight:500; color:var(--muted); margin:16px 0 48px; max-width:580px; letter-spacing:0.5px; position:relative; z-index:1; }
+
+  .coming-soon-badge {
+    position:relative; z-index:1;
+    display:inline-flex; align-items:center; gap:12px;
+    background:rgba(232,98,10,0.12); border:1px solid var(--orange);
+    border-radius:100px; padding:14px 36px;
+    font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:3px; color:var(--orange);
+    animation:pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(232,98,10,0.3)} 50%{box-shadow:0 0 0 16px rgba(232,98,10,0)} }
+
+  .features-preview { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:48px; position:relative; z-index:1; }
+  .feat-pill { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:100px; padding:8px 18px; font-size:13px; color:var(--muted); }
+
+  .notify-box { margin-top:48px; position:relative; z-index:1; }
+  .notify-box p { font-size:14px; color:var(--muted); margin-bottom:16px; }
+  .notify-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .btn-primary { background:var(--orange); color:#fff; padding:12px 28px; border-radius:4px; font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; text-decoration:none; letter-spacing:1px; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary:hover { background:var(--orange2); transform:translateY(-2px); }
+  .btn-secondary { background:transparent; color:var(--text); padding:12px 28px; border-radius:4px; border:1px solid var(--border); font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:600; text-decoration:none; letter-spacing:1px; transition:all 0.2s; }
+  .btn-secondary:hover { border-color:var(--orange); color:var(--orange); }
+
+  footer { background:#070f18; padding:32px 5%; text-align:center; border-top:1px solid var(--border); }
+  footer p { font-size:13px; color:var(--muted); }
+  footer a { color:var(--orange); text-decoration:none; }
+
+  @media(max-width:768px){ .nav-links{display:none;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+    <span>PHOENIX <em>P6 ENGINE</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">P6 Engine</a></li>
+    <li><a href="excel-addin.html" class="active">Excel Add-in</a></li>
+    <li><a href="powerbi.html">Power BI</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">&#8592; Back to Main</a>
+</nav>
+
+<div class="page">
+  <div class="grid-bg"></div>
+
+  <div class="excel-icon">📊</div>
+  <div class="page-label">New Product</div>
+  <h1>PHOENIX P6 ENGINE<br><span>EXCEL ADD-IN</span></h1>
+  <p class="sub">Advanced Primavera P6 planning tools — directly inside Microsoft Excel. Powerful schedule analysis, reporting, and data manipulation without leaving your spreadsheet.</p>
+
+  <div class="coming-soon-badge">
+    ⏳ COMING SOON
+  </div>
+
+  <div class="features-preview">
+    <div class="feat-pill">XER Data Import to Excel</div>
+    <div class="feat-pill">Schedule Analysis Reports</div>
+    <div class="feat-pill">Earned Value Calculations</div>
+    <div class="feat-pill">Baseline Comparison</div>
+    <div class="feat-pill">Activity Code Mapping</div>
+    <div class="feat-pill">KPI Dashboard Generator</div>
+    <div class="feat-pill">Delay Analysis Tools</div>
+    <div class="feat-pill">Resource Loading Charts</div>
+  </div>
+
+  <div class="notify-box">
+    <p>Get notified when it launches — reach out via WhatsApp or LinkedIn:</p>
+    <div class="notify-btns">
+      <a href="https://wa.me/201114422615" class="btn-primary" target="_blank">&#128172; Notify Me on WhatsApp</a>
+      <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">Follow on LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Phoenix P6 Engine — Built by <a href="mailto:omar@phoenixp6engine.com">Omar Adel Badawy</a></p>
+</footer>
+
+</body>
+</html>
