@@ -258,55 +258,67 @@
     .nav-logo span { font-size: 16px; }
 
     /* Hero */
-    .hero { padding: 90px 5% 48px; }
-    .hero-logo { width: 140px; }
-    .hero-sub { font-size: 15px; margin: 12px 0 28px; }
-    .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
-    .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; font-size: 15px; padding: 13px 20px; }
-    .hero-badge { gap: 16px; margin-top: 32px; }
+    .hero { padding: 90px 4% 48px; min-height: auto; padding-top: 100px; }
+    .hero-logo { width: 130px; margin-bottom: 16px; }
+    .hero h1 { font-size: clamp(44px, 12vw, 72px); }
+    .hero-sub { font-size: 15px; margin: 12px 0 24px; padding: 0 4%; }
+    .hero-btns { flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; font-size: 15px; padding: 13px 20px; }
+    .hero-badge { gap: 12px; margin-top: 28px; flex-wrap: wrap; justify-content: center; }
     .badge-item { font-size: 12px; }
 
     /* Stats */
-    .stats-section { padding: 40px 5%; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .stat-num { font-size: 40px; }
-    .stat-label { font-size: 11px; }
+    .stats-section { padding: 36px 4%; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 100%; }
+    .stat-num { font-size: 38px; }
+    .stat-label { font-size: 10px; }
 
-    /* Sections */
-    section { padding: 56px 5%; }
-    .section-title { font-size: clamp(28px, 7vw, 44px); }
+    /* General sections */
+    section { padding: 52px 4%; }
+    .section-title { font-size: clamp(28px, 8vw, 44px); }
+    .section-desc { font-size: 14px; }
 
-    /* Tabs */
-    .tab-nav { flex-direction: column; max-width: 100%; }
-    .tab-btn { border-right: none; border-bottom: 1px solid var(--border); font-size: 14px; padding: 13px 16px; flex-direction: row; justify-content: center; gap: 8px; }
+    /* Features tabs */
+    .tabs-header { margin-bottom: 32px; }
+    .tab-nav { flex-direction: column; max-width: 100%; border-radius: 8px; }
+    .tab-btn { border-right: none !important; border-bottom: 1px solid var(--border); font-size: 13px; padding: 12px 16px; flex-direction: row; justify-content: center; gap: 8px; }
     .tab-btn:last-child { border-bottom: none; }
     .tab-panel.active { grid-template-columns: 1fr; }
+    .feature-card { padding: 20px 18px; }
 
     /* How it works */
     .how-grid { grid-template-columns: 1fr; }
-    .how-step { border-right: none; border-bottom: 1px solid var(--border); padding: 28px 20px; }
+    .how-step { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 16px; }
     .how-step:last-child { border-bottom: none; }
 
     /* Audience */
     .audience-grid { grid-template-columns: 1fr; }
+    .audience-card { padding: 24px 20px; }
 
-    /* Reviews */
-    #reviews-list { grid-template-columns: 1fr; }
+    /* Reviews section */
+    #reviews { padding: 52px 4%; }
+    #reviews-list { grid-template-columns: 1fr !important; }
+    #rev-name, #rev-text { font-size: 16px; } /* prevent zoom on iOS */
 
-    /* Pricing */
-    .cta-section { padding: 56px 4%; }
-    .cta-section > div[style*="grid"] { grid-template-columns: 1fr !important; }
+    /* Pricing - override inline grid */
+    .cta-section { padding: 52px 4%; }
+    .pricing-grid { grid-template-columns: 1fr !important; }
 
     /* Video */
-    #demo { padding: 56px 4%; }
+    #demo { padding: 52px 4%; }
+
+    /* Footer */
+    footer { padding: 28px 4%; }
   }
 
   @media (max-width: 480px) {
-    .hero-logo { width: 110px; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .stat-num { font-size: 32px; }
     nav { height: 58px; }
-    .hero { padding-top: 78px; }
+    .hero { padding-top: 80px; }
+    .hero-logo { width: 110px; }
+    .stats-grid { gap: 14px; }
+    .stat-num { font-size: 32px; }
+    .stat-label { font-size: 10px; }
+    .section-title { font-size: clamp(26px, 9vw, 40px); }
   }
 
   /* ── ANIMATIONS ── */
@@ -604,7 +616,7 @@
   <h2 class="section-title fade-in">READY TO POWER UP<br><span>YOUR P6 WORKFLOW?</span></h2>
 
   <!-- Pricing grid -->
-  <div class="fade-in" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; max-width:900px; margin:40px auto; position:relative; z-index:1;">
+  <div class="pricing-grid fade-in" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; max-width:900px; margin:40px auto; position:relative; z-index:1;">
 
     <!-- Individual license -->
     <div style="background:rgba(255,255,255,0.04); border:2px solid var(--orange); border-radius:12px; padding:36px 32px; position:relative;">
