@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="phoenix_excel_logo.png">
+<title>Excel Add-in — Phoenix P6 Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0d1b2a; --navy2:#112236;
+    --orange:#e8620a; --orange2:#f07c2a;
+    --text:#e8eaf0; --muted:#8899aa;
+    --border:rgba(232,98,10,0.25); --card-bg:rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;background:rgba(13,27,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:44px;}
+  .nav-logo span{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff;}
+  .nav-logo em{color:var(--orange);font-style:normal;}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--orange);}
+  .nav-back{background:transparent;color:var(--text);padding:9px 22px;border-radius:4px;border:1px solid var(--border);font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;transition:all 0.2s;}
+  .nav-back:hover{border-color:var(--orange);color:var(--orange);}
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 5% 60px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(232,98,10,0.1),transparent);pointer-events:none;}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(232,98,10,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(232,98,10,0.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);}
+  .hero-logo{width:200px;margin-bottom:20px;position:relative;z-index:1;filter:drop-shadow(0 0 40px rgba(232,98,10,0.4));animation:float 4s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .section-label{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,6vw,72px);letter-spacing:3px;line-height:1.05;margin-bottom:16px;}
+  .section-title span{color:var(--orange);}
+  .hero-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:500;color:var(--muted);max-width:640px;letter-spacing:0.5px;margin-bottom:32px;position:relative;z-index:1;}
+  .coming-badge{position:relative;z-index:1;display:inline-flex;align-items:center;gap:12px;background:rgba(232,98,10,0.12);border:1px solid var(--orange);border-radius:100px;padding:12px 32px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:var(--orange);animation:pulse 2.5s ease-in-out infinite;margin-bottom:40px;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,98,10,0.3)}50%{box-shadow:0 0 0 16px rgba(232,98,10,0)}}
+  .btn-primary{background:var(--orange);color:#fff;padding:13px 28px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;text-decoration:none;letter-spacing:1px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,10,0.4);}
+  .btn-secondary{background:transparent;color:var(--text);padding:13px 28px;border-radius:4px;border:1px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;transition:all 0.2s;}
+  .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+  .modules-section{background:var(--navy2);padding:80px 5%;}
+  .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;margin-top:48px;}
+  .module-card{background:var(--card-bg);border-radius:12px;padding:28px;transition:all 0.25s;position:relative;overflow:hidden;}
+  .module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity 0.25s;}
+  .module-card:hover{transform:translateY(-3px);}
+  .module-card:hover::before{opacity:1;}
+  .module-card.utilities{border:1px solid rgba(29,125,58,0.4);}
+  .module-card.utilities::before{background:linear-gradient(90deg,#1d7d3a,#34a85a);}
+  .module-card.utilities:hover{border-color:rgba(29,125,58,0.7);}
+  .module-card.utilities .mod-label{color:#34a85a;}
+  .module-card.analysis{border:1px solid rgba(232,98,10,0.4);}
+  .module-card.analysis::before{background:linear-gradient(90deg,var(--orange),var(--orange2));}
+  .module-card.analysis:hover{border-color:rgba(232,98,10,0.7);}
+  .module-card.analysis .mod-label{color:var(--orange);}
+  .module-card.database{border:1px solid rgba(55,138,221,0.4);}
+  .module-card.database::before{background:linear-gradient(90deg,#378add,#5ba8f5);}
+  .module-card.database:hover{border-color:rgba(55,138,221,0.7);}
+  .module-card.database .mod-label{color:#5ba8f5;}
+  .mod-label{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+  .mod-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .mod-icon{font-size:28px;}
+  .mod-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff;}
+  .feature-list{list-style:none;}
+  .feature-list li{font-size:14px;color:var(--muted);padding:7px 0 7px 20px;position:relative;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .feature-list li:last-child{border-bottom:none;}
+  .feature-list li::before{content:'›';position:absolute;left:0;font-size:16px;}
+  .feature-list li .wip{font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(232,98,10,0.15);color:var(--orange);font-weight:600;letter-spacing:0.5px;white-space:nowrap;flex-shrink:0;}
+  .cta-section{background:var(--navy);text-align:center;padding:80px 5%;}
+  footer{background:#070f18;padding:32px 5%;text-align:center;border-top:1px solid var(--border);}
+  footer p{font-size:13px;color:var(--muted);}
+  footer a{color:var(--orange);text-decoration:none;}
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+  @media(max-width:768px){.nav-links{display:none;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+    <span>PHOENIX <em>P6 ENGINE</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">P6 Engine</a></li>
+    <li><a href="excel-addin.html" class="active">Excel Add-in</a></li>
+    <li><a href="powerbi.html">Power BI</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">&#8592; Back to Main</a>
+</nav>
+
+<div class="hero">
+  <div class="grid-bg"></div>
+  <img src="phoenix_excel_logo.png" alt="Phoenix Excel Add-in" class="hero-logo">
+  <div style="position:relative;z-index:1;">
+    <div class="section-label">Excel Add-in</div>
+    <h1 class="section-title">PHOENIX P6 ENGINE<br><span>FOR EXCEL</span></h1>
+  </div>
+  <p class="hero-sub">Three powerful modules — Utilities, Analysis, and Database — all running directly inside Microsoft Excel. No switching tools, no exports.</p>
+  <div class="coming-badge">⏳ COMING SOON</div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;">
+    <a href="https://wa.me/201114422615" class="btn-primary" target="_blank">&#128172; Get Notified</a>
+    <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">Follow on LinkedIn</a>
+  </div>
+</div>
+
+<section class="modules-section" id="features">
+  <div class="fade-in" style="text-align:center;">
+    <div class="section-label">What's Inside</div>
+    <h2 class="section-title" style="font-size:clamp(32px,4vw,52px);">THREE <span>POWERFUL MODULES</span></h2>
+  </div>
+  <div class="modules-grid">
+
+    <div class="module-card utilities fade-in">
+      <div class="mod-label">Module 01</div>
+      <div class="mod-header">
+        <div class="mod-icon">🛠️</div>
+        <div class="mod-title">Phoenix Utilities</div>
+      </div>
+      <ul class="feature-list">
+        <li>Color and Group P6 Style</li>
+        <li>Draw Gantt Chart</li>
+        <li>WBS Generation and Injection</li>
+        <li>Create PMS Sheet</li>
+        <li>Resource Generation and Injection</li>
+        <li>Create Activity Codes and Injection</li>
+        <li>Change Activity ID</li>
+        <li>Split In-Progress Activities</li>
+        <li>Remove Assigned Resources</li>
+        <li>XER Data Import in Excel</li>
+      </ul>
+    </div>
+
+    <div class="module-card analysis fade-in">
+      <div class="mod-label">Module 02</div>
+      <div class="mod-header">
+        <div class="mod-icon">📊</div>
+        <div class="mod-title">Phoenix Analysis</div>
+      </div>
+      <ul class="feature-list">
+        <li>Calendar View</li>
+        <li>Out-of-Sequence Detector &amp; Solver</li>
+        <li>Update Quality Analysis</li>
+        <li>Schedule Comparison</li>
+        <li><span>Eagle Eye — Baseline Analysis</span><span class="wip">IN PROGRESS</span></li>
+        <li><span>Create Schedule Dashboard</span><span class="wip">IN PROGRESS</span></li>
+        <li>Redundant Relation Detector &amp; Solver</li>
+        <li>Resource ID Duplication Check</li>
+      </ul>
+    </div>
+
+    <div class="module-card database fade-in">
+      <div class="mod-label">Module 03</div>
+      <div class="mod-header">
+        <div class="mod-icon">🗄️</div>
+        <div class="mod-title">Phoenix Database</div>
+      </div>
+      <ul class="feature-list">
+        <li>Increase Activity ID Limit</li>
+        <li>Rollback Database Version</li>
+        <li>Assign / Un-Assign Baseline From Project</li>
+        <li>Delete Shared Mode</li>
+        <li>Reset Password</li>
+        <li>Copy Template from Another Database</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="fade-in">
+    <div class="section-label">Stay Updated</div>
+    <h2 class="section-title" style="font-size:clamp(32px,5vw,56px);">BE THE FIRST TO<br><span>GET ACCESS</span></h2>
+    <p style="color:var(--muted);font-size:16px;max-width:500px;margin:16px auto 36px;line-height:1.7;">Reach out to be notified the moment the Excel Add-in launches.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://wa.me/201114422615" class="btn-primary" target="_blank">&#128172; WhatsApp Omar</a>
+      <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">LinkedIn Profile</a>
+    </div>
+    <p style="margin-top:32px;font-size:13px;color:var(--muted);">By <strong style="color:var(--text)">Omar Adel Badawy</strong> — Business Intelligence Manager</p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Phoenix P6 Engine — Built by <a href="mailto:omar@phoenixp6engine.com">Omar Adel Badawy</a></p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
