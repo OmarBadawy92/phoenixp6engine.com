@@ -101,7 +101,32 @@
   .fade-in { opacity:0; transform:translateY(20px); transition:opacity 0.6s,transform 0.6s; }
   .fade-in.visible { opacity:1; transform:translateY(0); }
 
-  @media(max-width:768px) { .nav-links{display:none;} .how-step{border-right:none;border-bottom:1px solid var(--border);} .how-step:last-child{border-bottom:none;} }
+
+  @media (max-width: 768px) {
+    #hamburger { display:block !important; }
+    .nav-back-desk { display:none; }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .nav-logo span { font-size: 16px; }
+    .hero { padding: 90px 4% 48px; }
+    .hero img[style*="width:200px"] { width: 150px !important; }
+    .hero-sub { font-size: 15px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; }
+    .what-grid { grid-template-columns: 1fr; }
+    .how-steps { grid-template-columns: 1fr; }
+    .how-step { border-right: none; border-bottom: 1px solid var(--border); }
+    .how-step:last-child { border-bottom: none; }
+    .cta-section { padding: 56px 4%; }
+    .cta-section div[style*="display:flex"] { flex-direction: column; align-items: center; }
+    .video-section { padding: 56px 4%; }
+    section { padding: 56px 4%; }
+  }
+  @media (max-width: 480px) {
+    nav { height: 58px; }
+    .hero { padding-top: 78px; }
+  }
+
 </style>
 </head>
 <body>
@@ -116,8 +141,14 @@
     <li><a href="excel-addin.html">Excel Add-in</a></li>
     <li><a href="powerbi.html" class="active">Power BI</a></li>
   </ul>
-  <a href="index.html" class="nav-back">&#8592; Back to Main</a>
+  <a href="index.html" class="nav-back nav-back-desk">&#8592; Back to Main</a>
+  <button id="hamburger" onclick="toggleMenu()" style="display:none; background:none; border:1px solid var(--border); border-radius:4px; padding:6px 10px; cursor:pointer; color:var(--text); font-size:18px;">&#9776;</button>
 </nav>
+<div id="mobile-menu" style="display:none; position:fixed; top:58px; left:0; right:0; z-index:99; background:rgba(13,27,42,0.98); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:16px 5%;">
+  <a href="index.html" style="display:block; color:var(--muted); text-decoration:none; font-size:14px; font-weight:500; text-transform:uppercase; padding:12px 0; border-bottom:1px solid var(--border);">P6 Engine</a>
+  <a href="excel-addin.html" style="display:block; color:var(--muted); text-decoration:none; font-size:14px; font-weight:500; text-transform:uppercase; padding:12px 0; border-bottom:1px solid var(--border);">Excel Add-in</a>
+  <a href="powerbi.html" style="display:block; color:var(--orange); text-decoration:none; font-size:14px; font-weight:500; text-transform:uppercase; padding:12px 0;">Power BI</a>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -145,7 +176,7 @@
     <div class="what-card fade-in">
       <div class="icon">⚡</div>
       <h3>Live P6 Data Connection</h3>
-      <p>Direct link between your Primavera P6 SQLite / SQL Server databases and Power BI — data refreshes automatically with every schedule update.</p>
+      <p>Direct link between your Primavera P6 SQLite database and Power BI — data refreshes automatically with every schedule update.</p>
     </div>
     <div class="what-card fade-in">
       <div class="icon">📈</div>
@@ -206,7 +237,7 @@
     <div class="how-step fade-in">
       <div class="step-num">1</div>
       <h3>Share Your Database</h3>
-      <p>Send your P6 SQLite / SQL Server Access to P6 database or XER files. We handle all the data modelling and connection setup.</p>
+      <p>Send your P6 SQLite database or XER files. We handle all the data modelling and connection setup.</p>
     </div>
     <div class="how-step fade-in">
       <div class="step-num">2</div>
@@ -245,10 +276,9 @@
 </footer>
 
 <script>
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+function toggleMenu(){const m=document.getElementById('mobile-menu');const h=document.getElementById('hamburger');const open=m.style.display==='block';m.style.display=open?'none':'block';h.innerHTML=open?'&#9776;':'&#10005;';}
+const obs = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
