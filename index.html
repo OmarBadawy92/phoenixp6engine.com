@@ -329,6 +329,39 @@
 </head>
 <body>
 
+
+<script>
+function animateCount(el, target, duration = 700) {
+  let start = 0;
+  let startTime = null;
+
+  function update(currentTime) {
+    if (!startTime) startTime = currentTime;
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+
+    el.innerText = Math.floor(progress * target);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.innerText = target + (target === 10 ? "+" : "");
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+function startCounters() {
+  document.querySelectorAll(".count").forEach(el => {
+    const target = parseInt(el.getAttribute("data-target"));
+    animateCount(el, target);
+  });
+}
+
+// trigger when page loads
+window.addEventListener("load", startCounters);
+</script>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
@@ -377,10 +410,27 @@
 <!-- STATS -->
 <div class="stats-section">
   <div class="stats-grid">
-    <div class="fade-in"><div class="stat-num">3</div><div class="stat-label">Main Modules</div></div>
-    <div class="fade-in"><div class="stat-num">10+</div><div class="stat-label">Built-in Tools</div></div>
-    <div class="fade-in"><div class="stat-label" style="font-size:15px;margin-bottom:6px;">No Admin Rights Needed</div><div class="stat-num" style="font-size:32px;letter-spacing:1px;">&#10003;</div></div>
-    <div class="fade-in"><div class="stat-label" style="font-size:15px;margin-bottom:6px;">No Install — Run EXE File</div><div class="stat-num" style="font-size:32px;letter-spacing:1px;">&#10003;</div></div>
+
+    <div class="fade-in">
+      <div class="stat-num count" data-target="3">0</div>
+      <div class="stat-label">Main Modules</div>
+    </div>
+
+    <div class="fade-in">
+      <div class="stat-num count" data-target="10">0</div>
+      <div class="stat-label">Built-in Tools</div>
+    </div>
+
+    <div class="fade-in">
+      <div class="stat-label" style="font-size:15px;margin-bottom:6px;">No Admin Rights Needed</div>
+      <div class="stat-num" style="font-size:32px;letter-spacing:1px;">&#10003;</div>
+    </div>
+
+    <div class="fade-in">
+      <div class="stat-label" style="font-size:15px;margin-bottom:6px;">No Install — Run EXE File</div>
+      <div class="stat-num" style="font-size:32px;letter-spacing:1px;">&#10003;</div>
+    </div>
+
   </div>
 </div>
 
