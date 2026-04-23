@@ -70,6 +70,38 @@
   .feature-list li .wip{font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(232,98,10,0.15);color:var(--orange);font-weight:600;letter-spacing:0.5px;white-space:nowrap;flex-shrink:0;}
   .cta-section{background:var(--navy);text-align:center;padding:80px 5%;}
   
+  
+  .stats-section{
+  background:var(--navy);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:60px 5%;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:40px;
+  max-width:900px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:56px;
+  color:var(--orange);
+  letter-spacing:2px;
+  line-height:1;
+}
+
+.stat-label{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:6px;
+  text-transform:uppercase;
+}
+  
   /* ── FOOTER ── */
   footer {
     background: #070f18;
@@ -124,6 +156,29 @@
     <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">Follow on LinkedIn</a>
   </div>
 </div>
+
+<div class="stats-section">
+  <div class="stats-grid">
+
+    <div class="fade-in">
+      <div class="stat-num count" data-target="3">0</div>
+      <div class="stat-label">Main Modules</div>
+    </div>
+
+    <div class="fade-in">
+      <div class="stat-num count" data-target="20">0</div>
+      <div class="stat-label">Built-in Tools</div>
+    </div>
+
+    <div class="fade-in">
+      <div class="stat-label" style="font-size:15px;margin-bottom:6px;">No Switching Tools</div>
+      <div class="stat-num" style="font-size:32px;">&#10003;</div>
+    </div>
+
+  </div>
+</div>
+
+
 
 <section class="modules-section" id="features">
   <div class="fade-in" style="text-align:center;">
@@ -201,6 +256,50 @@
     <p style="margin-top:32px;font-size:13px;color:var(--muted);">By <strong style="color:var(--text)">Omar Adel Badawy</strong> — Business Intelligence Manager</p>
   </div>
 </section>
+
+<script>
+function toggleMenu(){
+ const m=document.getElementById('mobile-menu');
+ const h=document.getElementById('hamburger');
+ const open=m.style.display==='block';
+ m.style.display=open?'none':'block';
+ h.innerHTML=open?'&#9776;':'&#10005;';
+}
+
+function animateCount(el,target,duration=700){
+ let startTime=null;
+
+ function update(currentTime){
+   if(!startTime) startTime=currentTime;
+
+   const progress=Math.min((currentTime-startTime)/duration,1);
+   el.innerText=Math.floor(progress*target);
+
+   if(progress<1){
+     requestAnimationFrame(update);
+   }else{
+     el.innerText=target+(target===20?"+":"");
+   }
+ }
+
+ requestAnimationFrame(update);
+}
+
+const obs = new IntersectionObserver(entries=>{
+ entries.forEach(e=>{
+   if(e.isIntersecting){
+     e.target.classList.add('visible');
+
+     if(e.target.classList.contains('count') && !e.target.dataset.done){
+       e.target.dataset.done="1";
+       animateCount(e.target, parseInt(e.target.dataset.target));
+     }
+   }
+ });
+},{threshold:0.25});
+
+document.querySelectorAll('.fade-in,.count').forEach(el=>obs.observe(el));
+</script>
 
 <!-- FOOTER -->
 <footer>
