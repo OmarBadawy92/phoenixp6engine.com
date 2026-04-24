@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/jpeg" href="phoenix_logo.jpg">
-<title>About Omar Adel Badawy — Phoenix P6 Engine</title>
+<title>About Me — Omar Adel Badawy · Phoenix P6 Engine</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -36,7 +36,7 @@
   .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(232,98,10,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,98,10,0.04) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black,transparent);}
 
   .hero-photo-wrap{position:relative;z-index:1;flex-shrink:0;}
-  .hero-photo-ring{width:320px;height:320px;border-radius:50%;padding:4px;background:conic-gradient(from 0deg,var(--orange),var(--gold),var(--orange2),var(--orange));animation:spinRing 8s linear infinite;flex-shrink:0;}
+  .hero-photo-ring{width:320px;height:320px;border-radius:50%;padding:4px;background:conic-gradient(from 0deg,var(--orange),var(--gold),var(--orange2),var(--orange));flex-shrink:0;}
   @keyframes spinRing{to{transform:rotate(360deg);}}
   .hero-photo-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid var(--navy);}
   .hero-photo-inner img{width:100%;height:100%;object-fit:cover;object-position:top;}
@@ -159,7 +159,7 @@
     <li><a href="download.html">Download</a></li>
     <li><a href="excel-addin.html">Excel Add-in</a></li>
     <li><a href="powerbi.html">Power BI</a></li>
-    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="about.html" class="active">About Me</a></li>
   </ul>
   <a href="download.html" class="nav-back">Get the Tool</a>
   <button id="hamburger" onclick="toggleMenu()" style="display:none; background:none; border:1px solid var(--border); border-radius:4px; padding:6px 10px; cursor:pointer; color:var(--text); font-size:18px;">&#9776;</button>
@@ -169,7 +169,7 @@
   <a href="download.html" onclick="closeMenu()" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Download</a>
   <a href="excel-addin.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Excel Add-in</a>
   <a href="powerbi.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Power BI</a>
-  <a href="about.html" style="display:block;color:var(--orange);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;">About</a>
+  <a href="about.html" style="display:block;color:var(--orange);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;">About Me</a>
 </div>
 
 <!-- HERO -->
@@ -204,10 +204,10 @@
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stats-bar-grid">
-    <div class="fade-in"><div class="sbar-num">11+</div><div class="sbar-label">Years Experience</div></div>
-    <div class="fade-in"><div class="sbar-num">18.1B</div><div class="sbar-label">SAR Projects Managed</div></div>
-    <div class="fade-in"><div class="sbar-num">20+</div><div class="sbar-label">VBA Tools Built</div></div>
-    <div class="fade-in"><div class="sbar-num">3</div><div class="sbar-label">Certifications</div></div>
+    <div class="fade-in"><div class="sbar-num" data-target="11" data-suffix="+">0</div><div class="sbar-label">Years Experience</div></div>
+    <div class="fade-in"><div class="sbar-num" data-target="18.1" data-suffix="B">0</div><div class="sbar-label">SAR Projects Managed</div></div>
+    <div class="fade-in"><div class="sbar-num" data-target="20" data-suffix="+">0</div><div class="sbar-label">VBA Tools Built</div></div>
+    <div class="fade-in"><div class="sbar-num" data-target="3" data-suffix="">0</div><div class="sbar-label">Certifications</div></div>
   </div>
 </div>
 
@@ -297,7 +297,7 @@
   <div class="certs-grid">
     <div class="cert-card fade-in"><div class="cert-icon">🎓</div><div class="cert-title">B.Sc. Civil Engineering</div><div class="cert-sub">Future University in Egypt · 2014</div></div>
     <div class="cert-card fade-in"><div class="cert-icon">🏆</div><div class="cert-title">PMP® Certified</div><div class="cert-sub">Project Management Professional</div></div>
-    <div class="cert-card fade-in"><div class="cert-icon">🛡️</div><div class="cert-title">PMI-RMP® Certified</div><div class="cert-sub">Risk Management Professional</div></div>
+    <div class="cert-card fade-in"><div class="cert-icon">🏆</div><div class="cert-title">PMI-RMP® Certified</div><div class="cert-sub">Risk Management Professional</div></div>
     <div class="cert-card fade-in"><div class="cert-icon">🔧</div><div class="cert-title">Primavera P6 Expert</div><div class="cert-sub">Advanced Schema · XER · SQLite Integration</div></div>
   </div>
 </section>
@@ -313,8 +313,6 @@
     <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Invented unique systems to read, refine, and visualize P6 data through EPPM and local databases — eliminating manual extraction entirely.</div></div>
     <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Created 20+ Excel VBA tools that significantly improved planning productivity — now packaged as the Phoenix P6 Engine product suite.</div></div>
     <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Managed projects with total value of <strong style="color:var(--orange)">18.1+ Billion SAR / EGP</strong> across construction, infrastructure, entertainment, and commercial sectors.</div></div>
-    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Published original KPI methodologies (CEI, SPI Optimized) for schedule accuracy improvement through AACE International research.</div></div>
-    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Built Phoenix P6 Engine — a professional-grade toolset now used by planners to automate XER import, schedule analysis, and database management.</div></div>
   </div>
 </section>
 
@@ -335,6 +333,33 @@
 </footer>
 
 <script>
+// Animated counters
+function animateCounter(el) {
+  const target = el.dataset.target;
+  const isFloat = target.includes('.');
+  const suffix = el.dataset.suffix || '';
+  const prefix = el.dataset.prefix || '';
+  const num = parseFloat(target);
+  const duration = 1800;
+  const steps = 60;
+  const increment = num / steps;
+  let current = 0;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= num) { current = num; clearInterval(timer); }
+    el.textContent = prefix + (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
+  }, duration / steps);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = '1';
+      animateCounter(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.sbar-num[data-target]').forEach(el => counterObs.observe(el));
+
 function toggleMenu(){const m=document.getElementById('mobile-menu');const h=document.getElementById('hamburger');const open=m.style.display==='block';m.style.display=open?'none':'block';h.innerHTML=open?'&#9776;':'&#10005;';}
 function closeMenu(){document.getElementById('mobile-menu').style.display='none';document.getElementById('hamburger').innerHTML='&#9776;';}
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
