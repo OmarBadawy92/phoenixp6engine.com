@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/jpeg" href="phoenix_logo.jpg">
+<title>Download — Phoenix P6 Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0d1b2a;--navy2:#112236;
+    --orange:#e8620a;--orange2:#f07c2a;--gold:#f5a623;
+    --text:#e8eaf0;--muted:#8899aa;
+    --border:rgba(232,98,10,0.25);--card-bg:rgba(255,255,255,0.04);
+    --green:#1d9e75;--blue:#378add;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;background:rgba(13,27,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:44px;}
+  .nav-logo span{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff;}
+  .nav-logo em{color:var(--orange);font-style:normal;}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--orange);}
+  .nav-cta{background:var(--orange);color:#fff;padding:9px 22px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;transition:all 0.2s;}
+  .nav-cta:hover{background:var(--orange2);}
+  #hamburger{display:none;}
+
+  /* HERO */
+  .hero{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 5% 60px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(232,98,10,0.1),transparent);pointer-events:none;}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(232,98,10,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(232,98,10,0.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);}
+  .sec-label{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+  .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,6vw,72px);letter-spacing:3px;line-height:1.05;margin-bottom:16px;}
+  .sec-title span{color:var(--orange);}
+  .hero-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(15px,2vw,19px);font-weight:500;color:var(--muted);max-width:580px;letter-spacing:0.5px;margin-bottom:0;position:relative;z-index:1;}
+  .hero .sec-label,.hero .sec-title{position:relative;z-index:1;}
+
+  /* BUTTONS */
+  .btn-primary{background:var(--orange);color:#fff;padding:14px 32px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;text-decoration:none;letter-spacing:1px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,10,0.4);}
+  .btn-secondary{background:transparent;color:var(--text);padding:14px 32px;border-radius:4px;border:1px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:600;text-decoration:none;letter-spacing:1px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+  .btn-coming{background:rgba(255,255,255,0.04);color:var(--muted);padding:14px 32px;border-radius:4px;border:1px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:600;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px;cursor:not-allowed;}
+
+  /* DOWNLOAD CARDS */
+  .download-section{background:var(--navy2);padding:80px 5%;}
+  .download-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;max-width:900px;margin:48px auto 0;}
+
+  .dl-card{background:var(--card-bg);border-radius:12px;padding:36px 32px;position:relative;transition:all 0.25s;}
+  .dl-card.active{border:2px solid var(--orange);}
+  .dl-card.coming{border:1px solid var(--border);}
+  .dl-card:hover{transform:translateY(-3px);}
+
+  .dl-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 18px;border-radius:20px;white-space:nowrap;}
+  .dl-badge.live{background:var(--orange);color:#fff;}
+  .dl-badge.soon{background:rgba(55,138,221,0.2);border:1px solid var(--blue);color:var(--blue);}
+
+  .dl-logo{width:120px;height:120px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;}
+  .dl-logo img{width:100%;height:100%;object-fit:contain;}
+  .dl-name{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;text-align:center;margin-bottom:6px;}
+  .dl-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px;}
+  .dl-features{list-style:none;margin-bottom:28px;}
+  .dl-features li{font-size:14px;color:var(--muted);padding:6px 0 6px 20px;position:relative;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .dl-features li:last-child{border-bottom:none;}
+  .dl-features li::before{content:'›';position:absolute;left:0;color:var(--orange);}
+  .dl-action{text-align:center;}
+
+  /* COMPARISON TABLE */
+  .compare-section{background:var(--navy);padding:80px 5%;}
+  .compare-wrap{max-width:900px;margin:48px auto 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .compare-header{display:grid;grid-template-columns:2fr 1fr 1fr;background:var(--navy2);border-bottom:1px solid var(--border);}
+  .ch-cell{padding:16px 20px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  .ch-cell.feature{color:var(--muted);}
+  .ch-cell.exe{color:var(--orange);text-align:center;}
+  .ch-cell.excel{color:var(--blue);text-align:center;}
+
+  .compare-row{display:grid;grid-template-columns:2fr 1fr 1fr;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.2s;}
+  .compare-row:last-child{border-bottom:none;}
+  .compare-row:hover{background:rgba(255,255,255,0.03);}
+  .cr-cell{padding:14px 20px;font-size:14px;}
+  .cr-cell.feature{color:var(--text);}
+  .cr-cell.val{text-align:center;font-size:18px;}
+  .cr-cell.val.yes{color:var(--green);}
+  .cr-cell.val.no{color:#e24b4a;}
+  .cr-cell.val.soon{color:var(--blue);font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;}
+  .cr-cell.val.partial{color:var(--gold);font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;}
+  .compare-row.section-row{background:rgba(232,98,10,0.05);}
+  .compare-row.section-row .cr-cell{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);padding:10px 20px;}
+
+  /* PRICING */
+  .pricing-section{background:var(--navy2);padding:80px 5%;text-align:center;}
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:40px auto 0;}
+  .price-card{background:var(--card-bg);border-radius:12px;padding:36px 32px;position:relative;}
+  .price-card.featured{border:2px solid var(--orange);}
+  .price-card.standard{border:1px solid var(--border);}
+  .price-tag-pill{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 18px;border-radius:20px;white-space:nowrap;}
+  .price-type{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--orange);margin-bottom:12px;}
+  .price-type.company{color:var(--muted);}
+  .price-amount{display:flex;align-items:baseline;gap:10px;justify-content:center;margin-bottom:4px;}
+  .price-old{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);text-decoration:line-through;}
+  .price-new{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--orange);letter-spacing:2px;line-height:1;}
+  .price-custom{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--text);letter-spacing:2px;}
+  .price-period{font-size:13px;color:var(--muted);margin-bottom:24px;}
+  .price-features{list-style:none;margin-bottom:24px;text-align:left;}
+  .price-features li{font-size:14px;color:var(--text);padding:8px 0 8px 24px;position:relative;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .price-features li:last-child{border-bottom:none;}
+  .price-features li::before{content:'✓';position:absolute;left:0;color:var(--orange);}
+  .price-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+
+  /* GITHUB */
+  .github-section{background:var(--navy);padding:60px 5%;text-align:center;border-top:1px solid var(--border);}
+
+  /* FOOTER */
+  footer{background:#070f18;padding:32px 5%;text-align:center;border-top:1px solid var(--border);}
+  footer p{font-size:13px;color:var(--muted);}
+  footer a{color:var(--orange);text-decoration:none;}
+
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:768px){
+    #hamburger{display:block!important;}
+    .nav-cta{display:none;}
+    .nav-links{display:none!important;}
+    nav{padding:0 4%;}
+    .hero{padding:90px 4% 48px;min-height:unset!important;}
+    .download-section,.compare-section,.pricing-section,.github-section{padding:52px 4%;}
+    .download-grid,.pricing-grid{grid-template-columns:1fr;}
+    .compare-header,.compare-row{grid-template-columns:1.5fr 1fr 1fr;}
+    .ch-cell,.cr-cell{padding:10px 10px;font-size:12px;}
+    .price-btns{flex-direction:column;align-items:center;}
+    .btn-primary,.btn-secondary,.btn-coming{width:100%;max-width:300px;justify-content:center;}
+  }
+  @media(max-width:480px){
+    nav{height:58px;}
+    .hero{padding-top:78px;}
+    .compare-header,.compare-row{grid-template-columns:1.2fr 1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+    <span>PHOENIX <em>P6 ENGINE</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">P6 Engine</a></li>
+    <li><a href="download.html" class="active">Download</a></li>
+    <li><a href="excel-addin.html">Excel Add-in</a></li>
+    <li><a href="powerbi.html">Power BI</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Get License</a>
+  <button id="hamburger" onclick="toggleMenu()" style="display:none; background:none; border:1px solid var(--border); border-radius:4px; padding:6px 10px; cursor:pointer; color:var(--text); font-size:18px;">&#9776;</button>
+</nav>
+<div id="mobile-menu" style="display:none; position:fixed; top:58px; left:0; right:0; z-index:99; background:rgba(13,27,42,0.98); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:16px 5%;">
+  <a href="index.html" onclick="closeMenu()" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">P6 Engine</a>
+  <a href="download.html" style="display:block;color:var(--orange);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Download</a>
+  <a href="excel-addin.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Excel Add-in</a>
+  <a href="powerbi.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Power BI</a>
+  <a href="about.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;">About</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="grid-bg"></div>
+  <div class="sec-label fade-in">Get Phoenix P6 Engine</div>
+  <h1 class="sec-title fade-in">DOWNLOAD &amp;<br><span>LICENSING</span></h1>
+  <p class="hero-sub fade-in">Choose your version — the standalone EXE tool available now, or the Excel Add-in coming soon. Compare features and pick the right fit for your workflow.</p>
+</div>
+
+<!-- DOWNLOAD CARDS -->
+<section class="download-section" id="tools">
+  <div class="fade-in" style="text-align:center;">
+    <div class="sec-label">Available Versions</div>
+    <h2 class="sec-title" style="font-size:clamp(28px,4vw,48px);">CHOOSE YOUR <span>TOOL</span></h2>
+  </div>
+  <div class="download-grid">
+
+    <!-- EXE Tool -->
+    <div class="dl-card active fade-in">
+      <div class="dl-badge live">&#128293; AVAILABLE NOW</div>
+      <div class="dl-logo"><img src="phoenix_logo.jpg" alt="Phoenix P6 Engine EXE"></div>
+      <div class="dl-name">Phoenix P6 Engine</div>
+      <div class="dl-sub">Standalone Windows EXE · No Installation Required</div>
+      <ul class="dl-features">
+        <li>3 modules: Ultra Fast Import, Core Tools, Database Tweaks</li>
+        <li>10+ tools — XER import, OOS solver, split activities & more</li>
+        <li>Works directly on XER files & SQLite databases</li>
+        <li>No admin rights · No dependencies · Single EXE file</li>
+        <li>Works on any Windows PC — office, site, or home</li>
+      </ul>
+      <div class="dl-action">
+        <a href="https://github.com/OmarBadawy92/SQLLITE_DATABASE_ULTRA_FAST_IMPORT_P6/releases/tag/v1.1" class="btn-primary" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Download v1.1
+        </a>
+      </div>
+    </div>
+
+    <!-- Excel Add-in -->
+    <div class="dl-card coming fade-in">
+      <div class="dl-badge soon">⏳ COMING SOON</div>
+      <div class="dl-logo"><img src="phoenix_excel_logo.png" alt="Phoenix P6 Engine Excel Add-in"></div>
+      <div class="dl-name">Excel Add-in</div>
+      <div class="dl-sub">Microsoft Excel Add-in · Runs Inside Excel</div>
+      <ul class="dl-features">
+        <li>Phoenix Utilities — Gantt, WBS, PMS, Resources & more</li>
+        <li>Phoenix Analysis — OOS, Schedule Comparison, Eagle Eye</li>
+        <li>Phoenix Database — Rollback, Reset, Copy Templates</li>
+        <li>Works directly inside your Excel ribbon</li>
+        <li>Advanced compiled engine — no macros needed</li>
+      </ul>
+      <div class="dl-action">
+        <div class="btn-coming">⏳ Coming Soon</div>
+        <div style="margin-top:12px;">
+          <a href="https://wa.me/201114422615" target="_blank" style="font-size:13px;color:var(--orange);text-decoration:none;">Notify me when available →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="compare-section" id="compare">
+  <div class="fade-in" style="text-align:center;">
+    <div class="sec-label">Feature Comparison</div>
+    <h2 class="sec-title" style="font-size:clamp(28px,4vw,48px);">EXE vs <span>EXCEL ADD-IN</span></h2>
+  </div>
+  <div class="compare-wrap fade-in">
+    <div class="compare-header">
+      <div class="ch-cell feature">Feature</div>
+      <div class="ch-cell exe">🖥️ EXE Tool</div>
+      <div class="ch-cell excel">📊 Excel Add-in</div>
+    </div>
+
+    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">General</div></div>
+    <div class="compare-row"><div class="cr-cell feature">No Installation Required</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">No Admin Rights</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Works on Any Windows PC</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Requires Microsoft Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Standalone — No Dependencies</div><div class="cr-cell val yes">✓</div><div class="cr-cell val no">✗</div></div>
+
+    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Import & Database</div></div>
+    <div class="compare-row"><div class="cr-cell feature">XER File Import to SQLite</div><div class="cr-cell val yes">✓</div><div class="cr-cell val soon">SOON</div></div>
+    <div class="compare-row"><div class="cr-cell feature">DB → DB Project Copy</div><div class="cr-cell val yes">✓</div><div class="cr-cell val soon">SOON</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Assign / Unassign Baseline</div><div class="cr-cell val yes">✓</div><div class="cr-cell val soon">SOON</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Rollback Database Version</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Reset Password</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Delete Shared Mode</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+
+    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Schedule Tools</div></div>
+    <div class="compare-row"><div class="cr-cell feature">OOS Detector & Solver</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Split In-Progress Activities</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Remove Resource Assignments</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Schedule Comparison</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Eagle Eye Baseline Analysis</div><div class="cr-cell val no">✗</div><div class="cr-cell val partial">IN PROGRESS</div></div>
+
+    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Excel & Reporting</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Draw Gantt Chart in Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">WBS Generation in Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Color & Group P6 Style</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">PMS Sheet (Progress Measurement)</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Calendar View in Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+    <div class="compare-row"><div class="cr-cell feature">XER Data Import into Excel Sheet</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+
+    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Availability</div></div>
+    <div class="compare-row"><div class="cr-cell feature">Current Status</div><div class="cr-cell val" style="color:var(--green);font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:700;">AVAILABLE v1.1</div><div class="cr-cell val soon">COMING SOON</div></div>
+    <div class="compare-row"><div class="cr-cell feature">License Price</div><div class="cr-cell val" style="color:var(--orange);font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:700;">$10.7/yr</div><div class="cr-cell val soon">TBA</div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="fade-in">
+    <div class="sec-label">Licensing</div>
+    <h2 class="sec-title" style="font-size:clamp(28px,4vw,52px);">READY TO POWER UP<br><span>YOUR P6 WORKFLOW?</span></h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card featured fade-in">
+      <div class="price-tag-pill">&#128293; LIMITED OFFER</div>
+      <div class="price-type">INDIVIDUAL LICENSE</div>
+      <div class="price-amount"><span class="price-old">$20</span><span class="price-new">$10.7</span></div>
+      <div class="price-period">per year · up to 2 devices</div>
+      <ul class="price-features">
+        <li>Full access to all 3 modules & 10+ tools</li>
+        <li>1-year license — 2 devices covered</li>
+        <li>Free updates during license period</li>
+        <li>No admin rights needed on any device</li>
+      </ul>
+      <div class="price-btns">
+        <a href="https://wa.me/201114422615" class="btn-primary" target="_blank" style="font-size:14px;padding:11px 22px;">&#128172; WhatsApp</a>
+        <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank" style="font-size:14px;padding:11px 22px;">LinkedIn</a>
+      </div>
+    </div>
+    <div class="price-card standard fade-in">
+      <div class="price-type company">COMPANY LICENSE</div>
+      <div class="price-amount" style="justify-content:center;"><span class="price-custom">Custom Pricing</span></div>
+      <div class="price-period">per year · team & multi-device</div>
+      <ul class="price-features">
+        <li>Unlimited devices within your company</li>
+        <li>Priority support & onboarding</li>
+        <li>Custom feature requests considered</li>
+        <li>Volume discount for large teams</li>
+      </ul>
+      <div class="price-btns">
+        <a href="https://wa.me/201114422615" class="btn-primary" target="_blank" style="font-size:14px;padding:11px 22px;">&#128172; Get a Quote</a>
+        <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank" style="font-size:14px;padding:11px 22px;">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GITHUB -->
+<section class="github-section">
+  <div class="fade-in">
+    <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">Try before you buy — download the latest release on GitHub:</p>
+    <a href="https://github.com/OmarBadawy92/SQLLITE_DATABASE_ULTRA_FAST_IMPORT_P6/releases/tag/v1.1" class="btn-secondary" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      Download v1.1 on GitHub
+    </a>
+    <p style="margin-top:28px;font-size:13px;color:var(--muted);">By <strong style="color:var(--text)">Omar Adel Badawy</strong> — Business Intelligence Manager</p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Phoenix P6 Engine — Built by <a href="mailto:Omarbadawy92@gmail.com">Omar Adel Badawy</a></p>
+</footer>
+
+<script>
+function toggleMenu(){const m=document.getElementById('mobile-menu');const h=document.getElementById('hamburger');const open=m.style.display==='block';m.style.display=open?'none':'block';h.innerHTML=open?'&#9776;':'&#10005;';}
+function closeMenu(){document.getElementById('mobile-menu').style.display='none';document.getElementById('hamburger').innerHTML='&#9776;';}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

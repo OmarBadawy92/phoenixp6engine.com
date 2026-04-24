@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/jpeg" href="phoenix_logo.jpg">
+<title>About Omar Adel Badawy — Phoenix P6 Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0d1b2a; --navy2:#112236; --navy3:#0a1520;
+    --orange:#e8620a; --orange2:#f07c2a; --gold:#f5a623;
+    --text:#e8eaf0; --muted:#8899aa; --muted2:#6677889;
+    --border:rgba(232,98,10,0.22); --card-bg:rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;background:rgba(13,27,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:44px;}
+  .nav-logo span{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff;}
+  .nav-logo em{color:var(--orange);font-style:normal;}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--orange);}
+  .nav-back{background:var(--orange);color:#fff;padding:9px 22px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;transition:all 0.2s;}
+  .nav-back:hover{background:var(--orange2);}
+  #hamburger{display:none;background:none;border:1px solid var(--border);border-radius:4px;padding:6px 10px;cursor:pointer;color:var(--text);font-size:18px;}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden;gap:60px;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 30% 50%,rgba(232,98,10,0.09),transparent);pointer-events:none;}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(232,98,10,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,98,10,0.04) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black,transparent);}
+
+  .hero-photo-wrap{position:relative;z-index:1;flex-shrink:0;}
+  .hero-photo-ring{width:320px;height:320px;border-radius:50%;padding:4px;background:conic-gradient(from 0deg,var(--orange),var(--gold),var(--orange2),var(--orange));animation:spinRing 8s linear infinite;flex-shrink:0;}
+  @keyframes spinRing{to{transform:rotate(360deg);}}
+  .hero-photo-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid var(--navy);}
+  .hero-photo-inner img{width:100%;height:100%;object-fit:cover;object-position:top;}
+
+  .hero-text{position:relative;z-index:1;max-width:600px;}
+  .hero-tag{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+  .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);letter-spacing:3px;line-height:1;margin-bottom:8px;}
+  .hero-name span{color:var(--orange);}
+  .hero-title{font-family:'Rajdhani',sans-serif;font-size:clamp(16px,2vw,22px);font-weight:600;color:var(--gold);letter-spacing:1px;margin-bottom:20px;}
+  .hero-tagline{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:32px;font-style:italic;border-left:3px solid var(--orange);padding-left:16px;}
+  .hero-desc{font-size:15px;color:var(--text);line-height:1.8;margin-bottom:36px;opacity:0.85;}
+  .hero-contacts{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px;}
+  .contact-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);text-decoration:none;transition:all 0.2s;}
+  .contact-pill:hover{border-color:var(--orange);color:var(--orange);}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn-primary{background:var(--orange);color:#fff;padding:13px 28px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;text-decoration:none;letter-spacing:1px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,10,0.4);}
+  .btn-secondary{background:transparent;color:var(--text);padding:13px 28px;border-radius:4px;border:1px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;transition:all 0.2s;}
+  .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
+  /* STATS BAR */
+  .stats-bar{background:var(--navy2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 5%;}
+  .stats-bar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:24px;max-width:900px;margin:0 auto;text-align:center;}
+  .sbar-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--orange);line-height:1;letter-spacing:2px;}
+  .sbar-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+
+  /* SECTIONS */
+  section{padding:80px 5%;}
+  .sec-label{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;}
+  .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,52px);letter-spacing:2px;line-height:1.1;margin-bottom:32px;}
+  .sec-title span{color:var(--orange);}
+
+  /* TIMELINE */
+  .timeline-section{background:var(--navy);}
+  .timeline{position:relative;padding-left:40px;}
+  .timeline::before{content:'';position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--orange),rgba(232,98,10,0.1));}
+  .tl-item{position:relative;margin-bottom:36px;}
+  .tl-dot{position:absolute;left:-36px;top:6px;width:16px;height:16px;border-radius:50%;border:2px solid var(--orange);background:var(--navy);z-index:1;}
+  .tl-dot.current{background:var(--orange);box-shadow:0 0 12px rgba(232,98,10,0.6);}
+  .tl-date{font-size:12px;color:var(--orange);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+  .tl-role{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:2px;}
+  .tl-company{font-size:14px;color:var(--gold);font-weight:500;margin-bottom:6px;}
+  .tl-location{font-size:12px;color:var(--muted);margin-bottom:8px;}
+  .tl-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+  .tl-value{display:inline-block;background:rgba(232,98,10,0.1);border:1px solid var(--border);border-radius:4px;padding:3px 10px;font-size:12px;color:var(--orange);margin-top:6px;}
+
+  /* EXPERTISE GRID */
+  .expertise-section{background:var(--navy2);}
+  .expertise-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .exp-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:24px;transition:all 0.25s;position:relative;overflow:hidden;}
+  .exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--gold));opacity:0;transition:opacity 0.25s;}
+  .exp-card:hover{transform:translateY(-3px);border-color:rgba(232,98,10,0.4);}
+  .exp-card:hover::before{opacity:1;}
+  .exp-icon{font-size:28px;margin-bottom:14px;}
+  .exp-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .exp-sub{font-size:13px;color:var(--muted);}
+
+  /* CERTS */
+  .certs-section{background:var(--navy);}
+  .certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+  .cert-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;transition:all 0.25s;}
+  .cert-card:hover{border-color:rgba(232,98,10,0.4);transform:translateY(-3px);}
+  .cert-icon{font-size:36px;margin-bottom:12px;}
+  .cert-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+  .cert-sub{font-size:12px;color:var(--muted);}
+
+  /* HIGHLIGHTS */
+  .highlights-section{background:var(--navy2);}
+  .highlights-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+  .hl-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:24px;display:flex;gap:16px;align-items:flex-start;transition:all 0.2s;}
+  .hl-card:hover{border-color:rgba(232,98,10,0.4);}
+  .hl-star{color:var(--gold);font-size:20px;flex-shrink:0;margin-top:2px;}
+  .hl-text{font-size:14px;color:var(--muted);line-height:1.6;}
+
+  /* CTA */
+  .cta-section{background:var(--navy);text-align:center;padding:80px 5%;position:relative;overflow:hidden;}
+  .cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(232,98,10,0.08),transparent);}
+  .cta-section *{position:relative;z-index:1;}
+
+  /* FOOTER */
+  footer{background:#070f18;padding:32px 5%;text-align:center;border-top:1px solid var(--border);}
+  footer p{font-size:13px;color:var(--muted);}
+  footer a{color:var(--orange);text-decoration:none;}
+
+  /* ANIMATIONS */
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  /* MOBILE */
+  @media(max-width:768px){
+    #hamburger{display:block!important;}
+    .nav-back{display:none;}
+    .nav-links{display:none!important;}
+    .hero{flex-direction:column;text-align:center;padding:90px 4% 48px;gap:36px;min-height:unset!important;}
+    .hero-photo-ring{width:200px;height:200px;}
+    .hero-tagline{text-align:left;}
+    .hero-contacts{justify-content:center;}
+    .hero-btns{justify-content:center;flex-direction:column;align-items:center;}
+    .btn-primary,.btn-secondary{width:100%;max-width:300px;justify-content:center;}
+    .stats-bar-grid{grid-template-columns:repeat(2,1fr);}
+    section{padding:52px 4%;}
+    .timeline{padding-left:28px;}
+    .expertise-grid,.highlights-grid,.certs-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:480px){
+    nav{height:58px;}
+    .hero{padding-top:78px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+    <span>PHOENIX <em>P6 ENGINE</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">P6 Engine</a></li>
+    <li><a href="download.html">Download</a></li>
+    <li><a href="excel-addin.html">Excel Add-in</a></li>
+    <li><a href="powerbi.html">Power BI</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <a href="download.html" class="nav-back">Get the Tool</a>
+  <button id="hamburger" onclick="toggleMenu()" style="display:none; background:none; border:1px solid var(--border); border-radius:4px; padding:6px 10px; cursor:pointer; color:var(--text); font-size:18px;">&#9776;</button>
+</nav>
+<div id="mobile-menu" style="display:none; position:fixed; top:58px; left:0; right:0; z-index:99; background:rgba(13,27,42,0.98); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:16px 5%;">
+  <a href="index.html" onclick="closeMenu()" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">P6 Engine</a>
+  <a href="download.html" onclick="closeMenu()" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Download</a>
+  <a href="excel-addin.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Excel Add-in</a>
+  <a href="powerbi.html" style="display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);">Power BI</a>
+  <a href="about.html" style="display:block;color:var(--orange);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;">About</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-photo-wrap fade-in">
+    <div class="hero-photo-ring">
+      <div class="hero-photo-inner">
+        <img src="omar_photo.png" alt="Omar Adel Badawy">
+      </div>
+    </div>
+  </div>
+  <div class="hero-text fade-in">
+    <div class="hero-tag">Planning Manager · Business Intelligence Manager</div>
+    <h1 class="hero-name">OMAR <span>ADEL</span><br>BADAWY</h1>
+    <div class="hero-title">Turning Plans into Performance. Data into Decisions. Vision into Value.</div>
+    <p class="hero-tagline">"I don't just build schedules — I build systems that make schedules work."</p>
+    <p class="hero-desc">Results-driven Planning & Business Intelligence professional with 11+ years of experience across large-scale construction and development projects. Expert in Primavera P6, Power BI, EPPM, and data automation — building smart tools, insightful dashboards, and high-performing teams that drive strategic execution and measurable results.</p>
+    <div class="hero-contacts">
+      <a href="tel:+966538090796" class="contact-pill">📞 +966 538 090 796</a>
+      <a href="mailto:Omarbadawy92@gmail.com" class="contact-pill">✉️ Omarbadawy92@gmail.com</a>
+      <span class="contact-pill">📍 Riyadh, KSA</span>
+      <span class="contact-pill">🇪🇬 Egyptian</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-primary" target="_blank">LinkedIn Profile</a>
+      <a href="https://wa.me/201114422615" class="btn-secondary" target="_blank">&#128172; WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-grid">
+    <div class="fade-in"><div class="sbar-num">11+</div><div class="sbar-label">Years Experience</div></div>
+    <div class="fade-in"><div class="sbar-num">18.1B</div><div class="sbar-label">SAR Projects Managed</div></div>
+    <div class="fade-in"><div class="sbar-num">20+</div><div class="sbar-label">VBA Tools Built</div></div>
+    <div class="fade-in"><div class="sbar-num">3</div><div class="sbar-label">Certifications</div></div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="journey">
+  <div class="fade-in">
+    <div class="sec-label">Career Journey</div>
+    <h2 class="sec-title">MY <span>EXPERIENCE</span></h2>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item fade-in">
+      <div class="tl-dot current"></div>
+      <div class="tl-date">Dec 2023 — Present</div>
+      <div class="tl-role">EPPM Executive</div>
+      <div class="tl-company">UCC Holding</div>
+      <div class="tl-location">📍 Riyadh, KSA &nbsp;·&nbsp; Entertainment & Administrative Projects</div>
+      <div class="tl-desc">Overseeing enterprise project portfolio management using SAP & Power BI. Built centralized dashboards and streamlined EPPM processes to enhance visibility, agility, and strategic decision-making.</div>
+      <span class="tl-value">Portfolio Value: 15.6 Billion SAR</span>
+    </div>
+
+    <div class="tl-item fade-in">
+      <div class="tl-dot"></div>
+      <div class="tl-date">May 2022 — Nov 2023</div>
+      <div class="tl-role">Planning Team Leader Engineer</div>
+      <div class="tl-company">EDECS</div>
+      <div class="tl-location">📍 Cairo, Egypt &nbsp;·&nbsp; Bridges & Seaports</div>
+      <div class="tl-desc">Led planning team, developed smart tools integrated with Primavera, automated data collection, and delivered insightful dashboards and reports for executive decision-making.</div>
+      <span class="tl-value">Portfolio Value: 2 Billion EGP</span>
+    </div>
+
+    <div class="tl-item fade-in">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Feb 2021 — Apr 2022</div>
+      <div class="tl-role">Planning Team Leader Engineer</div>
+      <div class="tl-company">MH Group</div>
+      <div class="tl-location">📍 Cairo, Egypt &nbsp;·&nbsp; Commercial & Administrative Buildings</div>
+      <div class="tl-desc">Directed planning activities, automated reporting systems, and monitored project performance using KPI-driven dashboards and Power BI.</div>
+      <span class="tl-value">Portfolio Value: 600 Million EGP</span>
+    </div>
+
+    <div class="tl-item fade-in">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Mar 2017 — Jan 2021</div>
+      <div class="tl-role">Senior Project Control Engineer</div>
+      <div class="tl-company">Palm Construction</div>
+      <div class="tl-location">📍 Cairo, Egypt &nbsp;·&nbsp; Commercial & Administrative Buildings</div>
+      <div class="tl-desc">Managed schedules, cost control, and earned value analysis. Prepared cost reports, S-curves, histograms, and quarterly dashboards. Supported financial reporting and project performance analysis.</div>
+      <span class="tl-value">Portfolio Value: 400 Million EGP</span>
+    </div>
+
+    <div class="tl-item fade-in">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Jan 2016 — Mar 2017</div>
+      <div class="tl-role">Planning Engineer</div>
+      <div class="tl-company">BIC for Construction</div>
+      <div class="tl-location">📍 Cairo, Egypt &nbsp;·&nbsp; Administrative Buildings</div>
+      <div class="tl-desc">Prepared schedules, tracked progress, and maintained cost control sheets. Participated in meetings and coordinated with site teams to ensure timely project delivery.</div>
+      <span class="tl-value">Portfolio Value: 126 Million EGP</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise-section" id="expertise">
+  <div class="fade-in">
+    <div class="sec-label">Professional Expertise</div>
+    <h2 class="sec-title">CORE <span>SKILLS</span></h2>
+  </div>
+  <div class="expertise-grid">
+    <div class="exp-card fade-in"><div class="exp-icon">📅</div><div class="exp-title">Project Planning & Scheduling</div><div class="exp-sub">Primavera P6 · DCMA 14-Point Assessment · Baseline Management</div></div>
+    <div class="exp-card fade-in"><div class="exp-icon">📊</div><div class="exp-title">Business Intelligence & Dashboards</div><div class="exp-sub">Power BI · Excel · Smart Dashboards · Real-time Analytics</div></div>
+    <div class="exp-card fade-in"><div class="exp-icon">💰</div><div class="exp-title">Cost Control & Earned Value</div><div class="exp-sub">EVM · Cash Flow · Budget vs Actual · S-Curves & Histograms</div></div>
+    <div class="exp-card fade-in"><div class="exp-icon">🏢</div><div class="exp-title">EPPM & Portfolio Management</div><div class="exp-sub">SAP · Centralized Processes · Lifecycle Management · Multi-project</div></div>
+    <div class="exp-card fade-in"><div class="exp-icon">⚡</div><div class="exp-title">Data Automation & Excel VBA</div><div class="exp-sub">20+ Custom Tools · Workflow Automation · P6 Schema Integration</div></div>
+    <div class="exp-card fade-in"><div class="exp-icon">👥</div><div class="exp-title">Leadership & Team Management</div><div class="exp-sub">Leading Planning Teams · Driving Performance · Mentoring Engineers</div></div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs-section">
+  <div class="fade-in">
+    <div class="sec-label">Education & Credentials</div>
+    <h2 class="sec-title">CERTIFICATIONS & <span>EDUCATION</span></h2>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card fade-in"><div class="cert-icon">🎓</div><div class="cert-title">B.Sc. Civil Engineering</div><div class="cert-sub">Future University in Egypt · 2014</div></div>
+    <div class="cert-card fade-in"><div class="cert-icon">🏆</div><div class="cert-title">PMP® Certified</div><div class="cert-sub">Project Management Professional</div></div>
+    <div class="cert-card fade-in"><div class="cert-icon">🛡️</div><div class="cert-title">PMI-RMP® Certified</div><div class="cert-sub">Risk Management Professional</div></div>
+    <div class="cert-card fade-in"><div class="cert-icon">🔧</div><div class="cert-title">Primavera P6 Expert</div><div class="cert-sub">Advanced Schema · XER · SQLite Integration</div></div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights-section">
+  <div class="fade-in">
+    <div class="sec-label">Career Highlights</div>
+    <h2 class="sec-title">KEY <span>ACHIEVEMENTS</span></h2>
+  </div>
+  <div class="highlights-grid">
+    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Developed enterprise dashboards connecting all departments and projects with real-time insights — used at portfolio level across billion-SAR programs.</div></div>
+    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Invented unique systems to read, refine, and visualize P6 data through EPPM and local databases — eliminating manual extraction entirely.</div></div>
+    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Created 20+ Excel VBA tools that significantly improved planning productivity — now packaged as the Phoenix P6 Engine product suite.</div></div>
+    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Managed projects with total value of <strong style="color:var(--orange)">18.1+ Billion SAR / EGP</strong> across construction, infrastructure, entertainment, and commercial sectors.</div></div>
+    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Published original KPI methodologies (CEI, SPI Optimized) for schedule accuracy improvement through AACE International research.</div></div>
+    <div class="hl-card fade-in"><div class="hl-star">★</div><div class="hl-text">Built Phoenix P6 Engine — a professional-grade toolset now used by planners to automate XER import, schedule analysis, and database management.</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="sec-label fade-in">Let's Connect</div>
+  <h2 class="sec-title fade-in" style="font-size:clamp(32px,5vw,56px);">WANT TO WORK<br><span>TOGETHER?</span></h2>
+  <p class="fade-in" style="color:var(--muted);font-size:16px;max-width:500px;margin:16px auto 36px;line-height:1.7;">Whether it's a project controls challenge, a Power BI dashboard, or a P6 automation need — reach out and let's build something great.</p>
+  <div class="fade-in" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+    <a href="https://wa.me/201114422615" class="btn-primary" target="_blank">&#128172; WhatsApp Omar</a>
+    <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">LinkedIn Profile</a>
+  </div>
+  <p class="fade-in" style="margin-top:32px;font-size:13px;color:var(--muted);">By <strong style="color:var(--text)">Omar Adel Badawy</strong> — Business Intelligence Manager · PMP · PMI-RMP</p>
+</section>
+
+<footer>
+  <p>&copy; 2025 Phoenix P6 Engine — Built by <a href="mailto:Omarbadawy92@gmail.com">Omar Adel Badawy</a></p>
+</footer>
+
+<script>
+function toggleMenu(){const m=document.getElementById('mobile-menu');const h=document.getElementById('hamburger');const open=m.style.display==='block';m.style.display=open?'none':'block';h.innerHTML=open?'&#9776;':'&#10005;';}
+function closeMenu(){document.getElementById('mobile-menu').style.display='none';document.getElementById('hamburger').innerHTML='&#9776;';}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
