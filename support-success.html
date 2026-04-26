@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="phoenix_excel_logo.png">
+<title>Support Request Sent — Phoenix P6 Engine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --navy:#0d1b2a;
+  --navy2:#112236;
+  --orange:#e8620a;
+  --text:#e8eaf0;
+  --muted:#8899aa;
+  --border:rgba(232,98,10,0.25);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:var(--navy);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  text-align:center;
+  padding:40px;
+}
+
+.card{
+  max-width:650px;
+  background:var(--navy2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:40px 30px;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--orange),#f07c2a);
+}
+
+.logo{
+  height:60px;
+  margin-bottom:20px;
+  opacity:0.9;
+}
+
+h1{
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:2px;
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+.sub{
+  color:var(--muted);
+  margin-bottom:25px;
+  font-size:15px;
+}
+
+.ticket{
+  display:inline-block;
+  background:rgba(232,98,10,0.15);
+  border:1px solid var(--orange);
+  padding:12px 20px;
+  border-radius:8px;
+  color:var(--orange);
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:25px;
+  font-family:'Rajdhani';
+  font-size:20px;
+}
+
+.info{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:30px;
+}
+
+.btn{
+  display:inline-block;
+  background:var(--orange);
+  color:#fff;
+  text-decoration:none;
+  padding:14px 28px;
+  border-radius:8px;
+  font-weight:700;
+  letter-spacing:1px;
+  transition:0.2s;
+}
+
+.btn:hover{
+  background:#f07c2a;
+  transform:translateY(-2px);
+}
+
+.small{
+  margin-top:20px;
+  font-size:12px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <img src="phoenix_logo.jpg" class="logo" alt="Phoenix">
+
+  <h1>REQUEST RECEIVED</h1>
+
+  <div class="sub">
+    Your support request has been successfully submitted.
+  </div>
+
+  <div class="ticket" id="ticketBox">
+    PX-XXXXXX
+  </div>
+
+  <div class="info">
+    ✔ A confirmation email has been sent to your inbox<br>
+    ✔ Our team will respond within 24–48 business hours<br>
+    ✔ Keep your Ticket ID for future reference
+  </div>
+
+  <a href="support.html" class="btn">Back to Support</a>
+
+  <div class="small">
+    Phoenix P6 Engine Support System
+  </div>
+
+</div>
+
+<script>
+// Optional: show ticket if passed in URL ?ticket=PX-123456
+const params = new URLSearchParams(window.location.search);
+const ticket = params.get("ticket");
+
+if(ticket){
+  document.getElementById("ticketBox").textContent = ticket;
+}
+</script>
+
+</body>
+</html>
