@@ -53,7 +53,7 @@
   .form-full{grid-column:1/-1;}
   
   label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;}
-  input,select,textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+  input,select,textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--orange); /* BLACK TEXT */;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
   input:focus,select:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,98,10,0.15);}
   textarea{min-height:140px;resize:vertical;line-height:1.5;}
   
@@ -126,6 +126,7 @@
     <li><a href="download.html">Download</a></li>
     <li><a href="excel-addin.html">Excel Add-in</a></li>
     <li><a href="powerbi.html">Power BI Services</a></li>
+    <li><a href="support.html">Support</a></li>
     <li><a href="about.html">About Me</a></li>
   </ul>
   <a href="download.html" class="nav-back nav-back-desk" style="background:var(--orange);color:#fff;border:none;">Get the Tool</a>
@@ -138,8 +139,8 @@
   <a href="download.html">Download</a>
   <a href="excel-addin.html">Excel Add-in</a>
   <a href="powerbi.html">Power BI Services</a>
-  <a href="about.html">About Me</a>
   <a href="support.html" class="active" style="color:var(--orange);">Support</a>
+    <a href="about.html">About Me</a>
 </div>
 
 <!-- HERO HEADER -->
@@ -170,11 +171,11 @@
       <div class="form-grid">
         <div>
           <label for="name">Your Name *</label>
-          <input type="text" id="name" name="name" placeholder="Someone" required>
+          <input type="text" id="name" name="name" placeholder="<Your Name>" required>
         </div>
         <div>
           <label for="email">Email Address *</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          <input type="email" id="email" name="email" placeholder="<you@example.com>" required>
         </div>
       </div>
 
@@ -182,17 +183,16 @@
         <label for="type">Request Type *</label>
         <select id="type" name="type" required>
           <option value="" disabled selected>Select a request type...</option>
-          <option value="Enhancement Request">✨ Enhancement Request</option>
           <option value="Bug Report">🐛 Bug Report</option>
-          <option value="General Question">❓ General Question</option>
+          <option value="Enhancement Request">✨ Enhancement Request</option>
           <option value="Feature Suggestion">💡 Feature Suggestion</option>
-          <option value="Technical Issue">⚙️ Technical Issue</option>
+          <option value="General Question">❓ General Question</option>
         </select>
       </div>
 
       <div class="form-full">
         <label for="message">Your Message *</label>
-        <textarea id="message" name="message" placeholder="Describe your request in detail. Include steps to reproduce for bugs, or specifics for enhancements..." required></textarea>
+        <textarea id="message" name="message" placeholder="<Describe your request in detail...>" required></textarea>
       </div>
 
       <div class="form-full">
@@ -254,6 +254,8 @@ function toggleMenu(){
   menu.style.display = isOpen ? 'none' : 'block';
   btn.innerHTML = isOpen ? '&#9776;' : '&#10005;';
 }
+
+
 
 // File Upload Label Update
 function updateFileName(input){
