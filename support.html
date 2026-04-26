@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix P6 Engine — Support</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:#0d1b2a;
+  --navy2:#112236;
+  --orange:#e8620a;
+  --text:#e8eaf0;
+  --muted:#8899aa;
+  --border:rgba(232,98,10,0.25);
+}
+
+body {
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+}
+
+nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 5%;
+  border-bottom:1px solid var(--border);
+  background:rgba(13,27,42,0.95);
+}
+
+.logo {
+  font-family:'Bebas Neue';
+  font-size:22px;
+  letter-spacing:2px;
+}
+
+.logo span { color:var(--orange); }
+
+.container {
+  max-width:900px;
+  margin:80px auto;
+  padding:0 5%;
+}
+
+h1 {
+  font-family:'Bebas Neue';
+  font-size:56px;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+h1 span { color:var(--orange); }
+
+p {
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.card {
+  margin-top:30px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:30px;
+}
+
+input, select, textarea {
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  margin-bottom:14px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:6px;
+  color:var(--text);
+  outline:none;
+}
+
+button {
+  width:100%;
+  padding:14px;
+  background:var(--orange);
+  border:none;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  border-radius:6px;
+  font-family:'Rajdhani';
+  letter-spacing:1px;
+}
+
+button:hover {
+  background:#f07c2a;
+}
+
+.back {
+  color:var(--muted);
+  text-decoration:none;
+  font-size:13px;
+}
+
+.back:hover { color:var(--orange); }
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">PHOENIX <span>P6 ENGINE</span></div>
+  <a class="back" href="index.html">← Back to Home</a>
+</nav>
+
+<div class="container">
+
+  <h1>SUPPORT & <span>FEEDBACK</span></h1>
+  <p>
+    Send bug reports, enhancement ideas, or general questions about Phoenix P6 Engine.
+    We actively improve the tool based on your feedback.
+  </p>
+
+  <div class="card">
+
+<form id="supportForm"
+      action="https://formsubmit.co/support@phoenixp6engine.com"
+      method="POST"
+      enctype="multipart/form-data">
+
+  <!-- Disable captcha -->
+  <input type="hidden" name="_captcha" value="false">
+
+  <!-- Email subject -->
+  <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
+
+  <!-- Auto reply to user (will include ticket via JS injection below) -->
+  <script>
+document.getElementById("supportForm").addEventListener("submit", function () {
+
+  // Generate ticket
+  const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
+
+  // Get user inputs
+  const name = document.querySelector('[name="name"]').value;
+  const email = document.querySelector('[name="email"]').value;
+  const type = document.querySelector('[name="type"]').value;
+  const message = document.querySelector('[name="message"]').value;
+
+  // Set ticket field
+  document.getElementById("ticket_id").value = ticket;
+
+  // FULL EMAIL COPY (this is what user receives)
+  const fullEmail =
+`Hello ${name},
+
+Thank you for contacting Phoenix P6 Engine.
+
+Here is a copy of your submission:
+
+----------------------------------
+Ticket ID: ${ticket}
+Type: ${type}
+
+Message:
+${message}
+----------------------------------
+
+We will review your request and respond shortly.
+
+Phoenix P6 Engine Support Team`;
+
+  document.getElementById("auto_response").value = fullEmail;
+
+  // Optional confirmation popup
+  alert("Submitted successfully!\nTicket ID: " + ticket);
+
+});
+</script>
+
+  <!-- Ticket ID -->
+  <input type="hidden" name="ticket_id" id="ticket_id">
+
+  <label>Name</label>
+  <input type="text" name="name" required>
+
+  <label>Email</label>
+  <input type="email" name="email" required>
+
+  <label>Type</label>
+  <select name="type">
+    <option>Enhancement Request</option>
+    <option>Bug Report</option>
+    <option>General Question</option>
+  </select>
+
+  <label>Message</label>
+  <textarea name="message" rows="6" required></textarea>
+
+  <label>Attach Screenshot (optional)</label>
+  <input type="file" name="attachment" accept="image/*">
+
+  <button type="submit">Send Message</button>
+
+</form>
+
+  </div>
+
+</div>
+
+
+
+<script>
+document.getElementById("supportForm").addEventListener("submit", function () {
+
+  // Generate ticket ID
+  const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
+
+  // Set ticket field
+  document.getElementById("ticket_id").value = ticket;
+
+  // Build auto-reply message (THIS is what user receives)
+  const emailMessage =
+`We received your request for Phoenix P6 Engine.
+
+Your Ticket ID: ${ticket}
+
+Please keep this ID for reference.
+Our team will review your request shortly.`;
+
+  document.getElementById("auto_response").value = emailMessage;
+
+  // Optional UX popup
+  alert("Request submitted successfully!\nTicket ID: " + ticket);
+
+});
+</script>
+
+
+</body>
+</html>
