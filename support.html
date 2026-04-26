@@ -168,6 +168,7 @@
       <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
       <input type="hidden" name="_autoresponse" id="auto_response">
       <input type="hidden" name="ticket_id" id="ticket_id">
+      <input type="hidden" name="_replyto" id="replyto_field">
 
       <div class="form-grid">
         <div>
@@ -303,7 +304,9 @@ Our team will review your request and respond within 24-48 business hours. Pleas
 Best regards,<br>
 — Phoenix P6 Engine Support Team<br>
 https://phoenixp6engine.com`;
-
+  
+document.getElementById("replyto_field").value = email;
+  
   const btn = this.querySelector('.btn-submit');
   const originalText = btn.innerHTML;
   btn.innerHTML = '<span>⏳</span> Sending...';
