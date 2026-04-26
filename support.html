@@ -290,42 +290,29 @@ document.getElementById("supportForm").addEventListener("submit", function(e){
   document.getElementById("ticket_id").value = ticket;
 
 document.getElementById("auto_response").value =
-`<div style="font-family:Arial,sans-serif;line-height:1.6;color:#222;max-width:700px;">
+`PHOENIX P6 ENGINE SUPPORT
 
-<h2 style="color:#e8620a;margin-bottom:10px;">Phoenix P6 Engine Support</h2>
+Thank you for contacting Phoenix P6 Engine.
 
-<p>Thank you for contacting Phoenix P6 Engine.</p>
+Your request has been received successfully.
 
-<p>Your request has been received successfully.</p>
+Ticket ID: ${ticket}
+Request Type: ${type}
+Email: ${email}
 
-<div style="background:#f8f8f8;padding:14px;border-left:4px solid #e8620a;margin:18px 0;">
-<strong>🎫 Ticket ID:</strong> ${ticket}<br>
-<strong>📋 Request Type:</strong> ${type}<br>
-<strong>📧 Email:</strong> ${email}
-</div>
+YOUR MESSAGE
+${message}
 
-<h3 style="color:#e8620a;margin-bottom:8px;">Your Message</h3>
+Our support team will review your request
+within 24-48 business hours.
 
-<div style="background:#fafafa;padding:14px;border:1px solid #ddd;">
-${message.replace(/\n/g,"<br>")}
-</div>
+Please keep your Ticket ID for future follow-up.
 
-<p style="margin-top:20px;">
-Our support team will review your request within <strong>24–48 business hours</strong>.
-</p>
+Website:
+https://phoenixp6engine.com
 
-<p>Please keep your Ticket ID for future follow-up.</p>
-
-<p>
-🌐 <a href="https://phoenixp6engine.com">phoenixp6engine.com</a>
-</p>
-
-<p style="margin-top:24px;">
-Best regards,<br>
-<strong>Phoenix P6 Engine Support Team</strong>
-</p>
-
-</div>`;
+Best regards,
+Phoenix P6 Engine Support Team`;
 
   document.getElementById("replyto_field").value = email;
 
