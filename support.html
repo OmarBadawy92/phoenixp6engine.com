@@ -187,19 +187,20 @@ button:hover {
 <script>
 document.getElementById("supportForm").addEventListener("submit", function () {
 
-  // Generate ticket ID
+  // Generate ticket
   const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
 
   // Get values
   const name = document.querySelector('[name="name"]').value;
+  const email = document.querySelector('[name="email"]').value;
   const type = document.querySelector('[name="type"]').value;
   const message = document.querySelector('[name="message"]').value;
 
-  // Set ticket
+  // Set ticket field
   document.getElementById("ticket_id").value = ticket;
 
-  // Build full email sent to user
-  const emailBody =
+  // FULL email content (THIS will be sent back to customer)
+  const fullMessage =
 `Hello ${name},
 
 Thank you for contacting Phoenix P6 Engine.
@@ -210,14 +211,12 @@ Request Type: ${type}
 Your Message:
 ${message}
 
-We will review your request shortly.
+We will review your request and respond shortly.
 
 — Phoenix P6 Engine Support Team`;
 
-  document.getElementById("auto_response").value = emailBody;
-
-  // Alert confirmation
-  alert("Request submitted successfully!\nTicket ID: " + ticket);
+  // IMPORTANT: set it BEFORE submit is processed
+  document.getElementById("auto_response").value = fullMessage;
 
 });
 </script>
