@@ -534,11 +534,37 @@ window.addEventListener("load", startCounters);
       <h3>Reset Password</h3>
       <p>Reset user password directly in the SQLite database.</p>
     </div>
-    <div class="feature-card fade-in">
-      <div class="card-icon">&#128272;</div>
-      <h3>Fix Invalid XER</h3>
-      <p>Fix common issue while importing XER File to P6. Will not work if the data itself is corrupted</p>
-    </div>
+<div class="feature-card fade-in">
+  <div class="card-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48" fill="none">
+
+      <!-- File Shape with Red Inside -->
+      <path d="M16 4h24l12 12v40a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z"
+            fill="#ff2d2d" stroke="#b30000" stroke-width="2"/>
+
+      <!-- Folded Corner -->
+      <path d="M40 4v12h12"
+            fill="#ff5a5a" stroke="#b30000" stroke-width="2"/>
+
+      <!-- XER Text -->
+      <text x="32" y="38" text-anchor="middle"
+            font-size="10" fill="#ffffff"
+            font-family="Arial, sans-serif" font-weight="bold">
+        XER
+      </text>
+
+      <!-- Small X in Top-Left Corner -->
+      <line x1="18" y1="14" x2="26" y2="22"
+            stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+      <line x1="26" y1="14" x2="18" y2="22"
+            stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+
+    </svg>
+  </div>
+
+  <h3>Fix Invalid XER</h3>
+  <p>Fix common issue while importing XER File to P6. Will not work if the data itself is corrupted</p>
+</div>
   </div>
 </section>
 
