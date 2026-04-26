@@ -274,53 +274,73 @@ function updateFileName(input){
 }
 
 // Ticket ID Generation & Auto-Response Setup
-document.getElementById("supportForm").addEventListener("submit", function(e){
-  // Generate unique ticket ID
+document.getElementById("supportForm").addEventListener("submit", async function(e){
+  e.preventDefault(); // Stop page redirect
+
   const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
-  
-  // Get form values
+  document.getElementById("ticket_id").value = ticket;
+
   const name = document.querySelector('[name="name"]').value.trim();
   const email = document.querySelector('[name="email"]').value.trim();
   const type = document.querySelector('[name="type"]').value;
   const message = document.querySelector('[name="message"]').value.trim();
-  
-  // Set hidden fields
-  document.getElementById("ticket_id").value = ticket;
-  
-  // Build auto-reply message
-  const autoReply = `Hello ${name},
 
-Thank you for contacting Phoenix P6 Engine Support.
+  // ✅ YOUR EXACT AUTO-RESPONSE (unchanged)
+  document.getElementById("auto_response").value = 
+`Thank you for contacting Phoenix P6 Engine Support.<br><br>
 
-🎫 Your Ticket ID: ${ticket}
-📋 Request Type: ${type}
-📧 Email: ${email}
+🎫 Your Ticket ID: ${ticket}<br>
+📋 Request Type: ${type}<br>
+📧 Email: ${email}<br><br>
 
-Your Message:
-────────────────────
-${message}
-────────────────────
+Your Message:<br>
+────────────────────<br>
+${message}<br>
+────────────────────<br><br>
 
-Our team will review your request and respond within 24-48 business hours. Please keep your Ticket ID for reference.
+Our team will review your request and respond within 24-48 business hours. Please keep your Ticket ID for reference.<br><br>
 
-Best regards,
-— Phoenix P6 Engine Support Team
+Best regards,<br>
+— Phoenix P6 Engine Support Team<br>
 https://phoenixp6engine.com`;
 
-  document.getElementById("auto_response").value = autoReply;
-  
-  // Visual feedback
   const btn = this.querySelector('.btn-submit');
   const originalText = btn.innerHTML;
-  btn.innerHTML = '<span>✓</span> Sending...';
+  btn.innerHTML = '<span>⏳</span> Sending...';
   btn.disabled = true;
-  
-  // Reset after submit (FormSubmit handles redirect)
-  setTimeout(() => {
+
+  try {
+    const formData = new FormData(this);
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      // ✅ Show popup with ticket
+      document.getElementById("modalTicket").textContent = "🎫 Ticket: " + ticket;
+      document.getElementById("successModal").style.display = "flex";
+      this.reset();
+      if(document.getElementById("file-label")) {
+        document.getElementById("file-label").textContent = "Click to upload or drag & drop (PNG, JPG, up to 10MB)";
+      }
+    } else {
+      alert("Submission failed. Please try again.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error. Please check your connection.");
+  } finally {
     btn.innerHTML = originalText;
     btn.disabled = false;
-  }, 3000);
+  }
 });
+
+// ✅ Add this helper function anywhere in your <script>
+function closeSuccessModal() {
+  document.getElementById("successModal").style.display = "none";
+}
 
 // Fade-in Animation on Scroll
 const observer = new IntersectionObserver((entries) => {
@@ -341,6 +361,16 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
   });
 });
 </script>
+
+<div id="successModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px;">
+  <div style="background:var(--navy2); border:1px solid var(--border); border-radius:16px; padding:40px 30px; max-width:460px; width:100%; text-align:center; box-shadow:0 25px 60px rgba(0,0,0,0.6); transform:scale(0.95); transition:transform 0.3s;">
+    <div style="font-size:56px; margin-bottom:12px;">✅</div>
+    <h3 style="font-family:'Bebas Neue'; font-size:26px; letter-spacing:2px; margin-bottom:10px;">SUBMISSION SUCCESSFUL</h3>
+    <p style="color:var(--muted); font-size:14px; margin-bottom:16px;">Your support request has been received.</p>
+    <div id="modalTicket" style="background:rgba(232,98,10,0.15); border:1px solid var(--orange); border-radius:8px; padding:12px; font-family:'Rajdhani'; font-size:22px; font-weight:700; color:var(--orange); letter-spacing:2px; margin-bottom:24px;"></div>
+    <button onclick="closeSuccessModal()" style="background:var(--orange); color:#fff; border:none; padding:12px 40px; border-radius:6px; font-family:'Rajdhani'; font-weight:700; font-size:15px; cursor:pointer; transition:all 0.2s;">Close</button>
+  </div>
+</div>
 
 </body>
 </html>
