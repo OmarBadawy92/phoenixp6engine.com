@@ -164,7 +164,6 @@
           enctype="multipart/form-data">
 
       <!-- FormSubmit Configuration -->
-      <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_next" value="https://phoenixp6engine.com/support.html">
       <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
       <input type="hidden" name="_autoresponse" id="auto_response">
@@ -201,7 +200,7 @@
         <label>Attach Screenshot (optional)</label>
         <label class="file-upload" for="attachment">
           <span class="icon">📎</span>
-          <span id="file-label">Click to upload or drag & drop (PNG, JPG, up to 10MB)</span>
+          <span id="file-label">Click to upload (PNG, JPG, up to 10MB)</span>
           <input type="file" id="attachment" name="attachment" accept="image/*" onchange="updateFileName(this)">
         </label>
       </div>
