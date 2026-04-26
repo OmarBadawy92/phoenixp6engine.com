@@ -164,11 +164,11 @@
           enctype="multipart/form-data">
 
       <!-- FormSubmit Configuration -->
-      <input type="hidden" name="_next" value="https://phoenixp6engine.com/support-success.html?ticket=PX-XXXXXX">
-      <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
-      <input type="hidden" name="_autoresponse" id="auto_response">
-      <input type="hidden" name="ticket_id" id="ticket_id">
-      <input type="hidden" name="_replyto" id="replyto_field">
+<input type="hidden" name="_next" id="next_page">
+<input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
+<input type="hidden" name="_autoresponse" id="auto_response">
+<input type="hidden" name="ticket_id" id="ticket_id">
+<input type="hidden" name="_replyto" id="replyto_field">
 
       <div class="form-grid">
         <div>
@@ -274,8 +274,22 @@ function updateFileName(input){
   }
 }
 
+
 // Ticket ID Generation & Auto-Response Setup
-document.getElementById("auto_response").value =
+document.getElementById("supportForm").addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  const ticket = "PX-" + String(Math.floor(Math.random()*1000000)).padStart(6,'0');
+ document.getElementById("next_page").value =
+ "https://phoenixp6engine.com/support-success.html?ticket=" + ticket;
+  const email = document.getElementById("email").value.trim();
+  const type = document.getElementById("type").value;
+  const message = document.getElementById("message").value.trim();
+
+  document.getElementById("ticket_id").value = ticket;
+
+  document.getElementById("auto_response").value =
 `========================================
 PHOENIX P6 ENGINE SUPPORT
 ========================================
@@ -307,7 +321,6 @@ https://phoenixp6engine.com
 Best regards,
 Phoenix P6 Engine Support Team
 ========================================`;
-  
 
   document.getElementById("replyto_field").value = email;
 
@@ -315,7 +328,8 @@ Phoenix P6 Engine Support Team
   btn.innerHTML = '<span>⏳</span> Sending...';
   btn.disabled = true;
 
-  this.submit();   // NORMAL SUBMIT TO FORMSUBMIT
+  this.submit();
+
 });
 
 // Fade-in Animation on Scroll
