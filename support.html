@@ -275,35 +275,38 @@ function updateFileName(input){
 }
 
 // Ticket ID Generation & Auto-Response Setup
-// Ticket ID Generation & Auto-Response Setup
-document.getElementById("supportForm").addEventListener("submit", function(e){
+document.getElementById("auto_response").value =
+`========================================
+PHOENIX P6 ENGINE SUPPORT
+========================================
 
-  e.preventDefault();
+Thank you for contacting Phoenix P6 Engine.
 
-  const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById("ticket_id").value = ticket;
+Your request has been received successfully.
 
-  const email = document.querySelector('[name="email"]').value.trim();
-  const type = document.querySelector('[name="type"]').value;
-  const message = document.querySelector('[name="message"]').value.trim();
+Ticket ID      : ${ticket}
+Request Type   : ${type}
+Customer Email : ${email}
 
-  document.getElementById("auto_response").value =
-`Thank you for contacting Phoenix P6 Engine Support.<br><br>
+----------------------------------------
+YOUR MESSAGE
+----------------------------------------
+${message}
 
-🎫 Your Ticket ID: ${ticket}<br>
-📋 Request Type: ${type}<br>
-📧 Email: ${email}<br><br>
+----------------------------------------
 
-Your Message:<br>
-────────────────────<br>
-${message}<br>
-────────────────────<br><br>
+Our support team will review your request
+within 24–48 business hours.
 
-Our team will review your request and respond within 24-48 business hours. Please keep your Ticket ID for reference.<br><br>
+Please keep your Ticket ID for any
+future follow-up.
 
-Best regards,<br>
-— Phoenix P6 Engine Support Team<br>
-https://phoenixp6engine.com`;
+Website:
+https://phoenixp6engine.com
+
+Best regards,
+Phoenix P6 Engine Support Team
+========================================`;
   
 
   document.getElementById("replyto_field").value = email;
