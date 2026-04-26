@@ -3,221 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="phoenix_excel_logo.png">
 <title>Phoenix P6 Engine — Support</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
-:root {
-  --navy:#0d1b2a;
-  --navy2:#112236;
-  --orange:#e8620a;
-  --text:#e8eaf0;
-  --muted:#8899aa;
-  --border:rgba(232,98,10,0.25);
-}
-
-body {
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:var(--navy);
-  color:var(--text);
-}
-
-nav {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 5%;
-  border-bottom:1px solid var(--border);
-  background:rgba(13,27,42,0.95);
-}
-
-.logo {
-  font-family:'Bebas Neue';
-  font-size:22px;
-  letter-spacing:2px;
-}
-
-.logo span { color:var(--orange); }
-
-.container {
-  max-width:900px;
-  margin:80px auto;
-  padding:0 5%;
-}
-
-h1 {
-  font-family:'Bebas Neue';
-  font-size:56px;
-  letter-spacing:2px;
-  margin-bottom:10px;
-}
-
-h1 span { color:var(--orange); }
-
-p {
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.card {
-  margin-top:30px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:30px;
-}
-
-label {
-  display:block;
-  margin-top:10px;
-  font-size:13px;
-  color:var(--muted);
-}
-
-input, select, textarea {
-  width:100%;
-  padding:12px;
-  margin-top:6px;
-  margin-bottom:14px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--border);
-  border-radius:6px;
-  color:var(--text);
-  outline:none;
-}
-
-button {
-  width:100%;
-  padding:14px;
-  background:var(--orange);
-  border:none;
-  color:white;
-  font-weight:700;
-  cursor:pointer;
-  border-radius:6px;
-  font-family:'Rajdhani';
-  letter-spacing:1px;
-}
-
-button:hover {
-  background:#f07c2a;
-}
-
-.back {
-  color:var(--muted);
-  text-decoration:none;
-  font-size:13px;
-}
-
-.back:hover { color:var(--orange); }
+  :root {
+    --navy:#0d1b2a; --navy2:#112236;
+    --orange:#e8620a; --orange2:#f07c2a;
+    --text:#e8eaf0; --muted:#8899aa;
+    --border:rgba(232,98,10,0.25); --card-bg:rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6;}
+  
+  /* ── NAVIGATION ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;background:rgba(13,27,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:44px;}
+  .nav-logo span{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff;}
+  .nav-logo em{color:var(--orange);font-style:normal;}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--orange);}
+  .nav-back{background:transparent;color:var(--text);padding:9px 22px;border-radius:4px;border:1px solid var(--border);font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;transition:all 0.2s;}
+  .nav-back:hover{border-color:var(--orange);color:var(--orange);}
+  #hamburger{display:none;background:none;border:1px solid var(--border);border-radius:4px;padding:6px 10px;cursor:pointer;color:var(--text);font-size:18px;}
+  
+  /* Mobile Menu */
+  #mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;z-index:99;background:rgba(13,27,42,0.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:16px 5%;}
+  #mobile-menu a{display:block;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;text-transform:uppercase;padding:12px 0;border-bottom:1px solid var(--border);}
+  #mobile-menu a:hover,#mobile-menu a.active{color:var(--orange);}
+  
+  /* ── HERO HEADER ── */
+  .support-hero{padding:120px 5% 60px;position:relative;overflow:hidden;}
+  .support-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(232,98,10,0.08),transparent);pointer-events:none;}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(232,98,10,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,98,10,0.04) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);}
+  .section-label{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;display:inline-block;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,6vw,56px);letter-spacing:3px;line-height:1.05;margin-bottom:16px;}
+  .section-title span{color:var(--orange);}
+  .hero-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(15px,2vw,18px);color:var(--muted);max-width:600px;margin-bottom:24px;}
+  
+  /* ── SUPPORT FORM ── */
+  .support-section{padding:40px 5% 80px;}
+  .support-card{max-width:900px;margin:0 auto;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:40px;position:relative;overflow:hidden;}
+  .support-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2));opacity:0.8;}
+  
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .form-full{grid-column:1/-1;}
+  
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;}
+  input,select,textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+  input:focus,select:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,98,10,0.15);}
+  textarea{min-height:140px;resize:vertical;line-height:1.5;}
+  
+  .file-upload{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px dashed var(--border);border-radius:8px;cursor:pointer;transition:border-color 0.2s;}
+  .file-upload:hover{border-color:var(--orange);}
+  .file-upload input{display:none;}
+  .file-upload span{color:var(--muted);font-size:13px;}
+  .file-upload .icon{font-size:18px;margin-right:4px;}
+  
+  .btn-submit{width:100%;padding:16px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
+  .btn-submit:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(232,98,10,0.35);}
+  .btn-submit:active{transform:translateY(0);}
+  
+  .ticket-note{margin-top:20px;padding:14px 18px;background:rgba(232,98,10,0.12);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;font-size:13px;color:var(--muted);}
+  .ticket-note strong{color:var(--orange);font-weight:600;}
+  
+  /* ── INFO CARDS ── */
+  .info-section{padding:0 5% 60px;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:1200px;margin:0 auto;}
+  .info-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:28px;transition:transform 0.2s;}
+  .info-card:hover{transform:translateY(-4px);border-color:rgba(232,98,10,0.4);}
+  .info-icon{font-size:32px;margin-bottom:16px;}
+  .info-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:10px;}
+  .info-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+  
+  /* ── FOOTER ── */
+  footer{background:#070f18;padding:40px 5%;text-align:center;border-top:1px solid var(--border);}
+  footer img{height:40px;margin-bottom:12px;opacity:0.7;}
+  footer p{font-size:13px;color:var(--muted);}
+  footer a{color:var(--orange);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  
+  /* ── ANIMATIONS ── */
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+  
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    .form-grid{grid-template-columns:1fr;}
+    .support-card{padding:30px 24px;}
+  }
+  @media(max-width:768px){
+    .nav-links{display:none;}
+    .nav-back-desk{display:none;}
+    #hamburger{display:block !important;}
+    .support-hero{padding-top:100px;}
+    .section-title{font-size:clamp(32px,8vw,48px);}
+    .info-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:480px){
+    nav{padding:0 4%;height:64px;}
+    .nav-logo img{height:38px;}
+    .nav-logo span{font-size:19px;}
+    .support-card{padding:24px 20px;border-radius:12px;}
+    input,select,textarea{padding:12px 14px;font-size:13px;}
+    .btn-submit{padding:14px;font-size:15px;}
+  }
 </style>
 </head>
-
 <body>
 
+<!-- NAVIGATION -->
 <nav>
-  <div class="logo">PHOENIX <span>P6 ENGINE</span></div>
-  <a class="back" href="index.html">← Back to Home</a>
+  <a href="index.html" class="nav-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6">
+    <span>PHOENIX <em>P6 Engine</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">P6 Engine</a></li>
+    <li><a href="download.html">Download</a></li>
+    <li><a href="excel-addin.html">Excel Add-in</a></li>
+    <li><a href="powerbi.html">Power BI Services</a></li>
+    <li><a href="about.html">About Me</a></li>
+  </ul>
+  <a href="download.html" class="nav-back nav-back-desk" style="background:var(--orange);color:#fff;border:none;">Get the Tool</a>
+  <button id="hamburger" onclick="toggleMenu()">&#9776;</button>
 </nav>
 
-<div class="container">
-
-  <h1>SUPPORT & <span>FEEDBACK</span></h1>
-  <p>
-    Send bug reports, enhancement ideas, or general questions.  
-    Every request generates a unique Phoenix Ticket ID.
-  </p>
-
-  <div class="card">
-
-<form id="supportForm"
-      action="https://formsubmit.co/support@phoenixp6engine.com"
-      method="POST"
-      enctype="multipart/form-data">
-
-  <!-- Disable captcha -->
-
-
-  <!-- Stay on same page -->
-  <input type="hidden" name="_next" value="https://phoenixp6engine.com/support.html">
-
-  <!-- Email subject -->
-  <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
-
-  <!-- Auto reply email -->
-  <input type="hidden" name="_autoresponse" id="auto_response">
-
-  <!-- Ticket ID -->
-  <input type="hidden" name="ticket_id" id="ticket_id">
-
-  <!-- NAME -->
-  <label>Name</label>
-  <input type="text" name="name" placeholder="Your Name" required>
-
-  <!-- EMAIL -->
-  <label>Email</label>
-  <input type="email" name="email" placeholder="Your Email" required>
-
-  <!-- TYPE -->
-  <label>Request Type</label>
-  <select name="type" required>
-    <option value="Enhancement Request">Enhancement Request</option>
-    <option value="Bug Report">Bug Report</option>
-    <option value="General Question">General Question</option>
-  </select>
-
-  <!-- MESSAGE -->
-  <label>Message</label>
-  <textarea name="message" rows="6" placeholder="Describe your request..." required></textarea>
-
-  <!-- ATTACHMENT -->
-  <label>Attach Screenshot (optional)</label>
-  <input type="file" name="attachment" accept="image/*">
-
-  <button type="submit">Send Message</button>
-
-</form>
-
-  </div>
-
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+  <a href="index.html">P6 Engine</a>
+  <a href="download.html">Download</a>
+  <a href="excel-addin.html">Excel Add-in</a>
+  <a href="powerbi.html">Power BI Services</a>
+  <a href="about.html">About Me</a>
+  <a href="support.html" class="active" style="color:var(--orange);">Support</a>
 </div>
 
+<!-- HERO HEADER -->
+<section class="support-hero">
+  <div class="grid-bg"></div>
+  <div class="fade-in" style="position:relative;z-index:1;max-width:700px;">
+    <div class="section-label">Support Center</div>
+    <h1 class="section-title">SUPPORT & <span>FEEDBACK</span></h1>
+    <p class="hero-sub">Send bug reports, enhancement ideas, or general questions. Every request generates a unique Phoenix Ticket ID for tracking.</p>
+  </div>
+</section>
+
+<!-- SUPPORT FORM SECTION -->
+<section class="support-section">
+  <div class="support-card fade-in">
+    <form id="supportForm"
+          action="https://formsubmit.co/support@phoenixp6engine.com"
+          method="POST"
+          enctype="multipart/form-data">
+
+      <!-- FormSubmit Configuration -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://phoenixp6engine.com/support.html">
+      <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
+      <input type="hidden" name="_autoresponse" id="auto_response">
+      <input type="hidden" name="ticket_id" id="ticket_id">
+
+      <div class="form-grid">
+        <div>
+          <label for="name">Your Name *</label>
+          <input type="text" id="name" name="name" placeholder="Someone" required>
+        </div>
+        <div>
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+
+      <div>
+        <label for="type">Request Type *</label>
+        <select id="type" name="type" required>
+          <option value="" disabled selected>Select a request type...</option>
+          <option value="Enhancement Request">✨ Enhancement Request</option>
+          <option value="Bug Report">🐛 Bug Report</option>
+          <option value="General Question">❓ General Question</option>
+          <option value="Feature Suggestion">💡 Feature Suggestion</option>
+          <option value="Technical Issue">⚙️ Technical Issue</option>
+        </select>
+      </div>
+
+      <div class="form-full">
+        <label for="message">Your Message *</label>
+        <textarea id="message" name="message" placeholder="Describe your request in detail. Include steps to reproduce for bugs, or specifics for enhancements..." required></textarea>
+      </div>
+
+      <div class="form-full">
+        <label>Attach Screenshot (optional)</label>
+        <label class="file-upload" for="attachment">
+          <span class="icon">📎</span>
+          <span id="file-label">Click to upload or drag & drop (PNG, JPG, up to 10MB)</span>
+          <input type="file" id="attachment" name="attachment" accept="image/*" onchange="updateFileName(this)">
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <span>🚀</span> Send Support Request
+      </button>
+
+      <div class="ticket-note">
+        <strong>🎫 Ticket System:</strong> Upon submission, you'll receive an auto-reply with your unique <strong>Phoenix Ticket ID</strong> (format: PX-XXXXXX). Use this ID for all future correspondence.
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- INFO CARDS SECTION -->
+<section class="info-section">
+  <div class="info-grid">
+    <div class="info-card fade-in">
+      <div class="info-icon">🔍</div>
+      <div class="info-title">Track Your Request</div>
+      <p class="info-desc">Every submission receives a unique Phoenix Ticket ID. Reference this ID in follow-ups for faster resolution and status updates.</p>
+    </div>
+    <div class="info-card fade-in">
+      <div class="info-icon">⚡</div>
+      <div class="info-title">Response Time</div>
+      <p class="info-desc">We review all requests within 24-48 business hours. Critical bugs are prioritized and addressed as soon as possible.</p>
+    </div>
+    <div class="info-card fade-in">
+      <div class="info-icon">🛡️</div>
+      <div class="info-title">Privacy Guaranteed</div>
+      <p class="info-desc">Your data and attachments are handled securely. We never share your information with third parties.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+  <p>&copy; 2026 Phoenix P6 Engine — Built by <a href="mailto:omar@phoenixp6engine.com">Omar Adel Badawy</a></p>
+  <p style="margin-top:6px;font-size:12px;">Primavera P6 is a registered trademark of Oracle Corporation. Phoenix P6 Engine is an independent tool.</p>
+  <p style="margin-top:12px;">
+    <a href="index.html">Home</a> • 
+    <a href="download.html">Download</a> • 
+    <a href="support.html">Support</a>
+  </p>
+</footer>
+
 <script>
-document.getElementById("supportForm").addEventListener("submit", function () {
+// Mobile Menu Toggle
+function toggleMenu(){
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  const isOpen = menu.style.display === 'block';
+  menu.style.display = isOpen ? 'none' : 'block';
+  btn.innerHTML = isOpen ? '&#9776;' : '&#10005;';
+}
 
-  // Generate ticket
+// File Upload Label Update
+function updateFileName(input){
+  const label = document.getElementById('file-label');
+  if(input.files && input.files[0]){
+    label.textContent = '✓ ' + input.files[0].name;
+    label.style.color = 'var(--orange)';
+  } else {
+    label.textContent = 'Click to upload or drag & drop (PNG, JPG, up to 10MB)';
+    label.style.color = 'var(--muted)';
+  }
+}
+
+// Ticket ID Generation & Auto-Response Setup
+document.getElementById("supportForm").addEventListener("submit", function(e){
+  // Generate unique ticket ID
   const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
-
-  // Get values
-  const name = document.querySelector('[name="name"]').value;
-  const email = document.querySelector('[name="email"]').value;
+  
+  // Get form values
+  const name = document.querySelector('[name="name"]').value.trim();
+  const email = document.querySelector('[name="email"]').value.trim();
   const type = document.querySelector('[name="type"]').value;
-  const message = document.querySelector('[name="message"]').value;
-
-  // Set ticket field
+  const message = document.querySelector('[name="message"]').value.trim();
+  
+  // Set hidden fields
   document.getElementById("ticket_id").value = ticket;
+  
+  // Build auto-reply message
+  const autoReply = `Hello ${name},
 
-  // FULL email content (THIS will be sent back to customer)
-  const fullMessage =
-`Hello ${name},
+Thank you for contacting Phoenix P6 Engine Support.
 
-Thank you for contacting Phoenix P6 Engine.
-
-Your Ticket ID: ${ticket}
-Request Type: ${type}
+🎫 Your Ticket ID: ${ticket}
+📋 Request Type: ${type}
+📧 Email: ${email}
 
 Your Message:
+────────────────────
 ${message}
+────────────────────
 
-We will review your request and respond shortly.
+Our team will review your request and respond within 24-48 business hours. Please keep your Ticket ID for reference.
 
-— Phoenix P6 Engine Support Team`;
+Best regards,
+— Phoenix P6 Engine Support Team
+https://phoenixp6engine.com`;
 
-  // IMPORTANT: set it BEFORE submit is processed
-  document.getElementById("auto_response").value = fullMessage;
+  document.getElementById("auto_response").value = autoReply;
+  
+  // Visual feedback
+  const btn = this.querySelector('.btn-submit');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<span>✓</span> Sending...';
+  btn.disabled = true;
+  
+  // Reset after submit (FormSubmit handles redirect)
+  setTimeout(() => {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }, 3000);
+});
 
+// Fade-in Animation on Scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, {threshold: 0.15, rootMargin: '0px 0px -50px 0px'});
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobile-menu').style.display = 'none';
+    document.getElementById('hamburger').innerHTML = '&#9776;';
+  });
 });
 </script>
 
