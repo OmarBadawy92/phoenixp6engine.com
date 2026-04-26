@@ -275,19 +275,19 @@ function updateFileName(input){
 }
 
 // Ticket ID Generation & Auto-Response Setup
-document.getElementById("supportForm").addEventListener("submit", async function(e){
-  e.preventDefault(); // Stop page redirect
+// Ticket ID Generation & Auto-Response Setup
+document.getElementById("supportForm").addEventListener("submit", function(e){
+
+  e.preventDefault();
 
   const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
   document.getElementById("ticket_id").value = ticket;
 
-  const name = document.querySelector('[name="name"]').value.trim();
   const email = document.querySelector('[name="email"]').value.trim();
   const type = document.querySelector('[name="type"]').value;
   const message = document.querySelector('[name="message"]').value.trim();
 
-  // ✅ YOUR EXACT AUTO-RESPONSE (unchanged)
-  document.getElementById("auto_response").value = 
+  document.getElementById("auto_response").value =
 `Thank you for contacting Phoenix P6 Engine Support.<br><br>
 
 🎫 Your Ticket ID: ${ticket}<br>
@@ -305,45 +305,15 @@ Best regards,<br>
 — Phoenix P6 Engine Support Team<br>
 https://phoenixp6engine.com`;
   
-document.getElementById("replyto_field").value = email;
-  
+
+  document.getElementById("replyto_field").value = email;
+
   const btn = this.querySelector('.btn-submit');
-  const originalText = btn.innerHTML;
   btn.innerHTML = '<span>⏳</span> Sending...';
   btn.disabled = true;
 
-  try {
-    const formData = new FormData(this);
-    const res = await fetch(this.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (res.ok) {
-      // ✅ Show popup with ticket
-      document.getElementById("modalTicket").textContent = "🎫 Ticket: " + ticket;
-      document.getElementById("successModal").style.display = "flex";
-      this.reset();
-      if(document.getElementById("file-label")) {
-        document.getElementById("file-label").textContent = "Click to upload or drag & drop (PNG, JPG, up to 10MB)";
-      }
-    } else {
-      alert("Submission failed. Please try again.");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Network error. Please check your connection.");
-  } finally {
-    btn.innerHTML = originalText;
-    btn.disabled = false;
-  }
+  this.submit();   // NORMAL SUBMIT TO FORMSUBMIT
 });
-
-// ✅ Add this helper function anywhere in your <script>
-function closeSuccessModal() {
-  document.getElementById("successModal").style.display = "none";
-}
 
 // Fade-in Animation on Scroll
 const observer = new IntersectionObserver((entries) => {
