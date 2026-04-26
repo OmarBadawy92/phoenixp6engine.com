@@ -69,10 +69,17 @@ p {
   padding:30px;
 }
 
+label {
+  display:block;
+  margin-top:10px;
+  font-size:13px;
+  color:var(--muted);
+}
+
 input, select, textarea {
   width:100%;
   padding:12px;
-  margin-top:10px;
+  margin-top:6px;
   margin-bottom:14px;
   background:rgba(255,255,255,0.05);
   border:1px solid var(--border);
@@ -119,8 +126,8 @@ button:hover {
 
   <h1>SUPPORT & <span>FEEDBACK</span></h1>
   <p>
-    Send bug reports, enhancement ideas, or general questions about Phoenix P6 Engine.
-    We actively improve the tool based on your feedback.
+    Send bug reports, enhancement ideas, or general questions.  
+    Every request generates a unique Phoenix Ticket ID.
   </p>
 
   <div class="card">
@@ -133,72 +140,39 @@ button:hover {
   <!-- Disable captcha -->
   <input type="hidden" name="_captcha" value="false">
 
+  <!-- Stay on same page -->
+  <input type="hidden" name="_next" value="https://phoenixp6engine.com/support.html">
+
   <!-- Email subject -->
   <input type="hidden" name="_subject" value="Phoenix P6 Engine Support Request">
 
-  <!-- Auto reply to user (will include ticket via JS injection below) -->
-  <script>
-document.getElementById("supportForm").addEventListener("submit", function () {
-
-  // Generate ticket
-  const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
-
-  // Get user inputs
-  const name = document.querySelector('[name="name"]').value;
-  const email = document.querySelector('[name="email"]').value;
-  const type = document.querySelector('[name="type"]').value;
-  const message = document.querySelector('[name="message"]').value;
-
-  // Set ticket field
-  document.getElementById("ticket_id").value = ticket;
-
-  // FULL EMAIL COPY (this is what user receives)
-  const fullEmail =
-`Hello ${name},
-
-Thank you for contacting Phoenix P6 Engine.
-
-Here is a copy of your submission:
-
-----------------------------------
-Ticket ID: ${ticket}
-Type: ${type}
-
-Message:
-${message}
-----------------------------------
-
-We will review your request and respond shortly.
-
-Phoenix P6 Engine Support Team`;
-
-  document.getElementById("auto_response").value = fullEmail;
-
-  // Optional confirmation popup
-  alert("Submitted successfully!\nTicket ID: " + ticket);
-
-});
-</script>
+  <!-- Auto reply email -->
+  <input type="hidden" name="_autoresponse" id="auto_response">
 
   <!-- Ticket ID -->
   <input type="hidden" name="ticket_id" id="ticket_id">
 
+  <!-- NAME -->
   <label>Name</label>
-  <input type="text" name="name" required>
+  <input type="text" name="name" placeholder="Your Name" required>
 
+  <!-- EMAIL -->
   <label>Email</label>
-  <input type="email" name="email" required>
+  <input type="email" name="email" placeholder="Your Email" required>
 
-  <label>Type</label>
-  <select name="type">
-    <option>Enhancement Request</option>
-    <option>Bug Report</option>
-    <option>General Question</option>
+  <!-- TYPE -->
+  <label>Request Type</label>
+  <select name="type" required>
+    <option value="Enhancement Request">Enhancement Request</option>
+    <option value="Bug Report">Bug Report</option>
+    <option value="General Question">General Question</option>
   </select>
 
+  <!-- MESSAGE -->
   <label>Message</label>
-  <textarea name="message" rows="6" required></textarea>
+  <textarea name="message" rows="6" placeholder="Describe your request..." required></textarea>
 
+  <!-- ATTACHMENT -->
   <label>Attach Screenshot (optional)</label>
   <input type="file" name="attachment" accept="image/*">
 
@@ -210,34 +184,43 @@ Phoenix P6 Engine Support Team`;
 
 </div>
 
-
-
 <script>
 document.getElementById("supportForm").addEventListener("submit", function () {
 
   // Generate ticket ID
   const ticket = "PX-" + Math.floor(100000 + Math.random() * 900000);
 
-  // Set ticket field
+  // Get values
+  const name = document.querySelector('[name="name"]').value;
+  const type = document.querySelector('[name="type"]').value;
+  const message = document.querySelector('[name="message"]').value;
+
+  // Set ticket
   document.getElementById("ticket_id").value = ticket;
 
-  // Build auto-reply message (THIS is what user receives)
-  const emailMessage =
-`We received your request for Phoenix P6 Engine.
+  // Build full email sent to user
+  const emailBody =
+`Hello ${name},
+
+Thank you for contacting Phoenix P6 Engine.
 
 Your Ticket ID: ${ticket}
+Request Type: ${type}
 
-Please keep this ID for reference.
-Our team will review your request shortly.`;
+Your Message:
+${message}
 
-  document.getElementById("auto_response").value = emailMessage;
+We will review your request shortly.
 
-  // Optional UX popup
+— Phoenix P6 Engine Support Team`;
+
+  document.getElementById("auto_response").value = emailBody;
+
+  // Alert confirmation
   alert("Request submitted successfully!\nTicket ID: " + ticket);
 
 });
 </script>
-
 
 </body>
 </html>
