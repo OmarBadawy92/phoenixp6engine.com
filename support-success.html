@@ -13,6 +13,7 @@
   --navy:#0d1b2a;
   --navy2:#112236;
   --orange:#e8620a;
+  --orange2:#f07c2a;
   --text:#e8eaf0;
   --muted:#8899aa;
   --border:rgba(232,98,10,0.25);
@@ -24,15 +25,53 @@ body{
   background:var(--navy);
   color:var(--text);
   font-family:'Inter',sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+header{
+  background:rgba(13,27,42,0.95);
+  border-bottom:1px solid var(--border);
+  padding:18px 5%;
+  text-align:center;
+}
+
+.header-logo{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+
+.header-logo img{
+  height:46px;
+}
+
+.header-logo span{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;
+  letter-spacing:2px;
+  color:#fff;
+}
+
+.header-logo em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+/* MAIN */
+main{
+  flex:1;
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:100vh;
-  text-align:center;
-  padding:40px;
+  padding:40px 20px;
 }
 
 .card{
+  width:100%;
   max-width:650px;
   background:var(--navy2);
   border:1px solid var(--border);
@@ -40,6 +79,7 @@ body{
   padding:40px 30px;
   position:relative;
   overflow:hidden;
+  text-align:center;
 }
 
 .card::before{
@@ -47,19 +87,19 @@ body{
   position:absolute;
   top:0;left:0;right:0;
   height:4px;
-  background:linear-gradient(90deg,var(--orange),#f07c2a);
+  background:linear-gradient(90deg,var(--orange),var(--orange2));
 }
 
 .logo{
   height:60px;
   margin-bottom:20px;
-  opacity:0.9;
+  opacity:0.95;
 }
 
 h1{
   font-family:'Bebas Neue',sans-serif;
   letter-spacing:2px;
-  font-size:40px;
+  font-size:42px;
   margin-bottom:10px;
 }
 
@@ -79,14 +119,14 @@ h1{
   font-weight:700;
   letter-spacing:2px;
   margin-bottom:25px;
-  font-family:'Rajdhani';
+  font-family:'Rajdhani',sans-serif;
   font-size:20px;
 }
 
 .info{
   font-size:14px;
   color:var(--muted);
-  line-height:1.6;
+  line-height:1.8;
   margin-bottom:30px;
 }
 
@@ -103,7 +143,7 @@ h1{
 }
 
 .btn:hover{
-  background:#f07c2a;
+  background:var(--orange2);
   transform:translateY(-2px);
 }
 
@@ -112,10 +152,50 @@ h1{
   font-size:12px;
   color:var(--muted);
 }
+
+/* FOOTER */
+footer{
+  background:#070f18;
+  padding:30px 5%;
+  text-align:center;
+  border-top:1px solid var(--border);
+}
+
+footer img{
+  height:38px;
+  margin-bottom:10px;
+  opacity:0.7;
+}
+
+footer p{
+  font-size:13px;
+  color:var(--muted);
+}
+
+footer a{
+  color:var(--orange);
+  text-decoration:none;
+}
+
+@media(max-width:768px){
+  h1{font-size:34px;}
+  .card{padding:32px 22px;}
+}
 </style>
 </head>
 
 <body>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="header-logo">
+    <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+    <span>PHOENIX <em>P6 Engine</em></span>
+  </a>
+</header>
+
+<!-- MAIN -->
+<main>
 
 <div class="card">
 
@@ -145,8 +225,18 @@ h1{
 
 </div>
 
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <img src="phoenix_logo.jpg" alt="Phoenix P6 Engine">
+  <p>&copy; 2026 Phoenix P6 Engine — Built by <a href="mailto:omar@phoenixp6engine.com">Omar Adel Badawy</a></p>
+  <p style="margin-top:6px;font-size:12px;">
+    Primavera P6 is a registered trademark of Oracle Corporation. Phoenix P6 Engine is an independent tool.
+  </p>
+</footer>
+
 <script>
-// Optional: show ticket if passed in URL ?ticket=PX-123456
 const params = new URLSearchParams(window.location.search);
 const ticket = params.get("ticket");
 
