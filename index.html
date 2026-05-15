@@ -344,7 +344,7 @@ function animateCount(el, target, duration = 700) {
     if (progress < 1) {
       requestAnimationFrame(update);
     } else {
-      el.innerText = target + (target === 10 ? "+" : "");
+      el.innerText = target + (target === 15 ? "+" : "");
     }
   }
 
@@ -629,7 +629,7 @@ window.addEventListener("load", startCounters);
     <div class="how-step fade-in">
       <div class="step-num">3</div>
       <h3>Choose Your Tool</h3>
-      <p>Pick from 10+ tools across 3 tabs. Each tool is purpose-built for a specific P6 planner workflow.</p>
+      <p>Pick from 15+ tools across 3 tabs. Each tool is purpose-built for a specific P6 planner workflow.</p>
     </div>
     <div class="how-step fade-in">
       <div class="step-num">4</div>
