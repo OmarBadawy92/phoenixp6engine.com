@@ -68,6 +68,13 @@
   .feature-list li:last-child{border-bottom:none;}
   .feature-list li::before{content:'›';position:absolute;left:0;font-size:16px;}
   .feature-list li .wip{font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(232,98,10,0.15);color:var(--orange);font-weight:600;letter-spacing:0.5px;white-space:nowrap;flex-shrink:0;}
+  .badge{font-size:9px;padding:2px 8px;border-radius:3px;font-weight:700;letter-spacing:0.8px;white-space:nowrap;flex-shrink:0;text-transform:uppercase;}
+  .badge.free{background:rgba(29,125,58,0.18);color:#34a85a;border:1px solid rgba(29,125,58,0.5);}
+  .badge.pro{background:rgba(232,98,10,0.18);color:var(--orange);border:1px solid rgba(232,98,10,0.55);}
+  .feature-list li.sub{padding-left:34px;font-size:13px;}
+  .feature-list li.sub::before{content:'•';left:20px;font-size:12px;color:var(--muted);}
+  .legend{display:flex;gap:24px;justify-content:center;margin-top:28px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:0.5px;}
   .cta-section{background:var(--navy);text-align:center;padding:80px 5%;}
   
   
@@ -173,7 +180,7 @@
     </div>
 
     <div class="fade-in">
-      <div class="stat-num count" data-target="20">0</div>
+      <div class="stat-num count" data-target="32">0</div>
       <div class="stat-label">Built-in Tools</div>
     </div>
     
@@ -191,6 +198,10 @@
   <div class="fade-in" style="text-align:center;">
     <div class="section-label">What's Inside</div>
     <h2 class="section-title" style="font-size:clamp(32px,4vw,52px);">THREE <span>POWERFUL MODULES</span></h2>
+    <div class="legend">
+      <span><i class="badge free">Free</i> Included in the free version</span>
+      <span><i class="badge pro">Pro</i> Requires Pro license</span>
+    </div>
   </div>
   <div class="modules-grid">
 
@@ -201,16 +212,25 @@
         <div class="mod-title">Phoenix Utilities</div>
       </div>
       <ul class="feature-list">
-        <li>Color and Group P6 Style</li>
-        <li>Draw Gantt Chart</li>
-        <li>WBS Generation and Injection</li>
-        <li>Create PMS Sheet</li>
-        <li>Resource Generation and Injection</li>
-        <li>Create Activity Codes and Injection</li>
-        <li>Change Activity ID</li>
-        <li>Split In-Progress Activities</li>
-        <li>Remove Assigned Resources</li>
-        <li>XER Data Import in Excel</li>
+        <li>Color and Group P6 Style<span class="badge free">Free</span></li>
+        <li>Draw Gantt Chart<span class="badge free">Free</span></li>
+        <li>Draw S-Curve<span class="badge free">Free</span></li>
+        <li class="sub">By Activity Breakdown<span class="badge pro">Pro</span></li>
+        <li>Actual Cost = Earned Value<span class="badge pro">Pro</span></li>
+        <li>Sum Parents<span class="badge free">Free</span></li>
+        <li>Max and Min Dates Parents<span class="badge free">Free</span></li>
+        <li>WBS Generation — Prepare &amp; Generate XER<span class="badge free">Free</span></li>
+        <li class="sub">Load WBS from XER / Database<span class="badge pro">Pro</span></li>
+        <li class="sub">Modify WBS in XER / Database<span class="badge pro">Pro</span></li>
+        <li>Resource Database — Prepare, Transform &amp; Inject<span class="badge free">Free</span></li>
+        <li>Create PMS Sheet<span class="badge free">Free</span></li>
+        <li>Activity Code — Prepare &amp; Inject<span class="badge free">Free</span></li>
+        <li class="sub">Load Codes from XER / Database<span class="badge pro">Pro</span></li>
+        <li>Activity ID Change — Import &amp; Replace<span class="badge free">Free</span></li>
+        <li>Split In-Progress Activities<span class="badge pro">Pro</span></li>
+        <li>Remove Assigned Resources<span class="badge free">Free</span></li>
+        <li class="sub">Sum Duplicated Assignment<span class="badge pro">Pro</span></li>
+        <li>XER Data — Import &amp; Compile<span class="badge free">Free</span></li>
       </ul>
     </div>
 
@@ -221,14 +241,17 @@
         <div class="mod-title">Phoenix Analysis</div>
       </div>
       <ul class="feature-list">
-        <li>Calendar View</li>
-        <li>Out-of-Sequence Detector &amp; Solver</li>
-        <li>Update Quality Analysis</li>
-        <li>Schedule Comparison</li>
-        <li><span>Eagle Eye — Baseline Analysis</li>
-        <li><span>Create Schedule Dashboard</li>
-        <li>Redundant Relation Detector &amp; Solver</li>
-        <li>Resource ID Duplication Check</li>
+        <li>Resource Mapping<span class="badge free">Free</span></li>
+        <li class="sub">Inject New Qty to XER / Database<span class="badge pro">Pro</span></li>
+        <li>Calendar View<span class="badge free">Free</span></li>
+        <li>Out-of-Sequence Detector &amp; Solver<span class="badge free">Free</span></li>
+        <li>Update Quality Analysis<span class="badge pro">Pro</span></li>
+        <li>Schedule Comparison<span class="badge pro">Pro</span></li>
+        <li>Advanced Baseline Analysis (Eagle Eye)<span class="badge pro">Pro</span></li>
+        <li>Create Schedule Story Dashboard<span class="badge free">Free</span></li>
+        <li>Redundant Relation Detector &amp; Solver<span class="badge pro">Pro</span></li>
+        <li>Resource ID Duplication Check<span class="badge free">Free</span></li>
+        <li class="sub">Update Resource ID<span class="badge pro">Pro</span></li>
       </ul>
     </div>
 
@@ -239,13 +262,14 @@
         <div class="mod-title">Phoenix Database Tweaks</div>
       </div>
       <ul class="feature-list">
-        <li>Increase Activity ID Limit</li>
-        <li>Delete Shared Mode</li>
-        <li>Assign / Un-Assign Baseline From Project</li>   
-        <li>Copy Template from Another Database</li>
-        <li>Rollback Database Version</li>
-        <li>Reset Password</li>
-        <li>Fix Invalid XER</li>
+        <li>Assign / Un-Assign Baseline from Project<span class="badge pro">Pro</span></li>
+        <li>Fix Unit Link (XER / Database)<span class="badge free">Free</span></li>
+        <li>Activity ID Limit<span class="badge free">Free</span></li>
+        <li>Delete Shared Mode<span class="badge free">Free</span></li>
+        <li>Roll Back Database Version<span class="badge pro">Pro</span></li>
+        <li>Reset Password<span class="badge free">Free</span></li>
+        <li>Fix Invalid XER<span class="badge pro">Pro</span></li>
+        <li>Copy Templates from another Database<span class="badge pro">Pro</span></li>
       </ul>
     </div>
 
@@ -286,7 +310,7 @@ function animateCount(el,target,duration=700){
    if(progress<1){
      requestAnimationFrame(update);
    }else{
-     el.innerText=target+(target===20?"+":"");
+     el.innerText=target+(target>=20?"+":"");
    }
  }
 
