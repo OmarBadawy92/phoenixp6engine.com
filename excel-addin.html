@@ -73,6 +73,12 @@
   .badge.pro{background:rgba(232,98,10,0.18);color:var(--orange);border:1px solid rgba(232,98,10,0.55);}
   .feature-list li.sub{padding-left:34px;font-size:13px;}
   .feature-list li.sub::before{content:'•';left:20px;font-size:12px;color:var(--muted);}
+  .feature-list li.menu{cursor:pointer;color:var(--text);font-weight:600;}
+  .feature-list li.menu::before{content:'▾';font-size:11px;transition:transform 0.2s;}
+  .feature-list li.menu.collapsed::before{transform:rotate(-90deg);}
+  .feature-list li.menu:hover{color:var(--orange);}
+  .feature-list li.sub.hidden{display:none;}
+  .feature-list li.leaf::before{content:'›';font-size:16px;}
   .legend{display:flex;gap:24px;justify-content:center;margin-top:28px;flex-wrap:wrap;}
   .legend span{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:0.5px;}
   .cta-section{background:var(--navy);text-align:center;padding:80px 5%;}
@@ -212,25 +218,52 @@
         <div class="mod-title">Phoenix Utilities</div>
       </div>
       <ul class="feature-list">
-        <li>Color and Group P6 Style<span class="badge free">Free</span></li>
-        <li>Draw Gantt Chart<span class="badge free">Free</span></li>
-        <li>Draw S-Curve<span class="badge free">Free</span></li>
-        <li class="sub">By Activity Breakdown<span class="badge pro">Pro</span></li>
-        <li>Actual Cost = Earned Value<span class="badge pro">Pro</span></li>
-        <li>Sum Parents<span class="badge free">Free</span></li>
-        <li>Max and Min Dates Parents<span class="badge free">Free</span></li>
-        <li>WBS Generation — Prepare &amp; Generate XER<span class="badge free">Free</span></li>
-        <li class="sub">Load WBS from XER / Database<span class="badge pro">Pro</span></li>
-        <li class="sub">Modify WBS in XER / Database<span class="badge pro">Pro</span></li>
-        <li>Resource Database — Prepare, Transform &amp; Inject<span class="badge free">Free</span></li>
-        <li>Create PMS Sheet<span class="badge free">Free</span></li>
-        <li>Activity Code — Prepare &amp; Inject<span class="badge free">Free</span></li>
-        <li class="sub">Load Codes from XER / Database<span class="badge pro">Pro</span></li>
-        <li>Activity ID Change — Import &amp; Replace<span class="badge free">Free</span></li>
-        <li>Split In-Progress Activities<span class="badge pro">Pro</span></li>
-        <li>Remove Assigned Resources<span class="badge free">Free</span></li>
-        <li class="sub">Sum Duplicated Assignment<span class="badge pro">Pro</span></li>
-        <li>XER Data — Import &amp; Compile<span class="badge free">Free</span></li>
+        <li class="menu" data-menu="u1">Color and Group P6 Style<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u1">From P6 / From XER<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u1">From Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u2">Draw Gantt Chart<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u2">Draw Weekly Curve<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u2">Draw Monthly Curve<span class="badge free">Free</span></li>
+        <li class="menu" data-menu="u3">Draw S-Curve<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u3">From XER File(s)<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u3">From SQLite Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u3">By Activity Breakdown<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u3">By Resource Breakdown<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u4">Actual Cost = Earned Value<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u4">From SQLite Database / From XER File<span class="badge pro">Pro</span></li>
+        <li class="leaf">Sum Parents<span class="badge free">Free</span></li>
+        <li class="leaf">Max and Min Dates Parents<span class="badge free">Free</span></li>
+        <li class="menu" data-menu="u5">WBS Generation<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u5">Prepare WBS Sheet<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u5">Load WBS from XER<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u5">Load WBS from Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u5">Generate XER for the WBS<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u5">Modify WBS in XER<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u5">Modify WBS for Project in Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u6">Resource Database<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u6">Prepare Resource Sheet<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u6">Transform Resource Sheet to XER<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u6">Inject Resource to Database<span class="badge free">Free</span></li>
+        <li class="leaf">Create PMS Sheet<span class="badge free">Free</span></li>
+        <li class="menu" data-menu="u7">Activity Code<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u7">Prepare Activity Code Sheet<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u7">Load Codes from XER<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u7">Load Codes from Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u7">Merge Activity Codes into XER<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u7">Inject Activity Codes to Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u8">Activity ID Change<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u8">Import Activities From XER<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u8">Import Activities From Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u8">Replace New IDs to XER<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u8">Replace New IDs to Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u9">Split In-Progress Activities<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u9">XER Method / Database Method<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u10">Remove Assigned Resources<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u10">XER Method<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u10">Database Method<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="u10">Sum Duplicated Assignment (XER / DB)<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="u11">XER Data<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="u11">Import XER Data / Compile XER Data<span class="badge free">Free</span></li>
       </ul>
     </div>
 
@@ -241,17 +274,31 @@
         <div class="mod-title">Phoenix Analysis</div>
       </div>
       <ul class="feature-list">
-        <li>Resource Mapping<span class="badge free">Free</span></li>
-        <li class="sub">Inject New Qty to XER / Database<span class="badge pro">Pro</span></li>
-        <li>Calendar View<span class="badge free">Free</span></li>
-        <li>Out-of-Sequence Detector &amp; Solver<span class="badge free">Free</span></li>
-        <li>Update Quality Analysis<span class="badge pro">Pro</span></li>
-        <li>Schedule Comparison<span class="badge pro">Pro</span></li>
-        <li>Advanced Baseline Analysis (Eagle Eye)<span class="badge pro">Pro</span></li>
-        <li>Create Schedule Story Dashboard<span class="badge free">Free</span></li>
-        <li>Redundant Relation Detector &amp; Solver<span class="badge pro">Pro</span></li>
-        <li>Resource ID Duplication Check<span class="badge free">Free</span></li>
-        <li class="sub">Update Resource ID<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a1">Resource Mapping<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a1">From XER File(s)<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a1">From SQLite Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a1">Inject New Qty to Database / XER<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a2">Calendar View<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a2">Import Calendars from XER<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a2">Import Calendars from Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a3">Out of Sequence Detector &amp; Solver<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a3">XER Method<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a3">Database Method<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a4">Update Quality Analysis<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a4">XER Method / Database Method<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a5">Schedule Comparison<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a5">XER Method / Database Method<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a6">Advanced Baseline Analysis (Eagle Eye)<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a6">XER / Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a7">Create Schedule Story Dashboard<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a7">From XER File(s)<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="a7">From SQLite Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a8">Redundant Relation Detector &amp; Solver<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a8">XER / Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="a9">Resource ID Duplication Check<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a9">XER with Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a9">XER vs Database in XER<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="a9">Update Resource ID<span class="badge pro">Pro</span></li>
       </ul>
     </div>
 
@@ -262,14 +309,20 @@
         <div class="mod-title">Phoenix Database Tweaks</div>
       </div>
       <ul class="feature-list">
-        <li>Assign / Un-Assign Baseline from Project<span class="badge pro">Pro</span></li>
-        <li>Fix Unit Link (XER / Database)<span class="badge free">Free</span></li>
-        <li>Activity ID Limit<span class="badge free">Free</span></li>
-        <li>Delete Shared Mode<span class="badge free">Free</span></li>
-        <li>Roll Back Database Version<span class="badge pro">Pro</span></li>
-        <li>Reset Password<span class="badge free">Free</span></li>
-        <li>Fix Invalid XER<span class="badge pro">Pro</span></li>
-        <li>Copy Templates from another Database<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="d1">Assign / Un-Assign Baseline from Project<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="d1">Assign BL to Project<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="d1">Un-Assign Baseline from Project<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="d2">Fix Unit Link<span class="badge free">Free</span></li>
+        <li class="sub" data-parent="d2">Fix Unit Link (XER) / (Database)<span class="badge free">Free</span></li>
+        <li class="leaf">Activity ID Limit<span class="badge free">Free</span></li>
+        <li class="leaf">Delete Shared Mode<span class="badge free">Free</span></li>
+        <li class="leaf">Roll Back Database Version<span class="badge pro">Pro</span></li>
+        <li class="leaf">Reset Password<span class="badge free">Free</span></li>
+        <li class="leaf">Fix Invalid XER<span class="badge pro">Pro</span></li>
+        <li class="menu" data-menu="d3">Copy Templates from another Database<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="d3">Layouts<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="d3">Filters<span class="badge pro">Pro</span></li>
+        <li class="sub" data-parent="d3">Unit of Measures<span class="badge pro">Pro</span></li>
       </ul>
     </div>
 
@@ -331,6 +384,17 @@ const obs = new IntersectionObserver(entries=>{
 },{threshold:0.25});
 
 document.querySelectorAll('.fade-in,.count').forEach(el=>obs.observe(el));
+
+// Collapsible feature menus (default: expanded)
+document.querySelectorAll('.feature-list li.menu').forEach(menu=>{
+  menu.addEventListener('click',()=>{
+    const id=menu.dataset.menu;
+    menu.classList.toggle('collapsed');
+    const collapsed=menu.classList.contains('collapsed');
+    document.querySelectorAll('.feature-list li.sub[data-parent="'+id+'"]')
+      .forEach(s=>s.classList.toggle('hidden',collapsed));
+  });
+});
 </script>
 
 <!-- FOOTER -->
