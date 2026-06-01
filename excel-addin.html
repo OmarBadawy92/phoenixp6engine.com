@@ -35,7 +35,7 @@
   .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,6vw,72px);letter-spacing:3px;line-height:1.05;margin-bottom:16px;}
   .section-title span{color:var(--orange);}
   .hero-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:500;color:var(--muted);max-width:640px;letter-spacing:0.5px;margin-bottom:32px;position:relative;z-index:1;}
-  .coming-badge{position:relative;z-index:1;display:inline-flex;align-items:center;gap:12px;background:rgba(232,98,10,0.12);border:1px solid var(--orange);border-radius:100px;padding:12px 32px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:var(--orange);animation:pulse 2.5s ease-in-out infinite;margin-bottom:40px;}
+  .live-badge{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:#fff;border-radius:100px;padding:12px 32px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;animation:pulse 2.5s ease-in-out infinite;margin-bottom:40px;}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,98,10,0.3)}50%{box-shadow:0 0 0 16px rgba(232,98,10,0)}}
   .btn-primary{background:var(--orange);color:#fff;padding:13px 28px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;text-decoration:none;letter-spacing:1px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
   .btn-primary:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,10,0.4);}
@@ -132,6 +132,38 @@
     .nav-back-desk{display:none;}
     #hamburger{display:block !important;}
   }
+
+
+/* ==================== PRICING STYLES ==================== */
+  .pricing-section{background:var(--navy2);padding:80px 5%;text-align:center;}
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:40px auto 0;}
+  .price-card{background:var(--card-bg);border-radius:12px;padding:36px 32px;position:relative;}
+  .price-card.featured{border:2px solid var(--orange);}
+  .price-card.standard{border:1px solid var(--border);}
+  .price-tag-pill{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 18px;border-radius:20px;white-space:nowrap;}
+  .price-type{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--orange);margin-bottom:12px;}
+  .price-type.company{color:var(--muted);}
+  .price-amount{display:flex;align-items:baseline;gap:10px;justify-content:center;margin-bottom:4px;}
+  .price-old{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);text-decoration:line-through;}
+  .price-new{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--orange);letter-spacing:2px;line-height:1;}
+  .price-custom{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--text);letter-spacing:2px;}
+  .price-period{font-size:13px;color:var(--muted);margin-bottom:24px;}
+  .price-features{list-style:none;margin-bottom:24px;text-align:left;}
+  .price-features li{font-size:14px;color:var(--text);padding:8px 0 8px 24px;position:relative;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .price-features li:last-child{border-bottom:none;}
+  .price-features li::before{content:'✓';position:absolute;left:0;color:var(--orange);}
+  .price-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:768px){
+    .nav-links{display:none;}
+    .nav-back-desk{display:none;}
+    #hamburger{display:block !important;}
+    .pricing-grid{grid-template-columns:1fr;}
+  }
+  
 </style>
 </head>
 <body>
@@ -149,7 +181,7 @@
     <li><a href="support.html">Support</a></li>
     <li><a href="about.html">About Me</a></li>
   </ul>
-  <a href="download.html" class="nav-back nav-back-desk" style="background:var(--orange);color:#fff;border:none;padding:9px 22px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;">Get the Tool</a>
+
   <button id="hamburger" onclick="toggleMenu()" style="display:none; background:none; border:1px solid var(--border); border-radius:4px; padding:6px 10px; cursor:pointer; color:var(--text); font-size:18px;">&#9776;</button>
 </nav>
 <div id="mobile-menu" style="display:none; position:fixed; top:58px; left:0; right:0; z-index:99; background:rgba(13,27,42,0.98); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:16px 5%;">
@@ -170,13 +202,20 @@
   </div>
   <p class="hero-sub">Three powerful modules — Utilities, Analysis, and Database.<br>
     All running directly inside Microsoft Excel.</p>
-  <div class="coming-badge">⏳ COMING SOON</div>
+  <div class="live-badge">🔥 AVAILABLE NOW</div>
+  
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;">
-    <a href="https://wa.me/201114422615" class="btn-primary" target="_blank">&#128172; Get Notified</a>
-    <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">Follow on LinkedIn</a>
+    <a href="https://github.com/OmarBadawy92/Phoenix_P6_Engine_Excel_Add_In/releases/tag/v1.0.0" 
+       class="btn-primary" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+      </svg>
+      Download Excel Add-in
+    </a>
+    <a href="https://wa.me/201114422615" class="btn-secondary" target="_blank">&#128172; Need Help?</a>
   </div>
 </div>
-
+  
 <div class="stats-section">
   <div class="stats-grid">
 
@@ -343,17 +382,66 @@
 
 <section class="cta-section">
   <div class="fade-in">
-    <div class="section-label">Stay Updated</div>
-    <h2 class="section-title" style="font-size:clamp(32px,5vw,56px);">BE THE FIRST TO<br><span>GET ACCESS</span></h2>
-    <p style="color:var(--muted);font-size:16px;max-width:500px;margin:16px auto 36px;line-height:1.7;">Reach out to be notified the moment the Excel Add-in launches.</p>
+    <div class="section-label">Ready to Use</div>
+    <h2 class="section-title" style="font-size:clamp(32px,5vw,56px);">DOWNLOAD &amp; START<br><span>USING TODAY</span></h2>
+    <p style="color:var(--muted);font-size:16px;max-width:500px;margin:16px auto 36px;line-height:1.7;">
+      Get the latest version instantly. License included with purchase.
+    </p>
     <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
-      <a href="https://wa.me/201114422615" class="btn-primary" target="_blank">&#128172; WhatsApp</a>
-      <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank">LinkedIn Profile</a>
+      <a href="https://github.com/OmarBadawy92/Phoenix_P6_Engine_Excel_Add_In/releases/tag/v1.0.0" 
+         class="btn-primary" target="_blank">Download Now</a>
+      <a href="https://wa.me/201114422615" class="btn-secondary" target="_blank">Contact Support</a>
     </div>
-    <p style="margin-top:32px;font-size:13px;color:var(--muted);">By <strong style="color:var(--text)">Omar Adel Badawy</strong> — Business Intelligence Manager</p>
   </div>
 </section>
 
+  <!-- ====================== PRICING SECTION ====================== -->
+<section class="pricing-section" id="pricing">
+  <div class="fade-in">
+    <div class="section-label">Licensing</div>
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,52px);">READY TO POWER UP<br><span>YOUR P6 WORKFLOW?</span></h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card featured fade-in">
+      <div class="price-tag-pill">&#128293; LIMITED OFFER</div>
+      <div class="price-type">INDIVIDUAL LICENSE</div>
+      <div class="price-amount"><span class="price-old">$20</span><span class="price-new">$10.7</span></div>
+      <div class="price-period">per year · up to 2 devices</div>
+      <ul class="price-features">
+        <li>Full access to all 3 modules & 10+ tools</li>
+        <li>1-year license — 2 devices covered</li>
+        <li>Free updates during license period</li>
+        <li>No admin rights needed on any device</li>
+      </ul>
+      <div style="margin:20px 0; text-align:center; padding:16px; background:rgba(232,98,10,0.1); border-radius:8px;">
+        <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">🇪🇬 Egypt: Pay by Instapay (550 EGP)</div>
+        <a href="https://ipn.eg/S/omarbadawy92/instapay/62xqu8" class="btn-primary" target="_blank" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;margin-bottom:8px;">💳 Open Instapay</a>
+        <p style="font-size:10px; color:var(--muted);">Send receipt to WhatsApp</p>
+      </div>
+      <div style="margin:16px 0 12px; font-size:12px; color:var(--muted);">From other countries connect through WhatsApp</div>
+      <div class="price-btns">
+        <a href="https://wa.me/201114422615" class="btn-primary" target="_blank" style="font-size:14px;padding:11px 22px;">&#128172; WhatsApp</a>
+        <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank" style="font-size:14px;padding:11px 22px;">LinkedIn</a>
+      </div>
+    </div>
+    <div class="price-card standard fade-in">
+      <div class="price-type company">COMPANY LICENSE</div>
+      <div class="price-amount" style="justify-content:center;"><span class="price-custom">Custom Pricing</span></div>
+      <div class="price-period">per year · team & multi-device</div>
+      <ul class="price-features">
+        <li>Unlimited devices within your company</li>
+        <li>Priority support & onboarding</li>
+        <li>Custom feature requests considered</li>
+        <li>Volume discount for large teams</li>
+      </ul>
+      <div class="price-btns">
+        <a href="https://wa.me/201114422615" class="btn-primary" target="_blank" style="font-size:14px;padding:11px 22px;">&#128172; Get a Quote</a>
+        <a href="https://www.linkedin.com/in/omar-adel-badawy-02a8b7a2/" class="btn-secondary" target="_blank" style="font-size:14px;padding:11px 22px;">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:28px;font-size:13px;color:var(--muted);">By <strong style="color:var(--text)">Omar Adel Badawy</strong> — Business Intelligence Manager</p>
+</section>
 <script>
 function toggleMenu(){
  const m=document.getElementById('mobile-menu');
