@@ -181,6 +181,10 @@
   <p class="hero-sub fade-in">Before subscribe, Understand the tool features.<br>
     The standalone EXE and the Excel Add-in.<br>
     Compare the features to understand the difference between them.</p>
+  <div class="fade-in" style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;">
+    <a href="#trial" class="btn-primary">&#128293; Start 14-Day Free Trial</a>
+    <a href="#pricing" class="btn-secondary">Get License</a>
+  </div>
 </div>
 
 <!-- DOWNLOAD CARDS -->
@@ -330,6 +334,131 @@
 
 </section>
     
+<!-- ====================== FREE TRIAL SECTION ====================== -->
+<section class="trial-section" id="trial">
+  <style>
+    .trial-section{background:var(--navy2);padding:80px 5%;border-top:1px solid var(--border);}
+    .trial-head{text-align:center;max-width:640px;margin:0 auto 40px;}
+    .trial-head .sec-label{display:inline-block;}
+    .trial-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,52px);letter-spacing:3px;line-height:1.05;margin-bottom:14px;}
+    .trial-title span{color:var(--orange);}
+    .trial-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(15px,2vw,18px);color:var(--muted);}
+    .trial-card{max-width:760px;margin:0 auto;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:40px;position:relative;overflow:hidden;}
+    .trial-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2));}
+    .trial-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .trial-full{grid-column:1/-1;}
+    .trial-section label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px;font-weight:500;letter-spacing:0.3px;}
+    .trial-section input,.trial-section select{width:100%;padding:13px 15px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+    .trial-section input:focus,.trial-section select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,98,10,0.15);}
+    .trial-section select option{background:var(--navy2);color:var(--text);}
+    .trial-hint{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;}
+    .trial-hp{position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden;}
+    .trial-btn{width:100%;padding:16px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.2s;margin-top:22px;display:flex;align-items:center;justify-content:center;gap:8px;}
+    .trial-btn:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(232,98,10,0.35);}
+    .trial-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;}
+    .trial-note{margin-top:18px;padding:14px 18px;background:rgba(232,98,10,0.10);border:1px solid var(--border);border-radius:8px;font-size:12.5px;color:var(--muted);line-height:1.6;}
+    .trial-note strong{color:var(--orange);}
+    .trial-success{display:none;text-align:center;padding:30px 10px;}
+    .trial-success .tick{font-size:46px;}
+    .trial-success h3{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:#fff;margin:10px 0 8px;}
+    .trial-success p{color:var(--muted);font-size:14px;line-height:1.6;}
+    @media(max-width:640px){.trial-grid{grid-template-columns:1fr;}.trial-card{padding:28px 22px;}}
+  </style>
+
+  <div class="trial-head fade-in">
+    <div class="sec-label">Free Trial</div>
+    <h2 class="trial-title">START YOUR <span>14-DAY FREE TRIAL</span></h2>
+    <p class="trial-sub">Enter your <strong style="color:var(--text)">Machine ID</strong> and we'll email you a 14-day trial license — no payment required.</p>
+  </div>
+
+  <div class="trial-card fade-in">
+    <form id="trialForm" autocomplete="on">
+      <div class="trial-grid">
+        <div>
+          <label for="t_name">Full Name *</label>
+          <input id="t_name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div>
+          <label for="t_email">Email Address *</label>
+          <input id="t_email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label for="t_company">Company</label>
+          <input id="t_company" name="company" type="text" placeholder="Optional">
+        </div>
+        <div>
+          <label for="t_country">Country</label>
+          <input id="t_country" name="country" type="text" placeholder="Optional">
+        </div>
+        <div class="trial-full">
+          <label for="t_machine">Machine ID *</label>
+          <input id="t_machine" name="machine_id" type="text" placeholder="Paste your Machine ID here" required>
+        </div>
+      </div>
+
+      <!-- anti-spam: bots fill this; humans never see it. Leave empty. -->
+      <div class="trial-hp" aria-hidden="true">
+        <label for="t_website">Website</label>
+        <input id="t_website" type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <input type="hidden" name="elapsed" id="t_elapsed" value="">
+
+      <button type="submit" class="trial-btn"><span>🚀</span> Request 14-Day Trial</button>
+
+      <div class="trial-note">
+        <strong>🔒 How it works:</strong> Your request is sent to us instantly and logged securely.
+        We'll generate a 14-day trial license for your Machine ID and email it back, usually within minutes.
+        if you didn't get you trial license, message us on
+        <a href="https://wa.me/201114422615" target="_blank" style="color:#fff;text-decoration:underline;">WhatsApp</a>.
+      </div>
+    </form>
+
+    <div class="trial-success" id="trialSuccess">
+      <div class="tick">✅</div>
+      <h3>REQUEST RECEIVED</h3>
+      <p>Thank you! Your 14-day trial request has been sent.<br>
+      We'll email your trial license to the address you provided shortly.</p>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // ⬇⬇⬇ PASTE YOUR GOOGLE APPS SCRIPT WEB-APP URL BETWEEN THE QUOTES ⬇⬇⬇
+    var TRIAL_ENDPOINT = "https://script.google.com/macros/s/AKfycbwbsodQ9-LkwWclj1tfpdJT8Eug9dGR70aL4eXD-7JgUOQZGYLKOWJMbpdd_DNECnNV/exec";
+    // ⬆⬆⬆ See SETUP-GUIDE.md for how to get this URL ⬆⬆⬆
+
+    var loadedAt = Date.now();
+    var form = document.getElementById('trialForm');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = form.querySelector('.trial-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> Sending...';
+
+      var elField = document.getElementById('t_elapsed');
+      if(elField) elField.value = String(Date.now() - loadedAt);
+
+      var data = new URLSearchParams(new FormData(form)).toString();
+
+      fetch(TRIAL_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        body: data
+      }).then(function(){
+        form.style.display = 'none';
+        document.getElementById('trialSuccess').style.display = 'block';
+      }).catch(function(){
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀</span> Request 14-Day Trial';
+        alert('Sorry, something went wrong sending your request. Please try again, or contact us on WhatsApp.');
+      });
+    });
+  })();
+  </script>
+</section>
+
 <!-- PRICING -->
 <section class="pricing-section" id="pricing">
   <div class="fade-in">
