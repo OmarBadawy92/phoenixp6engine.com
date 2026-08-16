@@ -180,9 +180,8 @@
   <div class="grid-bg"></div>
   <div class="sec-label fade-in">Get Phoenix P6 Engine</div>
   <h1 class="sec-title fade-in">DOWNLOAD &amp;<br><span>LICENSING</span></h1>
-  <p class="hero-sub fade-in">Before subscribe, Understand the tool features.<br>
-    The standalone EXE and the Excel Add-in.<br>
-    Compare the features to understand the difference between them.</p>
+  <p class="hero-sub fade-in">One license covers both the Standalone EXE and the Excel Add-in.<br>
+    Below: which one to open for which job &mdash; the full table is there if you want it.</p>
   <div class="fade-in" style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;">
     <a href="#trial" class="btn-primary">&#128293; Start 14-Day Free Trial</a>
     <a href="#pricing" class="btn-secondary">Get License</a>
@@ -242,78 +241,266 @@
 </section>
 
 <!-- COMPARISON TABLE -->
+<!-- ====================== WHICH TOOL / COMPARISON ====================== -->
 <section class="compare-section" id="compare">
-  <div class="fade-in" style="text-align:center;">
-    <div class="sec-label">Feature Comparison</div>
-    <h2 class="sec-title" style="font-size:clamp(28px,4vw,48px);">Standalone EXE vs <span>EXCEL ADD-IN</span></h2>
+<style>
+  .cmp-head{text-align:center;max-width:760px;margin:0 auto;}
+  .cmp-head p{font-family:'Rajdhani',sans-serif;font-size:17px;color:var(--muted);line-height:1.6;margin-top:12px;}
+  .cmp-head p strong{color:var(--text);}
+
+  /* one-license banner */
+  .cmp-note{max-width:640px;margin:26px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;
+    background:rgba(29,158,117,0.10);border:1px solid rgba(29,158,117,0.45);border-radius:999px;padding:11px 24px;
+    font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:var(--text);text-align:center;}
+  .cmp-note b{color:var(--green);}
+
+  /* tally strip — the three numbers ARE the summary; the product cards live
+     in the section above and are deliberately not repeated here. */
+  .cmp-tally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:44px auto 0;}
+  .cmp-tal{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:11px;
+    padding:16px 14px;text-align:center;cursor:pointer;transition:all .2s;color:inherit;font:inherit;}
+  .cmp-tal:hover{border-color:var(--tc);transform:translateY(-2px);}
+  .cmp-tal b{display:block;font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:1.5px;color:var(--tc);line-height:1;}
+  .cmp-tal span{display:block;font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.3px;}
+
+  /* disclosure */
+  .cmp-toggle{display:block;margin:34px auto 0;background:none;border:1px solid var(--border);color:var(--text);
+    border-radius:999px;padding:12px 28px;font-family:'Rajdhani',sans-serif;font-size:14.5px;font-weight:700;
+    letter-spacing:1px;cursor:pointer;transition:all .2s;}
+  .cmp-toggle:hover{border-color:var(--orange);color:var(--orange);}
+  .cmp-panel{display:none;max-width:1000px;margin:28px auto 0;}
+  .cmp-panel.open{display:block;}
+  .cmp-controls{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px;}
+  .cmp-chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .cmp-chip{background:none;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 15px;
+    font-family:'Rajdhani',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.6px;cursor:pointer;transition:all .18s;}
+  .cmp-chip:hover{color:var(--text);}
+  .cmp-chip.on{background:var(--orange);border-color:var(--orange);color:#fff;}
+  .cmp-search{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:999px;padding:9px 18px;
+    color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;outline:none;min-width:210px;}
+  .cmp-search::placeholder{color:var(--muted);font-weight:500;}
+  .cmp-search:focus{border-color:var(--orange);}
+
+  /* table */
+  .compare-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .compare-header,.compare-row{display:grid;grid-template-columns:2fr 1fr 1fr;}
+  /* No position:sticky here — the wrapper is overflow:hidden (for the rounded
+     corners), which confines the sticky element and clips it mid-row. */
+  .compare-header{background:var(--navy2);border-bottom:1px solid var(--border);}
+  .ch-cell{padding:15px 20px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  .ch-cell.feature{color:var(--muted);}
+  .ch-cell.exe{color:var(--orange);text-align:center;}
+  .ch-cell.excel{color:var(--blue);text-align:center;}
+  .compare-row{border-bottom:1px solid rgba(255,255,255,0.04);transition:background .2s;}
+  .compare-row:last-child{border-bottom:none;}
+  .compare-row:hover{background:rgba(255,255,255,0.03);}
+  .cr-cell{padding:13px 20px;font-size:14px;}
+  .cr-cell.feature{color:var(--text);line-height:1.45;}
+  .cr-cell.val{text-align:center;font-size:17px;}
+  .cr-cell.val.yes{color:var(--green);}
+  .cr-cell.val.no{color:#e24b4a;opacity:.55;}
+  .compare-row.section-row{background:rgba(232,98,10,0.06);}
+  .compare-row.section-row .cr-cell{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;
+    text-transform:uppercase;color:var(--orange);padding:10px 20px;}
+  .cmp-empty{padding:40px 20px;text-align:center;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:15px;}
+  .cmp-count{font-family:'Rajdhani',sans-serif;font-size:12.5px;color:var(--muted);font-weight:600;}
+
+  @media(max-width:820px){
+    .cmp-tally{grid-template-columns:1fr;}
+  }
+  @media(max-width:600px){
+    .compare-header,.compare-row{grid-template-columns:1.7fr .65fr .65fr;}
+    .ch-cell,.cr-cell{padding:10px 9px;font-size:12px;}
+    .cr-cell.val{font-size:15px;}
+    .cmp-controls{flex-direction:column;align-items:stretch;}
+    .cmp-search{width:100%;}
+  }
+</style>
+
+  <div class="cmp-head fade-in">
+    <div class="sec-label">Which One Do I Need?</div>
+    <h2 class="sec-title" style="font-size:clamp(28px,4vw,48px);">ONE LICENSE.<br><span>BOTH TOOLS.</span></h2>
+    <p>You don't have to pick. The same license unlocks the Standalone EXE <strong>and</strong> the Excel Add-in
+       &mdash; so the only question is which one you open for the job in front of you.</p>
+    <div class="cmp-note">&#128273; <span>One license &middot; <b>both tools</b> &middot; up to 2 devices</span></div>
   </div>
-  <div class="compare-wrap fade-in">
-    <div class="compare-header">
-      <div class="ch-cell feature">Feature</div>
-      <div class="ch-cell Standalone EXE">🖥️ Standalone EXE</div>
-      <div class="ch-cell excel">📊 Excel Add-in</div>
-    </div>
 
-    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">General</div></div>
-    <div class="compare-row"><div class="cr-cell feature">No Admin Rights</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Works on Any Windows PC</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Standalone — No Dependencies</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
+  <div class="cmp-tally fade-in">
+    <button class="cmp-tal" data-f="both" style="--tc:var(--green)"><b id="tBoth">0</b><span>in both tools</span></button>
+    <button class="cmp-tal" data-f="exe"  style="--tc:var(--orange)"><b id="tExe">0</b><span>only in the EXE</span></button>
+    <button class="cmp-tal" data-f="excel" style="--tc:var(--blue)"><b id="tXl">0</b><span>only in the Add-in</span></button>
+  </div>
 
-    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Import & Database Tweaks</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Ultra Fast Export & Import Options to SQLite Database</div><div class="cr-cell val yes">✓</div><div class="cr-cell val no">✗</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Ultra Fast XML conversion & Export</div><div class="cr-cell val yes">✓</div><div class="cr-cell val no">✗</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Increase Activity ID Limit</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Delete Shared Mode</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Remove Resource Assignments</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Assign/Un-Assign Baseline from project</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Fix Unit Link</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Copy Templates from DB to another DB</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Rollback Database Version</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Reset Password</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Fix Invalid XER</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Clean Rubbish in Database (Un-used Global Calendars , Resources & Activity Codes) and fix 90% corruption in database</div><div class="cr-cell val yes">✓</div><div class="cr-cell val no">✗</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Analyze Data Corruption (XER & Database)</div><div class="cr-cell val yes">✓</div><div class="cr-cell val no">✗</div></div>
-    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Schedule Tools & Analysis</div></div>
-    <div class="compare-row"><div class="cr-cell feature">OOS Detector & Solver</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Split In-Progress Activities</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Transfrom Progress Split to Old or vice versa</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Actual Cost = Earned Value</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Reduntant Relation Detector & Solver</div><div class="cr-cell val yes">✓</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Resource Mapping Sheet Output</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Update Quality Analysis</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Schedule Comparison</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Delay Analysis Features (Delay Analyzer /Time Impact / Window) </div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>  
-    <div class="compare-row"><div class="cr-cell feature">Resource ID Duplication Check</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Schedule Dashboard</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Eagle Eye Baseline Analysis</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Monto Carlo Risk Analysis</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Critical Path Drag Analysis</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Driving Path Tracer</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Activity Split & Dissolver</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    
-    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Excel Utilities</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Color & Group P6 Style & Draw Gantt Chart in Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Draw S-curve</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Draw Financial S-curve</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Lookahead BL & Update Comparison</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Create PMS Sheet</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Transfer Progress from PMS Sheet</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Summarize WBS Data</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">WBS/Activity Generation in Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Resource Creation</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Activity Code Creation</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Change Activity ID</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Calendar View in Excel</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
-    <div class="compare-row"><div class="cr-cell feature">XER Data Import into Excel Sheet</div><div class="cr-cell val no">✗</div><div class="cr-cell val yes">✓</div></div>
+  <button class="cmp-toggle fade-in" id="cmpToggle" aria-expanded="false">
+    Show the full feature-by-feature table &#9662;
+  </button>
 
-    <div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">Availability</div></div>
-    <div class="compare-row"><div class="cr-cell feature">Current Status</div><div class="cr-cell val" style="color:var(--green);font-size:11px;font-family:'Rajdhani',sans-serif;font-weight:700;"><a href="https://github.com/OmarBadawy92/Phoenix_P6_Engine_EXE/releases/tag/v3.8" target="_blank" style="color:var(--green);text-decoration:none;">✓ AVAILABLE v3.8</a></div>
-      <div class="cr-cell val" style="color:var(--green);font-size:11px;font-family:'Rajdhani',sans-serif;font-weight:700;">
-        <a href="https://github.com/OmarBadawy92/Phoenix_P6_Engine_Excel_Add_In" target="_blank" style="color:var(--green);text-decoration:none;">✓ AVAILABLE NOW</a>
+  <div class="cmp-panel" id="cmpPanel">
+    <div class="cmp-controls">
+      <div class="cmp-chips">
+        <button class="cmp-chip on" data-f="all">All</button>
+        <button class="cmp-chip" data-f="both">In both</button>
+        <button class="cmp-chip" data-f="exe">Only EXE</button>
+        <button class="cmp-chip" data-f="excel">Only Add-in</button>
       </div>
+      <input id="cmpSearch" class="cmp-search" type="text" autocomplete="off" placeholder="Find a feature…">
     </div>
-    <div class="compare-row"><div class="cr-cell feature">License Price</div><div class="cr-cell val" style="color:var(--orange);font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:700;">$10.7/yr</div><div class="cr-cell val" style="color:var(--muted);font-size:11px;font-family:'Rajdhani',sans-serif;font-weight:600;text-align:center;">Same license</div></div>
+    <div class="cmp-count" id="cmpCount" style="margin-bottom:10px;"></div>
+    <div class="compare-wrap">
+      <div class="compare-header">
+        <div class="ch-cell feature">Feature</div>
+        <div class="ch-cell exe">&#128421;&#65039; Standalone EXE</div>
+        <div class="ch-cell excel">&#128202; Excel Add-in</div>
+      </div>
+      <div id="cmpBody"></div>
+    </div>
   </div>
+
+<script>
+(function(){
+  // [section, feature, in EXE, in Excel Add-in]
+  var R=[
+    ['General','No admin rights needed',1,1],
+    ['General','Works on any Windows PC',1,1],
+    ['General','Standalone — no dependencies',1,1],
+
+    ['Import & Database Tweaks','Ultra-fast export & import to SQLite database',1,0],
+    ['Import & Database Tweaks','Ultra-fast XML conversion & export',1,0],
+    ['Import & Database Tweaks','Clean rubbish in database (unused global calendars, resources, activity codes) and fix ~90% of corruption',1,0],
+    ['Import & Database Tweaks','Analyze data corruption (XER & database)',1,0],
+    ['Import & Database Tweaks','Delete projects from the database',1,0],
+    ['Import & Database Tweaks','Increase activity ID limit',1,1],
+    ['Import & Database Tweaks','Delete shared mode',1,1],
+    ['Import & Database Tweaks','Remove resource assignments',1,1],
+    ['Import & Database Tweaks','Assign / un-assign baseline from project',1,1],
+    ['Import & Database Tweaks','Fix unit link',0,1],
+    ['Import & Database Tweaks','Copy templates from one database to another',1,1],
+    ['Import & Database Tweaks','Roll back database version',1,1],
+    ['Import & Database Tweaks','Reset password',1,1],
+    ['Import & Database Tweaks','Fix invalid XER',1,1],
+    ['Import & Database Tweaks','Repair database',0,1],
+    ['Import & Database Tweaks','Generate project blueprint',0,1],
+
+    ['Schedule Tools & Analysis','Out-of-sequence detector & solver',1,1],
+    ['Schedule Tools & Analysis','Split in-progress activities',1,1],
+    ['Schedule Tools & Analysis','Actual cost = earned value',1,1],
+    ['Schedule Tools & Analysis','Redundant relation detector & solver',1,1],
+    ['Schedule Tools & Analysis','Fix loop (circular logic)',0,1],
+    ['Schedule Tools & Analysis','Transfer progress: split ↔ old project',0,1],
+    ['Schedule Tools & Analysis','Recovery Schedule (compress back to target)',0,1],
+    ['Schedule Tools & Analysis','Reconstruct missing updates',0,1],
+    ['Schedule Tools & Analysis','Update quality analysis',0,1],
+    ['Schedule Tools & Analysis','Schedule comparison',0,1],
+    ['Schedule Tools & Analysis','Change log — activities & relations',0,1],
+    ['Schedule Tools & Analysis','Schedule gap detector',0,1],
+    ['Schedule Tools & Analysis','Eagle Eye baseline analysis (DCMA 14-point)',0,1],
+    ['Schedule Tools & Analysis','Monte Carlo risk analysis',0,1],
+    ['Schedule Tools & Analysis','Critical path drag analysis',0,1],
+    ['Schedule Tools & Analysis','Driving-path tracer',0,1],
+    ['Schedule Tools & Analysis','Delay analysis (root cause / time impact / windows)',0,1],
+    ['Schedule Tools & Analysis','Half-step schedule (MIP 3.4)',0,1],
+    ['Schedule Tools & Analysis','Activity splitter & dissolver',0,1],
+    ['Schedule Tools & Analysis','Resource ID duplication check',0,1],
+    ['Schedule Tools & Analysis','Resource mapping sheet output',0,1],
+    ['Schedule Tools & Analysis','Assign & re-distribute resources',0,1],
+    ['Schedule Tools & Analysis','Schedule digital movie',0,1],
+
+    ['Excel Reporting & Building','Color & group P6 style + draw Gantt chart',0,1],
+    ['Excel Reporting & Building','Draw S-curve',0,1],
+    ['Excel Reporting & Building','Draw financial / cash-flow curve',0,1],
+    ['Excel Reporting & Building','Schedule story dashboard (Excel & HTML)',0,1],
+    ['Excel Reporting & Building','Lookahead — baseline vs update',0,1],
+    ['Excel Reporting & Building','Create PMS sheet',0,1],
+    ['Excel Reporting & Building','Transfer progress from PMS sheet',0,1],
+    ['Excel Reporting & Building','Summarize WBS data',0,1],
+    ['Excel Reporting & Building','WBS / activity generation in Excel',0,1],
+    ['Excel Reporting & Building','Material & engineering builder',0,1],
+    ['Excel Reporting & Building','Resource creation',0,1],
+    ['Excel Reporting & Building','Activity code creation',0,1],
+    ['Excel Reporting & Building','Change activity ID',0,1],
+    ['Excel Reporting & Building','Calendar view in Excel',0,1],
+    ['Excel Reporting & Building','Calendar replace',0,1],
+    ['Excel Reporting & Building','XER data import into Excel sheet',0,1],
+    ['Excel Reporting & Building','Fast Excel import / export (round trip)',0,1]
+  ];
+
+  function kind(r){ return r[2]&&r[3]?'both':(r[2]?'exe':'excel'); }
+
+  var nBoth=0,nExe=0,nXl=0;
+  R.forEach(function(r){var k=kind(r);if(k==='both')nBoth++;else if(k==='exe')nExe++;else nXl++;});
+  document.getElementById('tBoth').textContent=nBoth;
+  document.getElementById('tExe').textContent=nExe;
+  document.getElementById('tXl').textContent=nXl;
+
+  var elBody=document.getElementById('cmpBody'),
+      elCount=document.getElementById('cmpCount'),
+      elPanel=document.getElementById('cmpPanel'),
+      elToggle=document.getElementById('cmpToggle'),
+      elSearch=document.getElementById('cmpSearch');
+  var filter='all',q='';
+
+  function tick(on){return on?'<div class="cr-cell val yes">&#10003;</div>':'<div class="cr-cell val no">&#10007;</div>';}
+
+  function draw(){
+    var list=R.filter(function(r){
+      if(filter!=='all' && kind(r)!==filter) return false;
+      if(q && (r[1]+' '+r[0]).toLowerCase().indexOf(q)<0) return false;
+      return true;
+    });
+    elCount.textContent=list.length+(list.length===1?' feature shown':' features shown');
+    if(!list.length){ elBody.innerHTML='<div class="cmp-empty">Nothing matches that. Try a shorter word.</div>'; return; }
+    var html='',sec=null;
+    list.forEach(function(r){
+      if(r[0]!==sec){ sec=r[0];
+        html+='<div class="compare-row section-row"><div class="cr-cell" style="grid-column:1/-1;">'+sec+'</div></div>'; }
+      html+='<div class="compare-row"><div class="cr-cell feature">'+r[1]+'</div>'+tick(r[2])+tick(r[3])+'</div>';
+    });
+    elBody.innerHTML=html;
+  }
+
+  function openPanel(){
+    elPanel.classList.add('open');
+    elToggle.setAttribute('aria-expanded','true');
+    elToggle.innerHTML='Hide the full table &#9652;';
+  }
+
+  elToggle.addEventListener('click',function(){
+    if(elPanel.classList.contains('open')){
+      elPanel.classList.remove('open');
+      elToggle.setAttribute('aria-expanded','false');
+      elToggle.innerHTML='Show the full feature-by-feature table &#9662;';
+    } else { openPanel(); }
+  });
+
+  // The tally tiles are the fast path into the table: click "only in the EXE"
+  // and you land on exactly those rows, already filtered.
+  document.querySelectorAll('.cmp-tal').forEach(function(t){
+    t.addEventListener('click',function(){
+      filter=t.dataset.f; q=''; elSearch.value='';
+      document.querySelectorAll('.cmp-chip').forEach(function(c){c.classList.toggle('on',c.dataset.f===filter);});
+      openPanel(); draw();
+      var y=elPanel.getBoundingClientRect().top+window.pageYOffset-90;
+      window.scrollTo({top:y,behavior:'smooth'});
+    });
+  });
+
+  document.querySelectorAll('.cmp-chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      filter=c.dataset.f;
+      document.querySelectorAll('.cmp-chip').forEach(function(x){x.classList.toggle('on',x===c);});
+      draw();
+    });
+  });
+
+  var tmr;
+  elSearch.addEventListener('input',function(){
+    clearTimeout(tmr);
+    tmr=setTimeout(function(){ q=elSearch.value.trim().toLowerCase(); draw(); },110);
+  });
+
+  draw();
+})();
+</script>
 </section>
 
 <!-- PRIMARY DOWNLOAD CTA -->
@@ -421,7 +608,7 @@
       <div class="price-amount"><span class="price-old">$20</span><span class="price-new">$10.7</span></div>
       <div class="price-period">First year new user only · up to 2 devices · Then $20/year</div>
       <ul class="price-features">
-        <li>Full access to all 3 modules & 10+ tools</li>
+        <li>Full access to all 3 modules &amp; 50+ tools</li>
         <li>1-year license — 2 devices covered</li>
         <li>Free updates during license period</li>
         <li>No admin rights needed on any device</li>
