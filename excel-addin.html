@@ -242,176 +242,340 @@
 
 
 
-<section class="modules-section" id="features">
-  <div class="fade-in" style="text-align:center;">
-    <div class="section-label">What's Inside</div>
-    <h2 class="section-title" style="font-size:clamp(32px,4vw,52px);">THREE <span>POWERFUL MODULES</span></h2>
-    <div class="legend">
+<!-- ====================== FEATURE EXPLORER ====================== -->
+<section class="fx-section" id="features">
+<style>
+  .fx-section{background:var(--navy2);padding:80px 5%;}
+  .fx-head{text-align:center;max-width:760px;margin:0 auto;}
+  .fx-head p{font-family:'Rajdhani',sans-serif;font-size:17px;color:var(--muted);line-height:1.6;margin-top:10px;}
+
+  /* search */
+  .fx-search-wrap{max-width:560px;margin:34px auto 0;}
+  .fx-field{position:relative;}
+  .fx-search{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:999px;
+    padding:15px 52px 15px 50px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;
+    letter-spacing:0.4px;outline:none;transition:border-color .2s,background .2s;}
+  .fx-search::placeholder{color:var(--muted);font-weight:500;}
+  .fx-search:focus{border-color:var(--orange);background:rgba(255,255,255,0.07);}
+  .fx-search-ico{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+  .fx-clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);
+    font-size:20px;cursor:pointer;display:none;line-height:1;padding:4px;}
+  .fx-clear:hover{color:var(--orange);}
+  .fx-hints{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+  .fx-hint{background:none;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:5px 14px;
+    font-family:'Rajdhani',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.4px;cursor:pointer;transition:all .18s;}
+  .fx-hint:hover{border-color:var(--orange);color:var(--orange);}
+
+  /* outcome tiles */
+  .fx-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:44px auto 0;max-width:1180px;}
+  @media(max-width:980px){.fx-tiles{grid-template-columns:repeat(2,1fr);}}
+  .fx-tile{background:var(--card-bg);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 20px;
+    text-align:left;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;color:inherit;font:inherit;}
+  .fx-tile::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--tc);opacity:0;transition:opacity .22s;}
+  .fx-tile:hover{transform:translateY(-3px);border-color:var(--tc);}
+  .fx-tile:hover::after,.fx-tile.on::after{opacity:1;}
+  .fx-tile.on{border-color:var(--tc);background:rgba(255,255,255,0.07);}
+  .fx-tile-ico{font-size:26px;display:block;margin-bottom:12px;}
+  .fx-tile-name{display:block;font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1.6px;color:#fff;line-height:1.15;}
+  .fx-tile-sub{display:block;font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:7px;}
+  .fx-tile-count{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;
+    text-transform:uppercase;color:var(--tc);margin-top:11px;display:block;}
+
+  /* results bar */
+  .fx-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    max-width:1180px;margin:52px auto 0;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .fx-bar-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;}
+  .fx-bar-title em{color:var(--muted);font-style:normal;font-family:'Rajdhani',sans-serif;font-size:14px;
+    font-weight:600;letter-spacing:.5px;margin-left:10px;}
+  .fx-chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .fx-chip{background:none;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 15px;
+    font-family:'Rajdhani',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.7px;cursor:pointer;transition:all .18s;}
+  .fx-chip:hover{color:var(--text);}
+  .fx-chip.on{background:var(--orange);border-color:var(--orange);color:#fff;}
+
+  /* tool cards */
+  .fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;max-width:1180px;margin:24px auto 0;}
+  .fx-card{background:var(--card-bg);border:1px solid rgba(255,255,255,0.08);border-radius:11px;overflow:hidden;transition:border-color .2s;}
+  .fx-card:hover{border-color:var(--gc);}
+  .fx-card-top{display:flex;align-items:flex-start;gap:12px;padding:18px;cursor:pointer;}
+  .fx-card-ico{font-size:19px;line-height:1.2;flex-shrink:0;}
+  .fx-card-body{display:block;flex:1;min-width:0;}
+  .fx-card-desc{display:block;}
+  .fx-card-name{font-family:'Rajdhani',sans-serif;font-size:15.5px;font-weight:700;color:#fff;letter-spacing:.3px;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.3;}
+  .fx-card-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-top:6px;}
+  .fx-meta{display:flex;gap:6px;align-items:center;margin-top:11px;flex-wrap:wrap;}
+  .fx-src{font-size:10px;letter-spacing:.7px;font-weight:700;padding:2px 7px;border-radius:3px;
+    background:rgba(255,255,255,0.07);color:var(--muted);text-transform:uppercase;}
+  .fx-more{margin-left:auto;font-size:11px;color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:700;
+    letter-spacing:.6px;white-space:nowrap;flex-shrink:0;align-self:center;}
+  .fx-card.open .fx-more{color:var(--orange);}
+  .fx-drop{display:none;padding:0 18px 16px 49px;}
+  .fx-card.open .fx-drop{display:block;}
+  .fx-drop li{list-style:none;font-size:12.8px;color:var(--muted);padding:6px 0 6px 15px;position:relative;
+    display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(255,255,255,0.05);}
+  .fx-drop li::before{content:'›';position:absolute;left:0;color:var(--gc);}
+
+  .fx-empty{text-align:center;color:var(--muted);padding:56px 20px;font-family:'Rajdhani',sans-serif;font-size:16px;}
+  .fx-empty b{color:var(--text);}
+  .fx-foot{text-align:center;margin-top:38px;}
+  .fx-legend{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+  .fx-legend span{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);
+    font-family:'Rajdhani',sans-serif;font-weight:600;}
+
+  @media(max-width:600px){
+    .fx-section{padding:60px 5%;}
+    .fx-grid{grid-template-columns:1fr;}
+    .fx-tiles{grid-template-columns:1fr 1fr;gap:12px;}
+    .fx-tile{padding:18px 15px;}
+    .fx-bar{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+
+  <div class="fx-head fade-in">
+    <div class="section-label">Explore</div>
+    <h2 class="section-title" style="font-size:clamp(32px,4.4vw,54px);">WHAT DO YOU <span>NEED TO DO?</span></h2>
+    <p>Pick the job you're trying to get done — or just search. You don't need to read the whole list.</p>
+  </div>
+
+  <div class="fx-search-wrap fade-in">
+   <div class="fx-field">
+    <svg class="fx-search-ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+      <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+    </svg>
+    <input id="fxSearch" class="fx-search" type="text" autocomplete="off"
+           placeholder="Search every tool — try &ldquo;s-curve&rdquo;, &ldquo;delay&rdquo;, &ldquo;loop&rdquo;">
+    <button class="fx-clear" id="fxClear" aria-label="Clear search">&times;</button>
+   </div>
+    <div class="fx-hints">
+      <button class="fx-hint" data-q="s-curve">s-curve</button>
+      <button class="fx-hint" data-q="delay">delay</button>
+      <button class="fx-hint" data-q="dcma">dcma</button>
+      <button class="fx-hint" data-q="monte carlo">monte carlo</button>
+      <button class="fx-hint" data-q="dashboard">dashboard</button>
+      <button class="fx-hint" data-q="fix">fix my file</button>
+    </div>
+  </div>
+
+  <div class="fx-tiles fade-in" id="fxTiles"></div>
+
+  <div class="fx-bar fade-in">
+    <div class="fx-bar-title" id="fxBarTitle">POPULAR STARTING POINTS <em id="fxCount"></em></div>
+    <div class="fx-chips">
+      <button class="fx-chip on" data-tier="all">All</button>
+      <button class="fx-chip" data-tier="free">Free</button>
+      <button class="fx-chip" data-tier="pro">Pro</button>
+      <button class="fx-chip" data-tier="reset" id="fxReset" style="display:none;">&larr; Back to all</button>
+    </div>
+  </div>
+
+  <div class="fx-grid" id="fxGrid"></div>
+
+  <div class="fx-foot fade-in">
+    <div class="fx-legend">
       <span><i class="badge free">Free</i> Included in the free version</span>
-      <span><i class="badge pro">Pro</i> Requires Pro license</span>
+      <span><i class="badge pro">Pro</i> Requires a Pro license</span>
+      <span><i class="fx-src">XER</i><i class="fx-src">DB</i> Works from an XER file and/or a P6 database</span>
     </div>
   </div>
-  <div class="modules-grid">
 
-    <div class="module-card utilities fade-in">
-      <div class="mod-label">Module 01</div>
-      <div class="mod-header">
-        <div class="mod-icon">🛠️</div>
-        <div class="mod-title">Phoenix Utilities</div>
-      </div>
-      <ul class="feature-list">
-        <li class="menu" data-menu="u1">Color and Group P6 Style<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u1">From P6 (Color and Group)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u1">From P6 (Color Only)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u1">From XER<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u1">From Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u2">Draw Gantt Chart<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u2">Draw Weekly Curve<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u2">Draw Monthly Curve<span class="badge free">Free</span></li>
-        <li class="menu" data-menu="u3">Draw S-Curve<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u3">From XER File(s)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u3">From SQLite Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u3">By Activity Breakdown<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u3">By Resource Breakdown<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u4">Financial / Cash-Flow Curve<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u4">From XER File(s)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u4">From SQLite Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u5">Grouping + Fixing Functions<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Sum Parents<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Max and Min Dates Parents<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Trim<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Add Blanks<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Paste to Filtered Cells<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Remove Charts &amp; Shapes<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Round up Duration Decimals (XER)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u5">Round up Duration Decimals (Database)<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u6">Actual Cost = Earned Value<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u6">From SQLite Database / From XER File<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u7">Create PMS Sheet<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u7">From P6 / Iteration run<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u7">Prepare From XER (WBS Sort)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u7">Prepare From Database (WBS Sort)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u7">Transfer Progress from PMS sheet (XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u8">WBS / Activity Generation<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u8">Prepare WBS/Activity Sheet<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u8">Material Engineering Preparation sheet<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u8">Transoform Material Engineering list to Activities and Relations<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u8">Load WBS/Activity from XER<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u8">Load WBS/Activity from Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u8">Generate WBS/Activity XER (new Project)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u8">Generate WBS/Activity in Database (new Project)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u8">Modify WBS/Activity in XER<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u8">Modify WBS/Activity for Project in Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u9">Activity Code<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u9">Prepare Activity Code Sheet<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u9">Load Codes from XER<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u9">Load Codes from Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u9">Merge Activity Codes into Existing XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u9">Inject Activity Codes to a Project in Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u10">Resource Database<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u10">Prepare Resource Sheet<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u10">Transform Resource Sheet to XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u10">Inject Resource to Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u11">Split for Revised Schedule<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u11">Split Activities (XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u11">Transform Progress · Split ↔ Old (XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u12">Activity Splitter and Dissolver<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u12">Activity Split from XER / Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u12">Activity Dissolve from XER / Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u13">Activity ID Change<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u13">Import Activities From XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u13">Import Activities From Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u13">Replace New IDs to XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u13">Replace New IDs to Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u14">Remove Assigned Resources<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u14">XER Method<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u14">Database Method<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="u14">Sum Duplicated Assignment (XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u15">Fix Loop<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u15">From XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u15">From Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="u16">XER Data<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="u16">Import XER Data / Compile XER Data<span class="badge free">Free</span></li>
-      </ul>
-    </div>
+<script>
+(function(){
+  var GROUPS=[
+    {k:'build', i:'🏗️', n:'Build a Schedule', s:'Create WBS, activities, codes and resources in Excel — then push them into P6.', c:'#34a85a'},
+    {k:'report',i:'📈', n:'Report & Visualise',  s:'S-curves, cash-flow, Gantt charts and dashboards straight from the schedule.', c:'#e8620a'},
+    {k:'qc',    i:'🔍', n:'Check Schedule Health',s:'DCMA checks, out-of-sequence, redundant logic, loops and update quality.', c:'#f0b429'},
+    {k:'claims',i:'⚖️', n:'Delay & Claims',      s:'Prove what caused the delay — root cause, TIA, windows and driving paths.', c:'#e0525a'},
+    {k:'risk',  i:'🎲', n:'Risk & Recovery',     s:'Monte Carlo, half-step schedules and splitting work for a revised programme.', c:'#a06ae0'},
+    {k:'fix',   i:'🔧', n:'Fix Files & Database',s:'Repair broken XERs, unlock databases and clean up the messy stuff.', c:'#5ba8f5'}
+  ];
 
-    <div class="module-card analysis fade-in">
-      <div class="mod-label">Module 02</div>
-      <div class="mod-header">
-        <div class="mod-icon">📊</div>
-        <div class="mod-title">Phoenix Analysis</div>
-      </div>
-      <ul class="feature-list">
-        <li class="menu" data-menu="a1">Resource Mapping<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a1">Histogram &amp; Charts (XER / Database)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a1">Load Resource Mapping (XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a1">Inject New Qty to Database / XER<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a2">Calendar View<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a2">Import Calendars from XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a2">Import Calendars from Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a3">Lookahead (BL vs Update)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a3">XER Method<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a3">Database Method<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a4">Out of Sequence Detector &amp; Solver<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a4">XER Method<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a4">Database Method<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a5">Update Quality Analysis<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a5">XER Method / Database Method<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a6">Redundant Relation Detector &amp; Solver<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a6">XER / Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a7">Schedule Comparison<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a7">XER Method / Database Method<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a8">Advanced Baseline Analysis (Eagle Eye)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a8">XER / Database<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a9">Create Schedule Story Dashboard<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a9">Excel Dashboard (XER / Database)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a9">HTML Dashboard (XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a10">Critical Path Drag<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a10">XER Method / Database Method<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a11">Driving-Path Tracer<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a11">XER Method / Database Method<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a12">Resource ID Duplication Check<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a12">XER with Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a12">XER vs Database in XER<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="a12">Update Resource ID<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="a12">Delay Analysis<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a12">Delay Root Cause Analyzer(XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a12">Time Impact Analysis(XER / Database)<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="a12">Window Delay Analysis(XER / Database)<span class="badge pro">Pro</span></li>
-      </ul>
-    </div>
+  var T=[
+    // ---- BUILD ----
+    {g:'build',t:'free',p:3,n:'WBS & Activity Generation',d:'Type your WBS and activities in Excel, get a ready-to-import XER — or write them straight into the database.',s:['XER','DB'],v:[['Prepare WBS/Activity sheet','free'],['Load WBS/Activity from XER','pro'],['Load WBS/Activity from database','pro'],['Generate a new project XER','free'],['Generate in database (new project)','pro'],['Modify WBS/Activity in XER','pro'],['Modify WBS/Activity in database','pro']]},
+    {g:'build',t:'pro',n:'Material & Engineering Builder',d:'Turn a material or engineering delivery list into full activities and relationships automatically.',s:['XER','DB'],v:[['Material Engineering preparation sheet','pro'],['Transform the list into activities + relations','pro']]},
+    {g:'build',t:'free',n:'Activity Codes',d:'Build your code structures in Excel and merge them into an existing XER or a project in the database.',s:['XER','DB'],v:[['Prepare activity code sheet','free'],['Load codes from XER','pro'],['Load codes from database','pro'],['Merge codes into an existing XER','free'],['Inject codes into a database project','pro']]},
+    {g:'build',t:'free',n:'Resource Database',d:'Prepare a resource sheet in Excel and push it into an XER or your P6 database.',s:['XER','DB'],v:[['Prepare resource sheet','free'],['Transform resource sheet to XER','free'],['Inject resources into database','pro']]},
+    {g:'build',t:'free',p:2,n:'PMS Sheet (Progress Measurement)',d:'Generate a progress-measurement sheet sorted the way P6 sorts it — then transfer the progress back in.',s:['P6','XER','DB'],v:[['From P6 / iteration run','free'],['Prepare from XER (WBS sort)','pro'],['Prepare from database (WBS sort)','pro'],['Transfer progress back from the PMS sheet','pro']]},
+    {g:'build',t:'free',n:'Activity ID Change',d:'Bulk-rename activity IDs across a whole project without breaking a single relationship.',s:['XER','DB'],v:[['Import activities from XER','free'],['Import activities from database','pro'],['Replace new IDs into XER','free'],['Replace new IDs into database','pro']]},
+    {g:'build',t:'free',n:'XER Data Explorer',d:'Open any XER as readable Excel tables, edit what you need, and compile it back into a valid file.',s:['XER'],v:[['Import XER data to Excel','free'],['Compile Excel back to XER','free']]},
 
-    <div class="module-card database fade-in">
-      <div class="mod-label">Module 03</div>
-      <div class="mod-header">
-        <div class="mod-icon">🗄️</div>
-        <div class="mod-title">Phoenix Database Tweaks</div>
-      </div>
-      <ul class="feature-list">
-        <li class="menu" data-menu="d1">Assign / Un-Assign Baseline from Project<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d1">Assign BL to Project<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d1">Un-Assign Baseline from Project<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="d2">Fix Unit Link<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="d2">Fix Unit Link (XER)<span class="badge free">Free</span></li>
-        <li class="sub" data-parent="d2">Fix Unit Link (Database)<span class="badge pro">Pro</span></li>
-        <li class="leaf">Activity ID Limit<span class="badge free">Free</span></li>
-        <li class="leaf">Delete Shared Mode<span class="badge free">Free</span></li>
-        <li class="leaf">Roll Back Database Version<span class="badge pro">Pro</span></li>
-        <li class="leaf">Reset Password<span class="badge free">Free</span></li>
-        <li class="leaf">Fix Invalid XER<span class="badge pro">Pro</span></li>
-        <li class="leaf">Generate Project Blueprint<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="d3">Copy Templates from another Database<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d3">Layouts<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d3">Filters<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d3">Unit of Measures<span class="badge free">Free</span></li>
-        <li class="leaf">Generate Half Step Schedule<span class="badge pro">Pro</span></li>
-        <li class="menu" data-menu="d4">Monte Carlo Schedule Risk<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d4">From XER File<span class="badge pro">Pro</span></li>
-        <li class="sub" data-parent="d4">From SQLite Database<span class="badge pro">Pro</span></li>
-      </ul>
-    </div>
+    // ---- REPORT ----
+    {g:'report',t:'free',p:10,n:'S-Curve',d:'Planned vs actual S-curves from one XER or many — broken down by activity or by resource.',s:['XER','DB'],v:[['From XER file(s)','free'],['From SQLite database','pro'],['By activity breakdown','pro'],['By resource breakdown','pro']]},
+    {g:'report',t:'pro',n:'Financial / Cash-Flow Curve',d:'A cost-loaded cash-flow curve generated directly from the schedule — no manual spreadsheet work.',s:['XER','DB'],v:[['From XER file(s)','pro'],['From SQLite database','pro']]},
+    {g:'report',t:'free',n:'Gantt Chart in Excel',d:'A clean, presentable Excel Gantt with weekly or monthly progress curves drawn on top.',s:['Excel'],v:[['Draw weekly curve','free'],['Draw monthly curve','free']]},
+    {g:'report',t:'free',p:1,n:'Color & Group, P6 Style',d:'Paste from P6 and instantly get the same grouping, banding and colors you see in the P6 window.',s:['P6','XER','DB'],v:[['From P6 (color and group)','free'],['From P6 (color only)','free'],['From XER','pro'],['From database','pro']]},
+    {g:'report',t:'free',p:11,n:'Schedule Story Dashboard',d:'One click turns the schedule into a dashboard that explains itself — in Excel or as an interactive HTML page.',s:['XER','DB'],v:[['Excel dashboard','free'],['Interactive HTML dashboard','pro']]},
+    {g:'report',t:'free',n:'Resource Mapping & Histogram',d:'Resource histograms and charts across the project — and inject revised quantities back when you rebalance.',s:['XER','DB'],v:[['Histogram & charts','free'],['Load resource mapping','pro'],['Inject new quantities back','pro']]},
+    {g:'report',t:'free',n:'Calendar View',d:'See every P6 calendar — workweek, exceptions and holidays — laid out readably in Excel.',s:['XER','DB'],v:[['Import calendars from XER','free'],['Import calendars from database','pro']]},
+    {g:'report',t:'pro',p:7,n:'Actual Cost = Earned Value',d:'Force actual cost to match earned value across the whole project in one pass.',s:['XER','DB'],v:[['From XER file','pro'],['From SQLite database','pro']]},
 
-  </div>
+    // ---- QC ----
+    {g:'qc',t:'pro',p:12,n:'Eagle Eye — DCMA 14-Point',d:'A full schedule-health audit against DCMA, using measured true float rather than estimates.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'qc',t:'pro',n:'Update Quality Analysis',d:'Catch everything that moved the wrong way between two updates before the client does.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'qc',t:'free',p:4,n:'Out-of-Sequence Detector & Solver',d:'Find every out-of-sequence progress case, understand which type it is, and fix it in the file.',s:['XER','DB'],v:[['XER method','free'],['Database method','pro']]},
+    {g:'qc',t:'pro',n:'Redundant Relation Detector & Solver',d:'Strip out logic links that add nothing to the network — safely, without changing dates.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'qc',t:'free',n:'Fix Loop',d:'Locate circular logic that stops P6 scheduling, and break it at the right link.',s:['XER','DB'],v:[['From XER','free'],['From database','pro']]},
+    {g:'qc',t:'pro',n:'Schedule Comparison',d:'Compare two schedules line by line — added, deleted, retimed and re-logicked — in a readable Excel report.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'qc',t:'pro',n:'Resource ID Duplication Check',d:'Spot duplicate resource IDs before they quietly corrupt your database.',s:['XER','DB'],v:[['XER against database','pro'],['XER vs database, inside the XER','free'],['Update resource IDs','pro']]},
+    {g:'qc',t:'pro',n:'Sum Duplicated Assignments',d:'Merge repeated resource assignments sitting on the same activity into one clean line.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+
+    // ---- CLAIMS ----
+    {g:'claims',t:'pro',p:13,n:'Delay Root Cause Analyzer',d:'Decompose slippage into what actually caused it — logic, duration, constraints or calendar.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'claims',t:'pro',n:'Time Impact Analysis (TIA)',d:'Model a delay event and measure its real, defensible impact on the completion date.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'claims',t:'pro',n:'Window Delay Analysis',d:'Attribute delay period by period across the life of the project.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'claims',t:'pro',n:'Critical Path Drag',d:'See how many days each critical activity is actually costing you — and what you would gain by shortening it.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'claims',t:'pro',p:6,n:'Driving-Path Tracer',d:'Trace the true driving path to any activity, one step at a time, and see exactly what pushes it.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'claims',t:'pro',n:'Lookahead — Baseline vs Update',d:'A lookahead that puts the baseline next to the current update so the variance is impossible to miss.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+
+    // ---- RISK ----
+    {g:'risk',t:'pro',p:14,n:'Monte Carlo Schedule Risk',d:'Run thousands of simulations and get P50 / P80 completion dates with the drivers ranked.',s:['XER','DB'],v:[['From XER file','pro'],['From SQLite database','pro']]},
+    {g:'risk',t:'pro',p:9,n:'Reconstruct Missing Updates (Half-Step)',d:'Rebuild the updates that were never issued — generate the mid-point schedules between baseline and the current update.',s:['DB'],v:[]},
+    {g:'risk',t:'pro',p:5,n:'Split for Revised Schedule',d:'Split in-progress activities into completed and remaining parts for a clean revised programme.',s:['XER','DB'],v:[['Split activities','pro'],['Transform progress: split ↔ old','pro']]},
+    {g:'risk',t:'pro',p:8,n:'Activity Splitter & Dissolver',d:'Break one activity into many, or dissolve one away — with the logic reconnected correctly either way.',s:['XER','DB'],v:[['Split activities','pro'],['Dissolve activities','pro']]},
+
+    // ---- FIX ----
+    {g:'fix',t:'pro',n:'Fix Invalid XER',d:'Repair an XER that P6 flatly refuses to import, and find out what was wrong with it.',s:['XER'],v:[]},
+    {g:'fix',t:'pro',n:'Assign / Un-Assign Baseline',d:'Attach or detach a baseline to a project directly in the database.',s:['DB'],v:[['Assign baseline to project','pro'],['Un-assign baseline from project','pro']]},
+    {g:'fix',t:'free',n:'Fix Unit Link',d:'Restore the broken link between units and costs on resource assignments.',s:['XER','DB'],v:[['Fix unit link (XER)','free'],['Fix unit link (database)','pro']]},
+    {g:'fix',t:'free',n:'Round Duration Decimals',d:'Clean up the ugly 3.9999-day durations that come out of imports.',s:['XER','DB'],v:[['From XER','free'],['From database','pro']]},
+    {g:'fix',t:'free',n:'Remove Assigned Resources',d:'Strip every resource assignment from a project in a single pass.',s:['XER','DB'],v:[['XER method','free'],['Database method','pro']]},
+    {g:'fix',t:'free',n:'Reset Password',d:'Get back into a standalone P6 database when the password is gone.',s:['DB'],v:[]},
+    {g:'fix',t:'pro',n:'Roll Back Database Version',d:'Open a newer P6 database on an older P6 install.',s:['DB'],v:[]},
+    {g:'fix',t:'free',n:'Delete Shared Mode',d:'Clear the shared-mode lock that stops you opening your own project.',s:['DB'],v:[]},
+    {g:'fix',t:'free',n:'Activity ID Limit',d:'Lift the activity ID length limit that P6 imposes by default.',s:['DB'],v:[]},
+    {g:'fix',t:'pro',n:'Copy Templates Across Databases',d:'Bring your layouts, filters and units of measure over from another database.',s:['DB'],v:[['Layouts','pro'],['Filters','pro'],['Units of measure','free']]},
+    {g:'fix',t:'pro',n:'Project Blueprint',d:'A full documented snapshot of how a project is set up — calendars, codes, structure and all.',s:['DB'],v:[]}
+  ];
+
+  var gmap={};GROUPS.forEach(function(g){gmap[g.k]=g;});
+  var state={group:null,tier:'all',q:''};
+
+  var elTiles=document.getElementById('fxTiles'),
+      elGrid=document.getElementById('fxGrid'),
+      elTitle=document.getElementById('fxBarTitle'),
+      elCount=document.getElementById('fxCount'),
+      elReset=document.getElementById('fxReset'),
+      elSearch=document.getElementById('fxSearch'),
+      elClear=document.getElementById('fxClear');
+
+  // tiles
+  elTiles.innerHTML=GROUPS.map(function(g){
+    var n=T.filter(function(t){return t.g===g.k;}).length;
+    return '<button class="fx-tile" data-g="'+g.k+'" style="--tc:'+g.c+'">'+
+      '<span class="fx-tile-ico">'+g.i+'</span>'+
+      '<span class="fx-tile-name">'+g.n+'</span>'+
+      '<span class="fx-tile-sub">'+g.s+'</span>'+
+      '<span class="fx-tile-count">'+n+' tools</span></button>';
+  }).join('');
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+  function card(t){
+    var g=gmap[t.g];
+    var tierBadge=t.t==='free'?'<i class="badge free">Free</i>':'<i class="badge pro">Pro</i>';
+    var srcs=t.s.map(function(x){return '<i class="fx-src">'+x+'</i>';}).join('');
+    var drop=t.v&&t.v.length?
+      '<ul class="fx-drop">'+t.v.map(function(v){
+        return '<li>'+esc(v[0])+'<i class="badge '+v[1]+'">'+(v[1]==='free'?'Free':'Pro')+'</i></li>';
+      }).join('')+'</ul>':'';
+    return '<div class="fx-card'+(drop?' has-drop':'')+'" style="--gc:'+g.c+'">'+
+      '<div class="fx-card-top">'+
+        '<span class="fx-card-ico">'+g.i+'</span>'+
+        '<span class="fx-card-body">'+
+          '<span class="fx-card-name">'+esc(t.n)+' '+tierBadge+'</span>'+
+          '<span class="fx-card-desc">'+esc(t.d)+'</span>'+
+          '<span class="fx-meta">'+srcs+(drop?'<span class="fx-more">'+t.v.length+' options &#9662;</span>':'')+'</span>'+
+        '</span>'+
+      '</div>'+drop+'</div>';
+  }
+
+  function render(){
+    var q=state.q.trim().toLowerCase();
+    var list;
+    if(q){
+      list=T.filter(function(t){
+        var hay=(t.n+' '+t.d+' '+gmap[t.g].n+' '+t.s.join(' ')+' '+(t.v||[]).map(function(v){return v[0];}).join(' ')).toLowerCase();
+        return q.split(/\s+/).every(function(w){return hay.indexOf(w)>-1;});
+      });
+      elTitle.innerHTML='RESULTS FOR &ldquo;'+esc(state.q.trim())+'&rdquo; <em id="fxCount"></em>';
+    }else if(state.group){
+      list=T.filter(function(t){return t.g===state.group;});
+      elTitle.innerHTML=gmap[state.group].n.toUpperCase()+' <em id="fxCount"></em>';
+    }else{
+      list=T.filter(function(t){return t.p;}).sort(function(a,b){return a.p-b.p;});
+      elTitle.innerHTML='POPULAR STARTING POINTS <em id="fxCount"></em>';
+    }
+    if(state.tier!=='all') list=list.filter(function(t){return t.t===state.tier;});
+
+    document.getElementById('fxCount').textContent=list.length+(list.length===1?' tool':' tools');
+    elReset.style.display=(state.group||q)?'inline-block':'none';
+
+    elGrid.innerHTML=list.length?list.map(card).join(''):
+      '<div class="fx-empty" style="grid-column:1/-1">No tool matches <b>'+esc(state.q)+'</b>.<br>'+
+      'Try a shorter word &mdash; or <a href="https://wa.me/201114422615" target="_blank" style="color:var(--orange)">ask us on WhatsApp</a>.</div>';
+
+    elGrid.querySelectorAll('.fx-card.has-drop .fx-card-top').forEach(function(top){
+      top.addEventListener('click',function(){
+        var c=top.parentNode,open=c.classList.toggle('open');
+        c.querySelector('.fx-more').innerHTML=open?'hide &#9652;':
+          c.querySelectorAll('.fx-drop li').length+' options &#9662;';
+      });
+    });
+  }
+
+  elTiles.addEventListener('click',function(e){
+    var b=e.target.closest('.fx-tile'); if(!b) return;
+    var k=b.dataset.g;
+    state.group=(state.group===k)?null:k;
+    state.q=''; elSearch.value=''; elClear.style.display='none';
+    elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.toggle('on',x.dataset.g===state.group);});
+    render();
+    if(state.group) document.querySelector('.fx-bar').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  document.querySelectorAll('.fx-chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      if(c.dataset.tier==='reset'){
+        state.group=null;state.q='';elSearch.value='';elClear.style.display='none';
+        elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.remove('on');});
+        render(); return;
+      }
+      state.tier=c.dataset.tier;
+      document.querySelectorAll('.fx-chip').forEach(function(x){
+        if(x.dataset.tier!=='reset') x.classList.toggle('on',x===c);
+      });
+      render();
+    });
+  });
+
+  var tmr;
+  elSearch.addEventListener('input',function(){
+    clearTimeout(tmr);
+    elClear.style.display=elSearch.value?'block':'none';
+    tmr=setTimeout(function(){
+      state.q=elSearch.value;
+      if(state.q.trim()){
+        state.group=null;
+        elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.remove('on');});
+      }
+      render();
+    },120);
+  });
+  elClear.addEventListener('click',function(){
+    elSearch.value='';state.q='';elClear.style.display='none';elSearch.focus();render();
+  });
+  document.querySelectorAll('.fx-hint').forEach(function(h){
+    h.addEventListener('click',function(){
+      elSearch.value=h.dataset.q;elClear.style.display='block';
+      elSearch.dispatchEvent(new Event('input'));
+      document.querySelector('.fx-bar').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+
+  render();
+})();
+</script>
 </section>
 
 <section class="cta-section">
