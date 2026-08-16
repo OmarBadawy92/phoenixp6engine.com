@@ -430,7 +430,7 @@
     {g:'report',t:'pro',n:'Financial / Cash-Flow Curve',d:'A cost-loaded cash-flow curve generated directly from the schedule — no manual spreadsheet work.',s:['XER','DB'],v:[['From XER file(s)','pro'],['From SQLite database','pro']]},
     {g:'report',t:'free',n:'Gantt Chart in Excel',d:'A clean, presentable Excel Gantt with weekly or monthly progress curves drawn on top.',s:['Excel'],v:[['Draw weekly curve','free'],['Draw monthly curve','free']]},
     {g:'report',t:'free',p:1,n:'Color & Group, P6 Style',d:'Paste from P6 and instantly get the same grouping, banding and colors you see in the P6 window.',s:['P6','XER','DB'],v:[['From P6 (color and group)','free'],['From P6 (color only)','free'],['From XER','pro'],['From database','pro'],['Customize colors…','free']]},
-    {g:'report',t:'pro',n:'Schedule Digital Movie',d:'Watch the schedule build itself period by period — a moving picture of the plan instead of a static bar chart.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'report',t:'pro',n:'Schedule Digital Movie',d:'Watch the schedule build itself period by period — a moving bar chart or 3D columns.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
     {g:'report',t:'free',p:11,n:'Schedule Story Dashboard',d:'One click turns the schedule into a dashboard that explains itself — in Excel or as an interactive HTML page.',s:['XER','DB'],v:[['Excel dashboard','free'],['Interactive HTML dashboard','pro']]},
     {g:'report',t:'free',n:'Resource Mapping & Histogram',d:'Resource histograms and charts across the project — and inject revised quantities back when you rebalance.',s:['XER','DB'],v:[['Histogram & charts — from XER','pro'],['Histogram & charts — from database','pro'],['Load resource mapping — from XER','free'],['Load resource mapping — from database','pro'],['Inject new quantity to XER','pro'],['Inject new quantity to database','pro']]},
     {g:'report',t:'free',n:'Calendar View',d:'See every P6 calendar — workweek, exceptions and holidays — laid out readably in Excel.',s:['XER','DB'],v:[['Import calendars from XER','free'],['Import calendars from database','pro']]},
@@ -438,7 +438,7 @@
 
     // ---- QC ----
     {g:'qc',t:'pro',p:12,n:'Eagle Eye — DCMA 14-Point',d:'A full schedule-health audit against DCMA, using measured true float rather than estimates.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
-    {g:'qc',t:'pro',n:'Update Quality Analysis',d:'Catch everything that moved the wrong way between two updates before the client does.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'qc',t:'pro',n:'Update Quality Analysis',d:'Catch fatal mistakes and everything that moved the wrong way in the updates before the client does.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
     {g:'qc',t:'free',p:4,n:'Out-of-Sequence Detector & Solver',d:'Find every out-of-sequence progress case, understand which type it is, and fix it in the file.',s:['XER','DB'],v:[['XER method','free'],['Database method','pro']]},
     {g:'qc',t:'pro',n:'Redundant Relation Detector & Solver',d:'Strip out logic links that add nothing to the network — safely, without changing dates.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
     {g:'qc',t:'pro',n:'Fix Loop',d:'Locate circular logic that stops P6 scheduling, and break it at the right link.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
@@ -473,16 +473,16 @@
     {g:'fix',t:'pro',n:'Fix Invalid XER',d:'Repair an XER that P6 flatly refuses to import, and find out what was wrong with it.',s:['XER'],v:[]},
     {g:'fix',t:'pro',n:'Assign / Un-Assign Baseline',d:'Attach or detach a baseline to a project directly in the database.',s:['DB'],v:[['Assign baseline to project','pro'],['Un-assign baseline from project','pro']]},
     {g:'fix',t:'free',n:'Fix Unit Link',d:'Restore the broken link between units and costs on resource assignments.',s:['XER','DB'],v:[['Fix unit link (XER)','free'],['Fix unit link (database)','pro']]},
-    {g:'fix',t:'free',n:'Round Duration Decimals',d:'Clean up the ugly 3.9999-day durations that come out of imports.',s:['XER','DB'],v:[['From XER','free'],['From database','pro']]},
+    {g:'fix',t:'free',n:'Round Duration Decimals',d:'Roundup decimal duration due to calendar change.',s:['XER','DB'],v:[['From XER','free'],['From database','pro']]},
     {g:'fix',t:'free',n:'Remove Assigned Resources',d:'Strip every resource assignment from a project in a single pass.',s:['XER','DB'],v:[['XER method','free'],['Database method','pro']]},
-    {g:'fix',t:'free',n:'Reset Password',d:'Get back into a standalone P6 database when the password is gone.',s:['DB'],v:[]},
+    {g:'fix',t:'free',n:'Reset Password',d:'Remove Password of the database and you can set new one in P6 settings if needed.',s:['DB'],v:[]},
     {g:'fix',t:'pro',n:'Roll Back Database Version',d:'Rollback a higher database version to an older database version.',s:['DB'],v:[]},
-    {g:'fix',t:'free',n:'Delete Shared Mode',d:'Clear the shared-mode lock that stops you opening your own project.',s:['DB'],v:[]},
+    {g:'fix',t:'free',n:'Delete Shared Mode',d:'Clear the shared-mode lock that stops you deleting your own project.',s:['DB'],v:[]},
     {g:'fix',t:'free',n:'Activity ID Limit',d:'Lift the activity ID length limit that P6 imposes by default.',s:['DB'],v:[]},
     {g:'fix',t:'pro',n:'Copy Templates Across Databases',d:'Bring your layouts, filters and units of measure over from another database.',s:['DB'],v:[['Layouts','pro'],['Filters','pro'],['Units of measure','free']]},
     {g:'fix',t:'pro',n:'Project Blueprint',d:'A full documented snapshot of how a project is set up — calendars, codes, structure and all.',s:['DB'],v:[]},
     {g:'fix',t:'free',n:'Repair Database',d:'Run a repair pass over the database itself when P6 starts behaving strangely.',s:['DB'],v:[]},
-    {g:'fix',t:'free',n:'Calendar Replace',d:'Swap one calendar for another across activities, in bulk, without touching anything else.',s:['XER','DB'],v:[['Calendar replace (XER)','free'],['Calendar replace (database)','free']]}
+    {g:'fix',t:'free',n:'Calendar Replace',d:'Swap one calendar for another across activities, in bulk, and preserve duration and lags duration after converstion.',s:['XER','DB'],v:[['Calendar replace (XER)','free'],['Calendar replace (database)','free']]}
   ];
 
   // Search synonyms. A user thinks "is there anything to assign resources?"
