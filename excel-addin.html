@@ -228,7 +228,7 @@
     </div>
 
     <div class="fade-in">
-      <div class="stat-num count" data-target="36">0</div>
+      <div class="stat-num count" data-target="54">0</div>
       <div class="stat-label">Built-in Tools</div>
     </div>
     
@@ -280,6 +280,24 @@
   .fx-tile-sub{display:block;font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:7px;}
   .fx-tile-count{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;
     text-transform:uppercase;color:var(--tc);margin-top:11px;display:block;}
+
+  /* flagship band */
+  .fx-hero{max-width:1180px;margin:46px auto 0;border-radius:16px;padding:1px;
+    background:linear-gradient(135deg,var(--orange),#f0b429 45%,rgba(232,98,10,0.25));}
+  .fx-hero-in{background:#0e1c2c;border-radius:15px;padding:30px 32px;position:relative;overflow:hidden;}
+  .fx-hero-in::before{content:'';position:absolute;top:-90px;right:-70px;width:290px;height:290px;border-radius:50%;
+    background:radial-gradient(circle,rgba(232,98,10,0.20),transparent 68%);pointer-events:none;}
+  .fx-hero-pill{display:inline-flex;align-items:center;gap:7px;background:var(--orange);color:#fff;border-radius:999px;
+    padding:5px 15px;font-family:'Rajdhani',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+  .fx-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.4vw,40px);letter-spacing:2.4px;color:#fff;
+    margin:14px 0 8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .fx-hero-desc{font-family:'Rajdhani',sans-serif;font-size:16.5px;font-weight:500;color:#c3cdd8;line-height:1.6;max-width:720px;}
+  .fx-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-top:24px;position:relative;}
+  .fx-mode{background:rgba(255,255,255,0.045);border:1px solid rgba(232,98,10,0.28);border-radius:9px;padding:14px 15px;}
+  .fx-mode b{display:block;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--orange);
+    letter-spacing:.5px;margin-bottom:5px;}
+  .fx-mode span{font-size:12.3px;color:var(--muted);line-height:1.5;}
+  .fx-hero-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:22px;position:relative;}
 
   /* results bar */
   .fx-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
@@ -348,6 +366,7 @@
     <button class="fx-clear" id="fxClear" aria-label="Clear search">&times;</button>
    </div>
     <div class="fx-hints">
+      <button class="fx-hint" data-q="recovery">recovery</button>
       <button class="fx-hint" data-q="s-curve">s-curve</button>
       <button class="fx-hint" data-q="delay">delay</button>
       <button class="fx-hint" data-q="dcma">dcma</button>
@@ -359,12 +378,15 @@
 
   <div class="fx-tiles fade-in" id="fxTiles"></div>
 
+  <div class="fx-hero fade-in" id="fxHero"></div>
+
   <div class="fx-bar fade-in">
     <div class="fx-bar-title" id="fxBarTitle">POPULAR STARTING POINTS <em id="fxCount"></em></div>
     <div class="fx-chips">
       <button class="fx-chip on" data-tier="all">All</button>
       <button class="fx-chip" data-tier="free">Free</button>
       <button class="fx-chip" data-tier="pro">Pro</button>
+      <button class="fx-chip" data-tier="everything" id="fxAll">Show every tool (A&ndash;Z)</button>
       <button class="fx-chip" data-tier="reset" id="fxReset" style="display:none;">&larr; Back to all</button>
     </div>
   </div>
@@ -395,8 +417,11 @@
     {g:'build',t:'free',p:3,n:'WBS & Activity Generation',d:'Type your WBS and activities in Excel, get a ready-to-import XER — or write them straight into the database.',s:['XER','DB'],v:[['Prepare WBS/Activity sheet','free'],['Load WBS/Activity from XER','pro'],['Load WBS/Activity from database','pro'],['Generate a new project XER','free'],['Generate in database (new project)','pro'],['Modify WBS/Activity in XER','pro'],['Modify WBS/Activity in database','pro']]},
     {g:'build',t:'pro',n:'Material & Engineering Builder',d:'Turn a material or engineering delivery list into full activities and relationships automatically.',s:['XER','DB'],v:[['Material Engineering preparation sheet','pro'],['Transform the list into activities + relations','pro']]},
     {g:'build',t:'free',n:'Activity Codes',d:'Build your code structures in Excel and merge them into an existing XER or a project in the database.',s:['XER','DB'],v:[['Prepare activity code sheet','free'],['Load codes from XER','pro'],['Load codes from database','pro'],['Merge codes into an existing XER','free'],['Inject codes into a database project','pro']]},
-    {g:'build',t:'free',n:'Resource Database',d:'Prepare a resource sheet in Excel and push it into an XER or your P6 database.',s:['XER','DB'],v:[['Prepare resource sheet','free'],['Transform resource sheet to XER','free'],['Inject resources into database','pro']]},
-    {g:'build',t:'free',p:2,n:'PMS Sheet (Progress Measurement)',d:'Generate a progress-measurement sheet sorted the way P6 sorts it — then transfer the progress back in.',s:['P6','XER','DB'],v:[['From P6 / iteration run','free'],['Prepare from XER (WBS sort)','pro'],['Prepare from database (WBS sort)','pro'],['Transfer progress back from the PMS sheet','pro']]},
+    {g:'build',t:'free',n:'Resource Database',d:'Prepare a resource sheet in Excel and push it into an XER or your P6 database.',s:['XER','DB'],v:[['Prepare resource sheet','free'],['Transform resource sheet to XER','free'],['Inject resources into database','pro'],['Load existing resources from database','pro'],['Load existing resources from XER','pro']]},
+    {g:'build',t:'pro',n:'Assign & Re-Distribute Resources',d:'The assigning resource engine — put resources onto activities in bulk, and re-spread the ones already assigned.',s:['XER','DB'],v:[['Assign resource — XER','pro'],['Assign resource — database','pro'],['Re-distribute assigned resources — XER','pro'],['Re-distribute assigned resources — database','pro']]},
+    {g:'build',t:'free',n:'Fast Excel Import / Export',d:'Export a whole project to clean Excel tables, edit it there, and push it all back — activities, relations and the rest.',s:['XER','DB'],v:[['Export to Excel tables — from database','free'],['Export to Excel tables — from XER','free'],['Fast import Excel — to database','free'],['Fast import Excel — to XER','free']]},
+    {g:'build',t:'free',n:'Excel Sheet Helpers',d:'The small things that eat your day — sum parents, parent max/min dates, trim, add blanks, paste into filtered cells, strip charts.',s:['Excel'],v:[['Sum parents','free'],['Max and min dates for parents','free'],['Trim','free'],['Add blanks','free'],['Paste to filtered (visible) cells','free'],['Remove charts & shapes','free']]},
+    {g:'build',t:'free',p:2,n:'PMS Sheet (Progress Measurement)',d:'Generate a progress-measurement sheet sorted the way P6 sorts it — then transfer the progress back in.',s:['P6','XER','DB'],v:[['From P6 / iteration run','free'],['Prepare from XER (WBS sort)','pro'],['Prepare from database (WBS sort)','pro'],['Transfer progress back — XER method','pro'],['Transfer progress back — database method','pro']]},
     {g:'build',t:'free',n:'Activity ID Change',d:'Bulk-rename activity IDs across a whole project without breaking a single relationship.',s:['XER','DB'],v:[['Import activities from XER','free'],['Import activities from database','pro'],['Replace new IDs into XER','free'],['Replace new IDs into database','pro']]},
     {g:'build',t:'free',n:'XER Data Explorer',d:'Open any XER as readable Excel tables, edit what you need, and compile it back into a valid file.',s:['XER'],v:[['Import XER data to Excel','free'],['Compile Excel back to XER','free']]},
 
@@ -404,9 +429,10 @@
     {g:'report',t:'free',p:10,n:'S-Curve',d:'Planned vs actual S-curves from one XER or many — broken down by activity or by resource.',s:['XER','DB'],v:[['From XER file(s)','free'],['From SQLite database','pro'],['By activity breakdown','pro'],['By resource breakdown','pro']]},
     {g:'report',t:'pro',n:'Financial / Cash-Flow Curve',d:'A cost-loaded cash-flow curve generated directly from the schedule — no manual spreadsheet work.',s:['XER','DB'],v:[['From XER file(s)','pro'],['From SQLite database','pro']]},
     {g:'report',t:'free',n:'Gantt Chart in Excel',d:'A clean, presentable Excel Gantt with weekly or monthly progress curves drawn on top.',s:['Excel'],v:[['Draw weekly curve','free'],['Draw monthly curve','free']]},
-    {g:'report',t:'free',p:1,n:'Color & Group, P6 Style',d:'Paste from P6 and instantly get the same grouping, banding and colors you see in the P6 window.',s:['P6','XER','DB'],v:[['From P6 (color and group)','free'],['From P6 (color only)','free'],['From XER','pro'],['From database','pro']]},
+    {g:'report',t:'free',p:1,n:'Color & Group, P6 Style',d:'Paste from P6 and instantly get the same grouping, banding and colors you see in the P6 window.',s:['P6','XER','DB'],v:[['From P6 (color and group)','free'],['From P6 (color only)','free'],['From XER','pro'],['From database','pro'],['Customize colors…','free']]},
+    {g:'report',t:'pro',n:'Schedule Digital Movie',d:'Watch the schedule build itself period by period — a moving picture of the plan instead of a static bar chart.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
     {g:'report',t:'free',p:11,n:'Schedule Story Dashboard',d:'One click turns the schedule into a dashboard that explains itself — in Excel or as an interactive HTML page.',s:['XER','DB'],v:[['Excel dashboard','free'],['Interactive HTML dashboard','pro']]},
-    {g:'report',t:'free',n:'Resource Mapping & Histogram',d:'Resource histograms and charts across the project — and inject revised quantities back when you rebalance.',s:['XER','DB'],v:[['Histogram & charts','free'],['Load resource mapping','pro'],['Inject new quantities back','pro']]},
+    {g:'report',t:'free',n:'Resource Mapping & Histogram',d:'Resource histograms and charts across the project — and inject revised quantities back when you rebalance.',s:['XER','DB'],v:[['Histogram & charts — from XER','pro'],['Histogram & charts — from database','pro'],['Load resource mapping — from XER','free'],['Load resource mapping — from database','pro'],['Inject new quantity to XER','pro'],['Inject new quantity to database','pro']]},
     {g:'report',t:'free',n:'Calendar View',d:'See every P6 calendar — workweek, exceptions and holidays — laid out readably in Excel.',s:['XER','DB'],v:[['Import calendars from XER','free'],['Import calendars from database','pro']]},
     {g:'report',t:'pro',p:7,n:'Actual Cost = Earned Value',d:'Force actual cost to match earned value across the whole project in one pass.',s:['XER','DB'],v:[['From XER file','pro'],['From SQLite database','pro']]},
 
@@ -415,24 +441,33 @@
     {g:'qc',t:'pro',n:'Update Quality Analysis',d:'Catch everything that moved the wrong way between two updates before the client does.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
     {g:'qc',t:'free',p:4,n:'Out-of-Sequence Detector & Solver',d:'Find every out-of-sequence progress case, understand which type it is, and fix it in the file.',s:['XER','DB'],v:[['XER method','free'],['Database method','pro']]},
     {g:'qc',t:'pro',n:'Redundant Relation Detector & Solver',d:'Strip out logic links that add nothing to the network — safely, without changing dates.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
-    {g:'qc',t:'free',n:'Fix Loop',d:'Locate circular logic that stops P6 scheduling, and break it at the right link.',s:['XER','DB'],v:[['From XER','free'],['From database','pro']]},
+    {g:'qc',t:'pro',n:'Fix Loop',d:'Locate circular logic that stops P6 scheduling, and break it at the right link.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'qc',t:'free',n:'Schedule Gap Detector',d:'Find the holes in the programme — stretches where nothing is planned to happen at all.',s:['XER','DB'],v:[['XER method','free'],['Database method','free']]},
     {g:'qc',t:'pro',n:'Schedule Comparison',d:'Compare two schedules line by line — added, deleted, retimed and re-logicked — in a readable Excel report.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'qc',t:'pro',n:'Change Log — Activities & Relations',d:'Track every activity and logic change across up to 30 consecutive schedules in one log.',s:['XER','DB'],v:[['XER method (up to 30 schedules)','pro'],['Database method (up to 30 schedules)','pro']]},
     {g:'qc',t:'pro',n:'Resource ID Duplication Check',d:'Spot duplicate resource IDs before they quietly corrupt your database.',s:['XER','DB'],v:[['XER against database','pro'],['XER vs database, inside the XER','free'],['Update resource IDs','pro']]},
     {g:'qc',t:'pro',n:'Sum Duplicated Assignments',d:'Merge repeated resource assignments sitting on the same activity into one clean line.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
 
     // ---- CLAIMS ----
     {g:'claims',t:'pro',p:13,n:'Delay Root Cause Analyzer',d:'Decompose slippage into what actually caused it — logic, duration, constraints or calendar.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
     {g:'claims',t:'pro',n:'Time Impact Analysis (TIA)',d:'Model a delay event and measure its real, defensible impact on the completion date.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
-    {g:'claims',t:'pro',n:'Window Delay Analysis',d:'Attribute delay period by period across the life of the project.',s:['XER','DB'],v:[['From XER','pro'],['From database','pro']]},
+    {g:'claims',t:'pro',n:'Windows Delay Analysis',d:'Attribute delay period by period across the life of the project.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
+    {g:'claims',t:'pro',n:'Half-Step Schedule',d:'Progress-only half-step schedules (MIP 3.4) — the forensic building block for windows analysis.',s:['XER','DB'],v:[['From XER file','pro'],['From SQLite database','pro']]},
     {g:'claims',t:'pro',n:'Critical Path Drag',d:'See how many days each critical activity is actually costing you — and what you would gain by shortening it.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
     {g:'claims',t:'pro',p:6,n:'Driving-Path Tracer',d:'Trace the true driving path to any activity, one step at a time, and see exactly what pushes it.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
     {g:'claims',t:'pro',n:'Lookahead — Baseline vs Update',d:'A lookahead that puts the baseline next to the current update so the variance is impossible to miss.',s:['XER','DB'],v:[['XER method','pro'],['Database method','pro']]},
 
     // ---- RISK ----
-    {g:'risk',t:'pro',p:14,n:'Monte Carlo Schedule Risk',d:'Run thousands of simulations and get P50 / P80 completion dates with the drivers ranked.',s:['XER','DB'],v:[['From XER file','pro'],['From SQLite database','pro']]},
-    {g:'risk',t:'pro',p:9,n:'Reconstruct Missing Updates (Half-Step)',d:'Rebuild the updates that were never issued — generate the mid-point schedules between baseline and the current update.',s:['DB'],v:[]},
-    {g:'risk',t:'pro',p:5,n:'Split for Revised Schedule',d:'Split in-progress activities into completed and remaining parts for a clean revised programme.',s:['XER','DB'],v:[['Split activities','pro'],['Transform progress: split ↔ old','pro']]},
-    {g:'risk',t:'pro',p:8,n:'Activity Splitter & Dissolver',d:'Break one activity into many, or dissolve one away — with the logic reconnected correctly either way.',s:['XER','DB'],v:[['Split activities','pro'],['Dissolve activities','pro']]},
+    {g:'risk',t:'pro',hero:1,k:'crash compress compression acceleration accelerate late behind schedule catch up fast track crashing',n:'Recovery Schedule',d:'The project is late — this builds the plan that gets it back. Set the finish you must hit, and the engine compresses the driving path until it lands there.',s:['XER','DB'],
+      modes:[['Smooth Mode','Remaining duration only. Logic and lags stay exactly as planned.'],
+             ['Aggressive Mode','Also removes waiting time from lags on the driving path.'],
+             ['Risk Mode','Overlaps finish-to-start work and trims lag. Durations untouched.'],
+             ['Save the Project Mode','Every lever. Fast-track used only where lag and duration can’t close the gap.']],
+      v:[['XER method','pro'],['Database method','pro'],['Target: project finish date','pro'],['Target: a specific finish milestone','pro']]},
+    {g:'risk',t:'pro',p:14,n:'Monte Carlo Schedule Risk',d:'Run thousands of simulations and get P10 / P50 / P80 completion dates with the drivers ranked.',s:['XER','DB'],v:[['From XER file','pro'],['From SQLite database','pro']]},
+    {g:'risk',t:'pro',p:9,n:'Reconstruct Missing Updates',d:'Rebuild the updates that were never issued — back-date the schedule and recreate the progress history you should have had.',s:['XER'],v:[]},
+    {g:'risk',t:'pro',p:5,n:'Split for Revised Schedule',d:'Split in-progress activities into completed and remaining parts for a clean revised programme.',s:['XER','DB'],v:[['Split activities — XER','pro'],['Split activities — database','pro'],['Split to old project (XER / database)','pro'],['Old to split project (XER / database)','pro']]},
+    {g:'risk',t:'pro',p:8,n:'Activity Splitter & Dissolver',d:'Break one activity into 2–4 detail pieces, or dissolve one away and re-link its logic finish-to-start.',s:['XER','DB'],v:[['Activity split from XER','pro'],['Activity split from database','pro'],['Activity dissolve from XER','pro'],['Activity dissolve from database','pro']]},
 
     // ---- FIX ----
     {g:'fix',t:'pro',n:'Fix Invalid XER',d:'Repair an XER that P6 flatly refuses to import, and find out what was wrong with it.',s:['XER'],v:[]},
@@ -445,19 +480,99 @@
     {g:'fix',t:'free',n:'Delete Shared Mode',d:'Clear the shared-mode lock that stops you opening your own project.',s:['DB'],v:[]},
     {g:'fix',t:'free',n:'Activity ID Limit',d:'Lift the activity ID length limit that P6 imposes by default.',s:['DB'],v:[]},
     {g:'fix',t:'pro',n:'Copy Templates Across Databases',d:'Bring your layouts, filters and units of measure over from another database.',s:['DB'],v:[['Layouts','pro'],['Filters','pro'],['Units of measure','free']]},
-    {g:'fix',t:'pro',n:'Project Blueprint',d:'A full documented snapshot of how a project is set up — calendars, codes, structure and all.',s:['DB'],v:[]}
+    {g:'fix',t:'pro',n:'Project Blueprint',d:'A full documented snapshot of how a project is set up — calendars, codes, structure and all.',s:['DB'],v:[]},
+    {g:'fix',t:'free',n:'Repair Database',d:'Run a repair pass over the database itself when P6 starts behaving strangely.',s:['DB'],v:[]},
+    {g:'fix',t:'free',n:'Calendar Replace',d:'Swap one calendar for another across activities, in bulk, without touching anything else.',s:['XER','DB'],v:[['Calendar replace (XER)','free'],['Calendar replace (database)','free']]}
   ];
 
+  // Search synonyms. A user thinks "is there anything to assign resources?"
+  // and types their own words, not the ribbon's label — so every tool carries
+  // the phrases a planner would actually reach for. Keyed by tool name.
+  var SYN={
+    'WBS & Activity Generation':'wbs breakdown structure create activities new schedule build from scratch import excel',
+    'Material & Engineering Builder':'material engineering procurement delivery submittal fabrication list',
+    'Activity Codes':'activity code structure coding classify tag attribute',
+    'Resource Database':'resource library manpower labour labor crew equipment material rates',
+    'Assign & Re-Distribute Resources':'assign resource assigning resources allocate loading manpower labour labor crew staffing distribute redistribute spread re-distribute unassign',
+    'Fast Excel Import / Export':'export excel import excel tables round trip bulk edit relations activities spreadsheet',
+    'Excel Sheet Helpers':'sum parents subtotal trim blanks paste filtered visible cells remove charts shapes formatting helpers',
+    'PMS Sheet (Progress Measurement)':'pms progress measurement sheet payment invoice boq percent complete transfer progress',
+    'Activity ID Change':'rename activity id renumber bulk change ids codes',
+    'XER Data Explorer':'open xer read xer edit xer tables compile rebuild raw data',
+    'S-Curve':'s curve scurve progress curve planned actual cumulative earned',
+    'Financial / Cash-Flow Curve':'cash flow cashflow money cost curve financial payment forecast budget spend',
+    'Gantt Chart in Excel':'gantt bar chart timeline weekly monthly curve',
+    'Color & Group, P6 Style':'color colour group banding format paste from p6 layout look',
+    'Schedule Digital Movie':'movie animation video playback time lapse watch schedule progress visual',
+    'Schedule Story Dashboard':'dashboard report kpi summary html interactive presentation management',
+    'Resource Mapping & Histogram':'histogram resource usage curve loading levelling leveling quantity qty manpower chart',
+    'Calendar View':'calendar workweek working days holidays exceptions shifts',
+    'Actual Cost = Earned Value':'earned value actual cost ev ac cost alignment financial fix',
+    'Eagle Eye — DCMA 14-Point':'dcma 14 point health check audit quality metrics float compliance baseline review',
+    'Update Quality Analysis':'update quality progress check monthly update review integrity',
+    'Out-of-Sequence Detector & Solver':'out of sequence oos progress logic broken retained fix',
+    'Redundant Relation Detector & Solver':'redundant relation logic link remove clean network relationships',
+    'Fix Loop':'loop circular logic cycle cannot schedule error network',
+    'Schedule Gap Detector':'gap hole dead period nothing planned inactivity break',
+    'Schedule Comparison':'compare claim digger two schedules difference variance revision changes',
+    'Change Log — Activities & Relations':'change log history audit trail track changes multiple schedules revisions',
+    'Resource ID Duplication Check':'duplicate resource id dupe clash conflict database corruption',
+    'Sum Duplicated Assignments':'duplicate assignment merge combine repeated resource same activity',
+    'Delay Root Cause Analyzer':'delay root cause who caused slippage reason logic duration constraint calendar forensic',
+    'Time Impact Analysis (TIA)':'tia time impact fragnet delay event eot extension of time claim',
+    'Windows Delay Analysis':'window windows delay analysis period forensic eot claim apportion',
+    'Half-Step Schedule':'half step mip 3.4 forensic progress only delay analysis',
+    'Critical Path Drag':'drag critical path cost days shorten crash longest path',
+    'Driving-Path Tracer':'driving path predecessor chain trace what pushes longest path',
+    'Lookahead — Baseline vs Update':'lookahead 3 week 6 week weekly plan baseline vs update variance',
+    'Recovery Schedule':'recovery recover crash compress compression acceleration accelerate late behind schedule catch up fast track mitigation',
+    'Monte Carlo Schedule Risk':'monte carlo risk simulation p10 p50 p80 probability confidence uncertainty',
+    'Reconstruct Missing Updates':'missing updates back date backdate rebuild history no updates recreate progress',
+    'Split for Revised Schedule':'split revised schedule rebaseline re-baseline remaining completed transfer progress',
+    'Activity Splitter & Dissolver':'split activity break apart dissolve delete activity relink detail',
+    'Fix Invalid XER':'invalid xer corrupt cannot import broken file repair error',
+    'Assign / Un-Assign Baseline':'baseline assign unassign attach detach link project bl',
+    'Fix Unit Link':'unit link cost units broken link resource assignment budget',
+    'Round Duration Decimals':'round duration decimals ugly odd durations clean tidy',
+    'Remove Assigned Resources':'remove resources strip delete assignments clear loading',
+    'Reset Password':'password forgot locked out login admin access standalone',
+    'Roll Back Database Version':'rollback roll back downgrade version older p6 open database upgrade',
+    'Delete Shared Mode':'shared mode locked project cannot open exclusive access',
+    'Activity ID Limit':'activity id length limit characters longer id',
+    'Copy Templates Across Databases':'copy layouts filters templates unit of measure migrate database transfer settings',
+    'Project Blueprint':'blueprint documentation snapshot project setup audit report structure',
+    'Repair Database':'repair database fix corrupt integrity maintenance health',
+    'Calendar Replace':'calendar replace swap change calendar bulk assign working days'
+  };
+  T.forEach(function(t){ t.k=((t.k||'')+' '+(SYN[t.n]||'')).trim(); });
+
   var gmap={};GROUPS.forEach(function(g){gmap[g.k]=g;});
-  var state={group:null,tier:'all',q:''};
+  var state={group:null,tier:'all',q:'',all:false};
 
   var elTiles=document.getElementById('fxTiles'),
       elGrid=document.getElementById('fxGrid'),
       elTitle=document.getElementById('fxBarTitle'),
       elCount=document.getElementById('fxCount'),
       elReset=document.getElementById('fxReset'),
+      elAll=document.getElementById('fxAll'),
       elSearch=document.getElementById('fxSearch'),
-      elClear=document.getElementById('fxClear');
+      elClear=document.getElementById('fxClear'),
+      elHero=document.getElementById('fxHero');
+
+  // Flagship band — rendered once, shown only on the default (unfiltered) view.
+  var HERO=T.filter(function(t){return t.hero;})[0];
+  if(HERO){
+    elHero.innerHTML='<div class="fx-hero-in">'+
+      '<span class="fx-hero-pill">&#9733; Flagship Feature</span>'+
+      '<div class="fx-hero-name">'+HERO.n+' <i class="badge pro">Pro</i></div>'+
+      '<p class="fx-hero-desc">'+HERO.d+'</p>'+
+      '<div class="fx-modes">'+HERO.modes.map(function(m){
+        return '<div class="fx-mode"><b>'+m[0]+'</b><span>'+m[1]+'</span></div>';}).join('')+'</div>'+
+      '<div class="fx-hero-foot">'+HERO.s.map(function(x){return '<i class="fx-src">'+x+'</i>';}).join('')+
+        '<span style="font-size:12.5px;color:var(--muted);margin-left:6px;">'+
+        'Recover to the project finish or to a specific milestone — every change reported as a single compression figure.</span>'+
+      '</div></div>';
+  }
 
   // tiles
   elTiles.innerHTML=GROUPS.map(function(g){
@@ -470,6 +585,29 @@
   }).join('');
 
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+  // Everything a tool can be found by: its name, its plain-English blurb, the
+  // job group it sits in, its sources, its sub-options, the flagship's modes,
+  // and the synonym list above.
+  var hayCache={};
+  function hayOf(t){
+    if(hayCache[t.n]==null){
+      // Deliberately NOT the group's blurb — that would make every tool in a
+      // group match its neighbours' keywords ("cash flow" hitting all 9).
+      hayCache[t.n]=(t.n+' '+t.d+' '+gmap[t.g].n+' '+t.s.join(' ')+' '+(t.k||'')+' '+
+        (t.v||[]).map(function(v){return v[0];}).join(' ')+' '+
+        (t.modes||[]).map(function(m){return m[0]+' '+m[1];}).join(' ')).toLowerCase();
+    }
+    return hayCache[t.n];
+  }
+
+  // Bring the search box up under the fixed nav so the results sit directly
+  // below it — searching should never leave you looking at the wrong part of
+  // the page. Idempotent: if we're already parked there, nothing moves.
+  function toResults(){
+    var y=elSearch.getBoundingClientRect().top+window.pageYOffset-92;
+    if(Math.abs(window.pageYOffset-y)>24) window.scrollTo({top:y,behavior:'smooth'});
+  }
 
   function card(t){
     var g=gmap[t.g];
@@ -494,11 +632,22 @@
     var q=state.q.trim().toLowerCase();
     var list;
     if(q){
-      list=T.filter(function(t){
-        var hay=(t.n+' '+t.d+' '+gmap[t.g].n+' '+t.s.join(' ')+' '+(t.v||[]).map(function(v){return v[0];}).join(' ')).toLowerCase();
-        return q.split(/\s+/).every(function(w){return hay.indexOf(w)>-1;});
-      });
+      // People type sentences ("how do I fix my broken xer"), not keywords.
+      // Drop filler words, require the rest; if that finds nothing, fall back
+      // to matching any single word so the search still offers something.
+      var STOP=/^(the|a|an|of|to|for|from|my|is|are|it|in|on|and|or|i|how|do|does|can|with|what|that|this|there|any|some|me|we|you|be|was|were|has|have|had)$/;
+      var words=q.split(/\s+/).filter(function(w){return w && !STOP.test(w);});
+      if(!words.length) words=q.split(/\s+/).filter(Boolean);
+      var match=function(t,every){
+        var hay=hayOf(t);
+        return words[every?'every':'some'](function(w){return hay.indexOf(w)>-1;});
+      };
+      list=T.filter(function(t){return match(t,true);});
+      if(!list.length) list=T.filter(function(t){return match(t,false);});
       elTitle.innerHTML='RESULTS FOR &ldquo;'+esc(state.q.trim())+'&rdquo; <em id="fxCount"></em>';
+    }else if(state.all){
+      list=T.slice().sort(function(a,b){return a.n.localeCompare(b.n);});
+      elTitle.innerHTML='EVERY TOOL, A&ndash;Z <em id="fxCount"></em>';
     }else if(state.group){
       list=T.filter(function(t){return t.g===state.group;});
       elTitle.innerHTML=gmap[state.group].n.toUpperCase()+' <em id="fxCount"></em>';
@@ -508,8 +657,17 @@
     }
     if(state.tier!=='all') list=list.filter(function(t){return t.t===state.tier;});
 
+    // The flagship band belongs to the default view only; elsewhere the
+    // Recovery Schedule shows up as an ordinary card in the grid.
+    if(elHero) elHero.style.display=(!q && !state.group && !state.all && state.tier!=='free')?'':'none';
+    // While searching (or scanning A–Z) the job tiles are just a wall between
+    // the box and the answer — drop them so results sit right under the field.
+    // They stay put for group browsing, where you still want to switch job.
+    elTiles.style.display=(q||state.all)?'none':'';
+    elAll.classList.toggle('on',state.all);
+
     document.getElementById('fxCount').textContent=list.length+(list.length===1?' tool':' tools');
-    elReset.style.display=(state.group||q)?'inline-block':'none';
+    elReset.style.display=(state.group||q||state.all)?'inline-block':'none';
 
     elGrid.innerHTML=list.length?list.map(card).join(''):
       '<div class="fx-empty" style="grid-column:1/-1">No tool matches <b>'+esc(state.q)+'</b>.<br>'+
@@ -528,18 +686,23 @@
     var b=e.target.closest('.fx-tile'); if(!b) return;
     var k=b.dataset.g;
     state.group=(state.group===k)?null:k;
-    state.q=''; elSearch.value=''; elClear.style.display='none';
+    state.q=''; state.all=false; elSearch.value=''; elClear.style.display='none';
     elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.toggle('on',x.dataset.g===state.group);});
     render();
-    if(state.group) document.querySelector('.fx-bar').scrollIntoView({behavior:'smooth',block:'start'});
+    if(state.group) toResults();
   });
 
   document.querySelectorAll('.fx-chip').forEach(function(c){
     c.addEventListener('click',function(){
       if(c.dataset.tier==='reset'){
-        state.group=null;state.q='';elSearch.value='';elClear.style.display='none';
+        state.group=null;state.q='';state.all=false;elSearch.value='';elClear.style.display='none';
         elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.remove('on');});
         render(); return;
+      }
+      if(c.dataset.tier==='everything'){
+        state.all=!state.all;state.group=null;state.q='';elSearch.value='';elClear.style.display='none';
+        elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.remove('on');});
+        render(); toResults(); return;
       }
       state.tier=c.dataset.tier;
       document.querySelectorAll('.fx-chip').forEach(function(x){
@@ -556,11 +719,18 @@
     tmr=setTimeout(function(){
       state.q=elSearch.value;
       if(state.q.trim()){
-        state.group=null;
+        state.group=null;state.all=false;
         elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.remove('on');});
       }
       render();
+      if(state.q.trim()) toResults();
     },120);
+  });
+  // Only reposition on focus when the field isn't already sitting comfortably
+  // in view — otherwise clicking the box yanks the page out from under you.
+  elSearch.addEventListener('focus',function(){
+    var r=elSearch.getBoundingClientRect();
+    if(r.top<80 || r.bottom>window.innerHeight-140) toResults();
   });
   elClear.addEventListener('click',function(){
     elSearch.value='';state.q='';elClear.style.display='none';elSearch.focus();render();
@@ -569,7 +739,6 @@
     h.addEventListener('click',function(){
       elSearch.value=h.dataset.q;elClear.style.display='block';
       elSearch.dispatchEvent(new Event('input'));
-      document.querySelector('.fx-bar').scrollIntoView({behavior:'smooth',block:'start'});
     });
   });
 
@@ -671,7 +840,7 @@
       <div class="price-amount"><span class="price-old">$20</span><span class="price-new">$10.7</span></div>
       <div class="price-period">per year · up to 2 devices</div>
       <ul class="price-features">
-        <li>Full access to all 3 modules & 10+ tools</li>
+        <li>Full access to all 3 modules &amp; 50+ tools</li>
         <li>1-year license — 2 devices covered</li>
         <li>Free updates during license period</li>
         <li>No admin rights needed on any device</li>
@@ -767,10 +936,5 @@ document.querySelectorAll('.feature-list li.menu').forEach(menu=>{
   <p style="margin-top:6px; font-size:12px;">Primavera P6 is a registered trademark of Oracle Corporation. Phoenix P6 Engine is an independent tool.</p>
 </footer>
 
-<script>
-function toggleMenu(){const m=document.getElementById('mobile-menu');const h=document.getElementById('hamburger');const open=m.style.display==='block';m.style.display=open?'none':'block';h.innerHTML=open?'&#9776;':'&#10005;';}
-const obs = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
-</script>
 </body>
 </html>
