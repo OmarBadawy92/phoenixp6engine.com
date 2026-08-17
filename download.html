@@ -441,12 +441,28 @@
 
   function tick(on){return on?'<div class="cr-cell val yes">&#10003;</div>':'<div class="cr-cell val no">&#10007;</div>';}
 
+  // Search the FEATURE NAME only. The section name must stay out of the
+  // haystack: one section is called "Import & Database Tweaks", so including it
+  // made a search for "import" return all 18 rows in that section — Reset
+  // Password, Delete Shared Mode and the rest. Section is used only as a
+  // fallback, when nothing matched on the feature name at all.
+  function matches(r, words, useSection){
+    var hay = (useSection ? r[1] + ' ' + r[0] : r[1]).toLowerCase();
+    for (var i = 0; i < words.length; i++)
+      if (hay.indexOf(words[i]) < 0) return false;
+    return true;
+  }
+
   function draw(){
-    var list=R.filter(function(r){
-      if(filter!=='all' && kind(r)!==filter) return false;
-      if(q && (r[1]+' '+r[0]).toLowerCase().indexOf(q)<0) return false;
-      return true;
-    });
+    var tier = R.filter(function(r){ return filter === 'all' || kind(r) === filter; });
+    var list;
+    if (q) {
+      var words = q.split(/\s+/).filter(Boolean);
+      list = tier.filter(function(r){ return matches(r, words, false); });
+      if (!list.length) list = tier.filter(function(r){ return matches(r, words, true); });
+    } else {
+      list = tier;
+    }
     elCount.textContent=list.length+(list.length===1?' feature shown':' features shown');
     if(!list.length){ elBody.innerHTML='<div class="cmp-empty">Nothing matches that. Try a shorter word.</div>'; return; }
     var html='',sec=null;
