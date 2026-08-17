@@ -609,6 +609,17 @@
     if(Math.abs(window.pageYOffset-y)>24) window.scrollTo({top:y,behavior:'smooth'});
   }
 
+  // Bring the RESULTS BAR into view instead. Used when the click came from
+  // something BELOW the search box — a job tile. Scrolling to the search box
+  // there sends the page UP, away from the filtered cards the user just asked
+  // for, which is the opposite of what the click meant.
+  function toBar(){
+    var bar=document.querySelector('.fx-bar');
+    if(!bar) return;
+    var y=bar.getBoundingClientRect().top+window.pageYOffset-84;
+    if(Math.abs(window.pageYOffset-y)>24) window.scrollTo({top:y,behavior:'smooth'});
+  }
+
   function card(t){
     var g=gmap[t.g];
     var tierBadge=t.t==='free'?'<i class="badge free">Free</i>':'<i class="badge pro">Pro</i>';
@@ -689,7 +700,7 @@
     state.q=''; state.all=false; elSearch.value=''; elClear.style.display='none';
     elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.toggle('on',x.dataset.g===state.group);});
     render();
-    if(state.group) toResults();
+    if(state.group) toBar();
   });
 
   document.querySelectorAll('.fx-chip').forEach(function(c){
@@ -702,7 +713,7 @@
       if(c.dataset.tier==='everything'){
         state.all=!state.all;state.group=null;state.q='';elSearch.value='';elClear.style.display='none';
         elTiles.querySelectorAll('.fx-tile').forEach(function(x){x.classList.remove('on');});
-        render(); toResults(); return;
+        render(); toBar(); return;
       }
       state.tier=c.dataset.tier;
       document.querySelectorAll('.fx-chip').forEach(function(x){
